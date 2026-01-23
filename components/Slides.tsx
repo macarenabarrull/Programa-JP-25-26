@@ -105,33 +105,33 @@ export const InfoSlide: React.FC<SlideProps> = ({ data }) => {
   );
 };
 
-// 3. Timeline Slide (Minor text sizing for harmony)
+// 3. Timeline Slide (Updated for visibility)
 export const TimelineSlide: React.FC<SlideProps> = ({ data }) => {
   return (
     <div className="h-full flex items-center">
         <div className="w-full relative">
-            {/* Horizontal Line (Desktop) */}
-            <div className="absolute top-1/2 left-0 w-full h-px bg-purple-200 -translate-y-1/2 hidden md:block" />
+            {/* Horizontal Line (Desktop) - Made thicker and gradient */}
+            <div className="absolute top-1/2 left-0 w-full h-1.5 bg-gradient-to-r from-purple-200 via-fuchsia-500 to-purple-200 rounded-full -translate-y-1/2 hidden md:block shadow-sm" />
             
             <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
                 {data.content.map((item: any, idx: number) => (
                     <div key={idx} className="relative group">
-                        {/* Dot */}
-                        <div className="hidden md:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-white border-4 border-fuchsia-500 z-10 group-hover:scale-125 transition-transform shadow-[0_0_15px_rgba(217,70,239,0.3)]"></div>
+                        {/* Dot - Larger and more prominent */}
+                        <div className="hidden md:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-white border-[5px] border-fuchsia-500 z-10 group-hover:scale-125 transition-transform shadow-[0_0_0_4px_rgba(240,171,252,0.4)]"></div>
                         
                         {/* Card */}
-                        <div className={`md:absolute md:left-0 md:w-full p-2 md:p-4 ${idx % 2 === 0 ? 'md:bottom-10 md:pb-8' : 'md:top-10 md:pt-8'}`}>
-                            <div className="p-4 md:p-5 bg-white/70 border border-purple-100 rounded-xl hover:border-fuchsia-400 transition-colors h-full flex flex-col justify-between group-hover:bg-white group-hover:shadow-md backdrop-blur-md">
+                        <div className={`md:absolute md:left-0 md:w-full p-2 md:p-4 ${idx % 2 === 0 ? 'md:bottom-12 md:pb-2' : 'md:top-12 md:pt-2'}`}>
+                            <div className="p-4 md:p-5 bg-white border-2 border-purple-100 rounded-2xl hover:border-fuchsia-400 transition-colors h-full flex flex-col justify-between group-hover:shadow-[0_10px_30px_-10px_rgba(192,132,252,0.3)] shadow-sm">
                                 <div>
                                     <span className="text-fuchsia-600 font-mono text-xs font-bold uppercase mb-2 block">{item.month}</span>
                                     <h3 className="text-base md:text-lg font-bold text-slate-900 mb-2 leading-tight">{item.title}</h3>
                                 </div>
-                                <p className="text-slate-500 text-xs mt-2 border-t border-purple-100 pt-2">{item.details}</p>
+                                <p className="text-slate-600 text-sm mt-2 border-t border-purple-100 pt-2 font-medium">{item.details}</p>
                             </div>
                             
-                            {/* Connecting Line */}
-                             <div className={`hidden md:block absolute left-1/2 w-px bg-gradient-to-b from-fuchsia-300 to-transparent -translate-x-1/2 h-8 
-                                ${idx % 2 === 0 ? 'bottom-0 translate-y-2' : 'top-0 -translate-y-2'}`} 
+                            {/* Connecting Line - Thicker */}
+                             <div className={`hidden md:block absolute left-1/2 w-0.5 bg-fuchsia-300 -translate-x-1/2 h-10 
+                                ${idx % 2 === 0 ? 'bottom-2 translate-y-full' : 'top-2 -translate-y-full'}`} 
                              />
                         </div>
                     </div>
