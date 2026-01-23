@@ -1,5 +1,5 @@
-import React, { ReactNode } from 'react';
-import { ChevronRight, ChevronLeft } from 'lucide-react';
+import React, { ReactNode, useState, useEffect } from 'react';
+import { ChevronRight, ChevronLeft, Maximize, Minimize } from 'lucide-react';
 
 interface SlideLayoutProps {
   children: ReactNode;
@@ -20,20 +20,42 @@ export const SlideLayout: React.FC<SlideLayoutProps> = ({
   title,
   subtitle
 }) => {
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+      setIsFullscreen(true);
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+        setIsFullscreen(false);
+      }
+    }
+  };
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+  }, []);
+
   return (
-    <div className="h-screen w-full flex flex-col relative bg-[#f5f3ff] text-slate-800 overflow-hidden selection:bg-purple-200 selection:text-purple-900">
+    <div className="h-screen w-full flex flex-col relative bg-[#f5f3ff] text-slate-800 overflow-hidden selection:bg-purple-200 selection:text-purple-900 print:h-auto print:overflow-visible">
       {/* Dynamic Background: Light Lilac Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#f0abfc] via-[#e879f9] to-[#c084fc] opacity-10" />
+      <div className="absolute inset-0 bg-gradient-to-br from-[#f0abfc] via-[#e879f9] to-[#c084fc] opacity-10 print:hidden" />
       
       {/* Soft Glowing Orbs (Light Mode) */}
-      <div className="absolute top-[-20%] right-[-10%] w-[800px] h-[800px] bg-purple-400/20 rounded-full blur-[100px] pointer-events-none mix-blend-multiply" />
-      <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-fuchsia-400/20 rounded-full blur-[80px] pointer-events-none mix-blend-multiply" />
+      <div className="absolute top-[-20%] right-[-10%] w-[800px] h-[800px] bg-purple-400/20 rounded-full blur-[100px] pointer-events-none mix-blend-multiply print:hidden" />
+      <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-fuchsia-400/20 rounded-full blur-[80px] pointer-events-none mix-blend-multiply print:hidden" />
 
       {/* Grid Pattern Overlay */}
-      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-40 pointer-events-none mix-blend-soft-light"></div>
+      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-40 pointer-events-none mix-blend-soft-light print:hidden"></div>
 
       {/* Header */}
-      <header className="flex-none px-8 py-6 flex justify-between items-center z-10 border-b border-purple-200/50 bg-white/40 backdrop-blur-md">
+      <header className="flex-none px-8 py-6 flex justify-between items-center z-10 border-b border-purple-200/50 bg-white/40 backdrop-blur-md print:hidden">
         <div className="flex items-center gap-4">
           {/* Fyo Logo Placeholder / Brand Name */}
           <div className="font-black text-2xl tracking-tighter flex items-center gap-1">
@@ -43,19 +65,26 @@ export const SlideLayout: React.FC<SlideLayoutProps> = ({
           <div className="h-6 w-px bg-purple-200 mx-2"></div>
           <div className="flex flex-col">
              <span className="text-xs font-bold tracking-widest text-purple-700 uppercase">Programa JP</span>
-             <span className="text-xs text-slate-500">2025 / 2026</span>
+             <span className="text-xs text-slate-500">2026 / 2027</span>
           </div>
         </div>
         
         <div className="flex items-center gap-4">
+            <button 
+              onClick={toggleFullscreen}
+              className="p-2 text-slate-500 hover:text-fuchsia-600 transition-colors"
+              title={isFullscreen ? "Salir de pantalla completa" : "Pantalla completa"}
+            >
+              {isFullscreen ? <Minimize size={20} /> : <Maximize size={20} />}
+            </button>
              <span className="text-slate-500 font-mono text-sm">{currentSlide + 1} / {totalSlides}</span>
         </div>
       </header>
 
       {/* Content Area */}
-      <main className="flex-1 w-full max-w-[1400px] mx-auto px-6 md:px-12 relative z-10 flex flex-col justify-center">
+      <main className="flex-1 w-full max-w-[1400px] mx-auto px-6 md:px-12 relative z-10 flex flex-col justify-center print:block print:max-w-none print:px-0">
         {title && (
-            <div className="mb-8 md:mb-12 animate-fade-in-down">
+            <div className="mb-8 md:mb-12 animate-fade-in-down print:mb-4">
                 <h1 className="text-3xl md:text-5xl font-bold text-slate-900 tracking-tight leading-tight">
                   {title}
                   <span className="text-fuchsia-500">.</span>
@@ -67,13 +96,13 @@ export const SlideLayout: React.FC<SlideLayoutProps> = ({
                 )}
             </div>
         )}
-        <div className="animate-fade-in-up w-full h-full flex flex-col justify-center">
+        <div className="animate-fade-in-up w-full h-full flex flex-col justify-center print:block">
             {children}
         </div>
       </main>
 
       {/* Footer / Navigation Controls */}
-      <footer className="flex-none p-6 md:p-8 flex justify-between items-center z-10">
+      <footer className="flex-none p-6 md:p-8 flex justify-between items-center z-10 print:hidden">
         <div className="flex gap-1.5">
             {Array.from({ length: totalSlides }).map((_, idx) => (
                 <div 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { SLIDES } from './constants';
+import { SLIDES, SlideData } from './constants';
 import { SlideLayout } from './components/SlideLayout';
 import { 
   CoverSlide, 
@@ -15,6 +15,7 @@ import {
 
 const App: React.FC = () => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+  const [isPrinting, setIsPrinting] = useState(false);
 
   const nextSlide = useCallback(() => {
     setCurrentSlideIndex((prev) => Math.min(prev + 1, SLIDES.length - 1));
@@ -38,33 +39,69 @@ const App: React.FC = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [nextSlide, prevSlide]);
 
-  const currentSlideData = SLIDES[currentSlideIndex];
+  const handlePrint = useCallback(() => {
+    setIsPrinting(true);
+    // Wait for render update then print
+    setTimeout(() => {
+        window.print();
+        setIsPrinting(false);
+    }, 100);
+  }, []);
 
-  const renderSlideContent = () => {
-    switch (currentSlideData.type) {
-      case 'cover':
-        return <CoverSlide data={currentSlideData} />;
-      case 'info':
-        return <InfoSlide data={currentSlideData} />;
-      case 'timeline':
-        return <TimelineSlide data={currentSlideData} />;
-      case 'grid':
-        return <GridSlide data={currentSlideData} />;
-      case 'table-granos':
-        return <TableGranosSlide data={currentSlideData} />;
-      case 'table-capital':
-        return <TableCapitalSlide data={currentSlideData} />;
-      case 'mentoring-split':
-        return <MentoringSplitSlide data={currentSlideData} />;
-      case 'academy-split':
-        return <AcademySplitSlide data={currentSlideData} />;
-      case 'closing':
-        return <ClosingSlide data={currentSlideData} />;
-      default:
-        return <div className="text-red-500">Slide type not found</div>;
-    }
+  const renderSlide = (data: SlideData) => {
+      switch (data.type) {
+        case 'cover':
+          return <CoverSlide data={data} />;
+        case 'info':
+          return <InfoSlide data={data} />;
+        case 'timeline':
+          return <TimelineSlide data={data} />;
+        case 'grid':
+          return <GridSlide data={data} />;
+        case 'table-granos':
+          return <TableGranosSlide data={data} />;
+        case 'table-capital':
+          return <TableCapitalSlide data={data} />;
+        case 'mentoring-split':
+          return <MentoringSplitSlide data={data} />;
+        case 'academy-split':
+          return <AcademySplitSlide data={data} />;
+        case 'closing':
+          return <ClosingSlide data={data} onPrint={handlePrint} />;
+        default:
+          return <div className="text-red-500">Slide type not found</div>;
+      }
   };
 
+  const currentSlideData = SLIDES[currentSlideIndex];
+
+  // If printing, render ALL slides in a list
+  if (isPrinting) {
+      return (
+          <div className="w-full bg-white text-slate-900">
+              {SLIDES.map((slide, index) => (
+                  <div key={slide.id} className="print-slide w-full h-screen relative overflow-hidden page-break-after-always">
+                      <div className="absolute top-4 left-8 text-xs text-slate-400 font-mono">
+                          {index + 1} / {SLIDES.length} - Programa JP 2025
+                      </div>
+                      <div className="p-12 h-full flex flex-col justify-center">
+                         {slide.title && slide.type !== 'cover' && slide.type !== 'closing' && (
+                            <div className="mb-8 border-b border-purple-200 pb-4">
+                                <h2 className="text-3xl font-bold text-slate-900">{slide.title}</h2>
+                                {slide.subtitle && <p className="text-slate-500 text-lg">{slide.subtitle}</p>}
+                            </div>
+                         )}
+                         <div className="flex-1">
+                            {renderSlide(slide)}
+                         </div>
+                      </div>
+                  </div>
+              ))}
+          </div>
+      )
+  }
+
+  // Normal View
   return (
     <SlideLayout
       currentSlide={currentSlideIndex}
@@ -74,7 +111,7 @@ const App: React.FC = () => {
       title={currentSlideData.type !== 'cover' && currentSlideData.type !== 'closing' ? currentSlideData.title : undefined}
       subtitle={currentSlideData.type !== 'cover' && currentSlideData.type !== 'closing' ? currentSlideData.subtitle : undefined}
     >
-      {renderSlideContent()}
+      {renderSlide(currentSlideData)}
     </SlideLayout>
   );
 };

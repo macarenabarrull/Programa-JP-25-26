@@ -1,9 +1,12 @@
 import React from 'react';
-import { SlideData } from '../constants';
+import { SlideData, SLIDES } from '../constants';
 import { CheckCircle2, ArrowRight, Users, Target, BookOpen, TrendingUp, Calendar, GraduationCap, Clock, Download, FileText, Presentation, Mail } from 'lucide-react';
+import pptxgen from "pptxgenjs";
 
 interface SlideProps {
   data: SlideData;
+  onPrint?: () => void;
+  onDownloadPPTX?: () => void;
 }
 
 // 1. Cover Slide
@@ -19,7 +22,7 @@ export const CoverSlide: React.FC<SlideProps> = ({ data }) => {
       
       <h1 className="text-6xl md:text-8xl font-black tracking-tighter text-slate-900 mb-6 leading-[0.9]">
         PROGRAMA<br />
-        <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-600 to-purple-600">JP 2025</span>
+        <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-600 to-purple-600">JP 2026</span>
         <span className="text-purple-300">_</span>
       </h1>
       
@@ -330,7 +333,7 @@ export const MentoringSplitSlide: React.FC<SlideProps> = ({ data }) => {
 };
 
 // 8. New Academy Slide (Split 2/2)
-export const AcademySplitSlide: React.FC<SlideProps> = () => {
+export const AcademySplitSlide: React.FC<SlideProps> = ({ data }) => {
     return (
         <div className="flex flex-col h-full gap-8">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -374,8 +377,99 @@ export const AcademySplitSlide: React.FC<SlideProps> = () => {
     );
 };
 
-// 9. Closing Slide
-export const ClosingSlide: React.FC<SlideProps> = ({ data }) => {
+// 9. Closing Slide with Download Logic
+export const ClosingSlide: React.FC<SlideProps> = ({ data, onPrint }) => {
+
+    const generatePPTX = async () => {
+        const pres = new pptxgen();
+        
+        // Metadata
+        pres.title = "Programa JP 2026-2027";
+        pres.company = "fyo";
+
+        SLIDES.forEach((slide) => {
+            const pptxSlide = pres.addSlide();
+            pptxSlide.background = { color: "F5F3FF" }; // Violet 50
+
+            // Header for slides (except cover/closing)
+            if (slide.type !== 'cover' && slide.type !== 'closing') {
+                pptxSlide.addText(slide.title || "", { x: 0.5, y: 0.5, fontSize: 32, bold: true, color: "0F172A" });
+                if (slide.subtitle) {
+                    pptxSlide.addText(slide.subtitle, { x: 0.5, y: 1.0, fontSize: 18, color: "475569" });
+                    pptxSlide.addShape(pres.ShapeType.line, { x: 0.5, y: 1.35, w: 9, h: 0, line: { color: "C084FC", width: 2 } });
+                }
+            }
+
+            // Content Logic
+            if (slide.type === 'cover') {
+                pptxSlide.addText("PROGRAMA JP 2026-2027", { x: 1, y: 2, w: '80%', fontSize: 54, bold: true, align: 'center', color: "0F172A" });
+                pptxSlide.addText(slide.subtitle || "", { x: 1, y: 3.5, w: '80%', fontSize: 24, align: 'center', color: "475569" });
+                if (slide.content?.tags) {
+                    pptxSlide.addText(slide.content.tags.join(" | "), { x: 1, y: 5, w: '80%', fontSize: 14, align: 'center', color: "C084FC" });
+                }
+            }
+            else if (slide.type === 'info') {
+                 if(slide.content.description) {
+                    pptxSlide.addText(slide.content.description, { x: 0.5, y: 1.8, w: '45%', fontSize: 14, color: "334155" });
+                 }
+                 if (slide.content.bullets) {
+                    pptxSlide.addText(slide.content.bullets.map((b: string) => `• ${b}`).join("\n"), { x: 0.5, y: 2.5, w: '45%', fontSize: 12, color: "334155", lineSpacing: 18 });
+                 }
+                 if(slide.content.stats) {
+                     let yOffset = 1.8;
+                     slide.content.stats.forEach((stat: any) => {
+                         pptxSlide.addText(`${stat.label}: ${stat.value}`, { x: 5.5, y: yOffset, w: '40%', fontSize: 16, bold: true, color: "0F172A", fill: { color: "FFFFFF" } });
+                         yOffset += 1.0;
+                     });
+                 }
+            }
+            else if (slide.type === 'timeline') {
+                let xOffset = 0.5;
+                slide.content.forEach((item: any) => {
+                    pptxSlide.addText(item.month, { x: xOffset, y: 2, w: 1.5, fontSize: 10, bold: true, color: "C084FC" });
+                    pptxSlide.addText(item.title, { x: xOffset, y: 2.3, w: 1.5, fontSize: 12, bold: true, color: "0F172A" });
+                    pptxSlide.addText(item.details, { x: xOffset, y: 2.7, w: 1.5, fontSize: 10, color: "475569" });
+                    xOffset += 1.8;
+                });
+            }
+            else if (slide.type === 'grid') {
+                 let xPos = 0.5;
+                 let yPos = 1.8;
+                 slide.content.items.forEach((item: any, idx: number) => {
+                     if(idx === 2) { xPos = 0.5; yPos = 4; } // New row
+                     else if (idx === 1 || idx === 3) { xPos = 5.2; }
+                     
+                     pptxSlide.addText(item.title, { x: xPos, y: yPos, w: 4, fontSize: 14, bold: true, color: "0F172A" });
+                     pptxSlide.addText(item.desc, { x: xPos, y: yPos + 0.4, w: 4, fontSize: 11, color: "475569" });
+                 });
+            }
+            else if (slide.type === 'mentoring-split') {
+                 pptxSlide.addText("Mentores Granos:", { x: 0.5, y: 1.8, fontSize: 14, bold: true });
+                 pptxSlide.addText(slide.content.granosMentors.join("\n"), { x: 0.5, y: 2.2, h: 3, fontSize: 11, lineSpacing: 16 });
+                 
+                 pptxSlide.addText("Mentores Capital:", { x: 4, y: 1.8, fontSize: 14, bold: true });
+                 pptxSlide.addText(slide.content.capitalMentors.join("\n"), { x: 4, y: 2.2, h: 3, fontSize: 11, lineSpacing: 16 });
+
+                 pptxSlide.addText("Consideraciones:", { x: 7.5, y: 1.8, fontSize: 14, bold: true });
+                 pptxSlide.addText(slide.content.considerations.join("\n"), { x: 7.5, y: 2.2, h: 3, fontSize: 11, lineSpacing: 16 });
+            }
+             else if (slide.type === 'closing') {
+                pptxSlide.addText("¡Muchas gracias!", { x: 1, y: 2, w: '80%', fontSize: 54, bold: true, align: 'center', color: "0F172A" });
+                pptxSlide.addText(slide.subtitle || "", { x: 1, y: 3.5, w: '80%', fontSize: 24, align: 'center', color: "475569" });
+                if (slide.content?.contact) {
+                    pptxSlide.addText(`Contacto: ${slide.content.contact.email}`, { x: 1, y: 5, w: '80%', fontSize: 18, align: 'center', color: "C084FC" });
+                }
+            }
+            // Fallback for tables (simplified text)
+            else if (slide.type.includes('table')) {
+                 pptxSlide.addText("Ver presentación web para el detalle interactivo de la matriz.", { x: 0.5, y: 2, fontSize: 14, italic: true, color: "64748B" });
+            }
+
+        });
+
+        pres.writeFile({ fileName: "Programa-JP-2026-2027.pptx" });
+    };
+
     return (
         <div className="flex flex-col justify-center items-center h-full text-center relative">
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-tr from-fuchsia-400/20 to-purple-500/20 blur-[120px] rounded-full opacity-60 pointer-events-none" />
@@ -403,16 +497,16 @@ export const ClosingSlide: React.FC<SlideProps> = ({ data }) => {
                  </div>
 
                  {/* Download Area */}
-                 <div className="mt-12 flex gap-4">
+                 <div className="mt-12 flex gap-4 no-print">
                     <button 
-                        onClick={() => window.print()}
+                        onClick={onPrint}
                         className="flex items-center gap-3 px-6 py-4 bg-white border border-slate-200 rounded-xl hover:border-fuchsia-500 hover:text-fuchsia-600 transition-all font-medium text-slate-600 group shadow-sm"
                     >
                         <FileText size={20} className="group-hover:scale-110 transition-transform" />
                         Descargar PDF
                     </button>
                     <button 
-                        onClick={() => alert("La descarga de PPTX comenzará en breve (Simulación).")}
+                        onClick={generatePPTX}
                         className="flex items-center gap-3 px-6 py-4 bg-slate-900 text-white border border-slate-900 rounded-xl hover:bg-fuchsia-600 hover:border-fuchsia-600 transition-all font-medium shadow-lg hover:shadow-fuchsia-500/30"
                     >
                         <Presentation size={20} />

@@ -12,8 +12,8 @@ export const SLIDES: SlideData[] = [
   {
     id: 'cover',
     type: 'cover',
-    title: 'PROGRAMA DE JP 2025–2026',
-    subtitle: 'Formando el futuro del ecosistema de negocios',
+    title: 'PROGRAMA DE JP 2026–2027',
+    subtitle: 'Formando el futuro del ecosistema de negocios comerciales',
     content: {
       highlight: '12 Jóvenes Profesionales',
       tags: ['Mesa de Granos', 'Mercado de Capitales', 'Consultoría']
