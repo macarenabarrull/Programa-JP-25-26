@@ -87,8 +87,14 @@ const App: React.FC = () => {
           <div className="w-full bg-[#f8f7ff] text-slate-900">
               {SLIDES.map((slide, index) => (
                   <div key={slide.id} className="print-slide relative overflow-hidden page-break-after-always bg-[#f8f7ff]">
-                      {/* Wrapper to scale down content to fit A4 margins nicely */}
-                      <div className="print-content-scale w-[1440px] h-[900px] flex flex-col p-16">
+                      {/* Wrapper to scale down content to fit A4 margins nicely. 
+                          Scale is reduced to 0.65 to ensure massive safety margin for PDF drivers. 
+                          Width/Height are roughly 16:9 large canvas.
+                       */}
+                      <div 
+                          className="print-content-scale flex flex-col p-16 origin-center"
+                          style={{ width: '1440px', height: '900px', transform: 'scale(0.65)' }}
+                      >
                            {/* Simple Header for Print Context */}
                            <div className="absolute top-8 left-12 text-sm text-slate-400 font-mono">
                                {index + 1} / {SLIDES.length} - Programa JP 2026

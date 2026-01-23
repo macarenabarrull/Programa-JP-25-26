@@ -127,11 +127,11 @@ export const ObjectivesSlide: React.FC<SlideProps> = ({ data }) => {
 };
 
 
-// 2b. Info Slide (Generic fallback or for other slides)
+// 2b. Info Slide (Modified for Slide 7: Tighter Right Col)
 export const InfoSlide: React.FC<SlideProps> = ({ data }) => {
   return (
     <motion.div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 h-full items-center" initial="hidden" animate="show" variants={containerVariants}>
-      <div className="lg:col-span-7 space-y-8 lg:space-y-10">
+      <div className="lg:col-span-8 space-y-8 lg:space-y-10">
         <motion.p variants={itemVariants} className="text-xl md:text-3xl text-slate-700 font-light leading-relaxed tracking-wide">
           {data.content.description}
         </motion.p>
@@ -150,20 +150,21 @@ export const InfoSlide: React.FC<SlideProps> = ({ data }) => {
         )}
       </div>
 
-      <motion.div variants={containerVariants} className="lg:col-span-5 flex flex-col gap-4">
+      {/* Reduced right column size slightly (from col-span-5 to col-span-4) for visual breathability */}
+      <motion.div variants={containerVariants} className="lg:col-span-4 flex flex-col gap-4">
         {data.content.stats && data.content.stats.map((stat: any, idx: number) => {
             const Icon = stat.icon;
             return (
                 <motion.div variants={itemVariants} key={idx}>
-                    <GlassCard hover className="p-6 flex items-center justify-between">
+                    <GlassCard hover className="p-5 flex items-center justify-between">
                         <div className="flex flex-col">
                             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-2">{stat.label}</span>
-                            <span className="text-4xl md:text-5xl font-black text-slate-800 tracking-tighter">
+                            <span className="text-3xl md:text-4xl font-black text-slate-800 tracking-tighter">
                                 {stat.value}
                             </span>
                         </div>
-                        <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-fuchsia-50 to-purple-50 border border-white flex items-center justify-center text-purple-600 shadow-inner">
-                            <Icon size={28} className="drop-shadow-sm" />
+                        <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-fuchsia-50 to-purple-50 border border-white flex items-center justify-center text-purple-600 shadow-inner">
+                            <Icon size={24} className="drop-shadow-sm" />
                         </div>
                     </GlassCard>
                 </motion.div>
@@ -190,11 +191,11 @@ export const InfoSlide: React.FC<SlideProps> = ({ data }) => {
   );
 };
 
-// 3. Timeline Slide - Glowing Connections
+// 3. Timeline Slide - Fixed Overlap
 export const TimelineSlide: React.FC<SlideProps> = ({ data }) => {
   return (
     <motion.div className="h-full flex items-center" initial="hidden" animate="show" variants={containerVariants}>
-        <div className="w-full relative py-12">
+        <div className="w-full relative py-8 mt-12 md:mt-16">
             {/* Horizontal Line with Glow */}
             <motion.div variants={itemVariants} className="absolute top-1/2 left-0 w-full h-1 bg-gradient-to-r from-purple-200 via-fuchsia-400 to-purple-200 rounded-full -translate-y-1/2 hidden md:block shadow-[0_0_15px_rgba(217,70,239,0.4)] opacity-50" />
             
@@ -206,9 +207,9 @@ export const TimelineSlide: React.FC<SlideProps> = ({ data }) => {
                             <div className="w-3 h-3 bg-fuchsia-500 rounded-full"></div>
                         </div>
                         
-                        {/* Card */}
-                        <div className={`md:absolute md:left-0 md:w-full px-2 ${idx % 2 === 0 ? 'md:bottom-16' : 'md:top-16'}`}>
-                            <GlassCard hover className="p-6 h-full flex flex-col justify-between relative overflow-hidden">
+                        {/* Card - Adjusted positioning to avoid top overlap */}
+                        <div className={`md:absolute md:left-0 md:w-full px-2 ${idx % 2 === 0 ? 'md:bottom-14' : 'md:top-14'}`}>
+                            <GlassCard hover className="p-5 h-full flex flex-col justify-between relative overflow-hidden">
                                 {/* Decor */}
                                 <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-fuchsia-100 to-transparent rounded-bl-full opacity-50" />
                                 
@@ -219,8 +220,8 @@ export const TimelineSlide: React.FC<SlideProps> = ({ data }) => {
                                 <p className="text-slate-500 text-sm border-t border-purple-100/50 pt-3 font-medium leading-relaxed">{item.details}</p>
                             </GlassCard>
                             
-                            {/* Connecting Line - Gradient Fade */}
-                             <div className={`hidden md:block absolute left-1/2 w-px bg-gradient-to-b from-fuchsia-300 to-transparent -translate-x-1/2 h-16 
+                            {/* Connecting Line */}
+                             <div className={`hidden md:block absolute left-1/2 w-px bg-gradient-to-b from-fuchsia-300 to-transparent -translate-x-1/2 h-14 
                                 ${idx % 2 === 0 ? 'bottom-0 translate-y-full' : 'top-0 -translate-y-full rotate-180'}`} 
                              />
                         </div>
@@ -259,7 +260,7 @@ export const GridSlide: React.FC<SlideProps> = ({ data }) => {
   );
 };
 
-// 5. Table Slide (Granos) - Data Viz Glow
+// 5. Table Slide (Granos) - Centered and Balanced
 export const TableGranosSlide: React.FC<SlideProps> = () => {
   const months = ['Mes 1', 'Mes 2', 'Mes 3', 'Mes 4', 'Mes 5'];
   const areas = ['Insumos', 'Análisis', 'Consultoría', 'Logística', 'Intel. y Des. Com.'];
@@ -272,8 +273,8 @@ export const TableGranosSlide: React.FC<SlideProps> = () => {
   ];
 
   return (
-    <motion.div className="w-full" initial="hidden" animate="show" variants={containerVariants}>
-      <motion.div variants={itemVariants}>
+    <motion.div className="w-full flex flex-col items-center justify-center" initial="hidden" animate="show" variants={containerVariants}>
+      <motion.div variants={itemVariants} className="w-full max-w-5xl">
         <GlassCard className="overflow-hidden">
             <table className="w-full text-left border-collapse">
             <thead>
@@ -338,8 +339,8 @@ export const TableCapitalSlide: React.FC<SlideProps> = () => {
     ];
 
     return (
-        <motion.div className="w-full" initial="hidden" animate="show" variants={containerVariants}>
-            <motion.div variants={itemVariants}>
+        <motion.div className="w-full flex flex-col items-center justify-center" initial="hidden" animate="show" variants={containerVariants}>
+            <motion.div variants={itemVariants} className="w-full max-w-5xl">
                 <GlassCard className="overflow-hidden">
                     <div className="grid grid-cols-5 bg-purple-50/50 border-b border-purple-100 text-xs font-bold text-slate-400 uppercase tracking-widest">
                         <div className="p-3 md:p-5">Mes</div>
@@ -364,24 +365,27 @@ export const TableCapitalSlide: React.FC<SlideProps> = () => {
     );
 };
 
-// 7. New Mentoring Slide (Split 1/2)
+// 7. New Mentoring Slide (Adjusted size and added "Sugerencias")
 export const MentoringSplitSlide: React.FC<SlideProps> = ({ data }) => {
     return (
-        <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 h-full" initial="hidden" animate="show" variants={containerVariants}>
-            {/* Left Col: Lists of Mentors */}
-            <motion.div variants={containerVariants} className="space-y-4 md:space-y-6">
+        <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 h-full" initial="hidden" animate="show" variants={containerVariants}>
+            {/* Left Col: Lists of Mentors - Larger Box */}
+            <motion.div variants={containerVariants} className="space-y-6 flex flex-col justify-center">
                  {/* Granos */}
                  <motion.div variants={itemVariants}>
-                    <GlassCard hover className="p-6">
-                        <h3 className="text-lg md:text-xl font-bold text-slate-900 mb-4 md:mb-6 flex items-center gap-3">
-                            <span className="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.4)]"></span>
-                            Mentores Granos
-                        </h3>
-                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+                    <GlassCard hover className="p-8">
+                        <div className="flex justify-between items-start mb-6">
+                            <h3 className="text-xl md:text-2xl font-bold text-slate-900 flex items-center gap-3">
+                                <span className="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.4)]"></span>
+                                Mentores Granos
+                            </h3>
+                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest bg-white/50 px-2 py-1 rounded-md border border-white/60">Sugerencias</span>
+                        </div>
+                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             {data.content.granosMentors.map((m: string, i: number) => (
-                                <li key={i} className="flex items-center gap-3 text-slate-600 group">
-                                    <div className="h-1.5 w-1.5 rounded-full bg-slate-300 group-hover:bg-green-500 transition-colors"></div>
-                                    <span className="text-xs md:text-sm font-medium group-hover:text-slate-900 transition-colors">{m}</span>
+                                <li key={i} className="flex items-center gap-3 text-slate-700 group">
+                                    <div className="h-2 w-2 rounded-full bg-slate-300 group-hover:bg-green-500 transition-colors"></div>
+                                    <span className="text-base font-medium group-hover:text-slate-900 transition-colors">{m}</span>
                                 </li>
                             ))}
                         </ul>
@@ -390,16 +394,19 @@ export const MentoringSplitSlide: React.FC<SlideProps> = ({ data }) => {
 
                  {/* Capital */}
                  <motion.div variants={itemVariants}>
-                    <GlassCard hover className="p-6">
-                        <h3 className="text-lg md:text-xl font-bold text-slate-900 mb-4 md:mb-6 flex items-center gap-3">
-                            <span className="w-3 h-3 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.4)]"></span>
-                            Mentores fyoCapital
-                        </h3>
-                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+                    <GlassCard hover className="p-8">
+                        <div className="flex justify-between items-start mb-6">
+                            <h3 className="text-xl md:text-2xl font-bold text-slate-900 flex items-center gap-3">
+                                <span className="w-3 h-3 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.4)]"></span>
+                                Mentores fyoCapital
+                            </h3>
+                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest bg-white/50 px-2 py-1 rounded-md border border-white/60">Sugerencias</span>
+                        </div>
+                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             {data.content.capitalMentors.map((m: string, i: number) => (
-                                <li key={i} className="flex items-center gap-3 text-slate-600 group">
-                                    <div className="h-1.5 w-1.5 rounded-full bg-slate-300 group-hover:bg-blue-500 transition-colors"></div>
-                                    <span className="text-xs md:text-sm font-medium group-hover:text-slate-900 transition-colors">{m}</span>
+                                <li key={i} className="flex items-center gap-3 text-slate-700 group">
+                                    <div className="h-2 w-2 rounded-full bg-slate-300 group-hover:bg-blue-500 transition-colors"></div>
+                                    <span className="text-base font-medium group-hover:text-slate-900 transition-colors">{m}</span>
                                 </li>
                             ))}
                         </ul>
@@ -408,27 +415,27 @@ export const MentoringSplitSlide: React.FC<SlideProps> = ({ data }) => {
             </motion.div>
 
             {/* Right Col: Considerations */}
-            <motion.div variants={itemVariants}>
-                <div className="bg-gradient-to-br from-fuchsia-500 to-purple-600 p-6 md:p-8 rounded-3xl border border-white/20 flex flex-col justify-center h-full text-white relative overflow-hidden shadow-2xl">
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
+            <motion.div variants={itemVariants} className="h-full">
+                <div className="bg-gradient-to-br from-fuchsia-500 to-purple-600 p-8 md:p-12 rounded-3xl border border-white/20 flex flex-col justify-center h-full text-white relative overflow-hidden shadow-2xl">
+                    <div className="absolute top-0 right-0 w-80 h-80 bg-white/10 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
                     
                     <div className="relative z-10">
-                        <div className="mb-4 md:mb-6 flex items-center gap-4">
-                            <div className="p-3 bg-white/20 backdrop-blur-sm rounded-xl border border-white/30 text-white">
-                                <Users size={24} />
+                        <div className="mb-8 flex items-center gap-5">
+                            <div className="p-4 bg-white/20 backdrop-blur-sm rounded-2xl border border-white/30 text-white shadow-lg">
+                                <Users size={32} />
                             </div>
-                            <h3 className="text-xl md:text-2xl font-bold tracking-tight">Consideraciones del Rol</h3>
+                            <h3 className="text-2xl md:text-3xl font-bold tracking-tight">Consideraciones del Rol</h3>
                         </div>
                         
-                        <p className="text-purple-100 mb-6 md:mb-8 leading-relaxed text-base md:text-lg font-light">
+                        <p className="text-purple-100 mb-8 leading-relaxed text-lg font-light">
                             El rol del mentor es clave para facilitar la inmersión cultural y técnica del JP, brindando guía estratégica más allá del día a día.
                         </p>
 
-                        <div className="flex flex-col gap-3 md:gap-4">
+                        <div className="flex flex-col gap-5">
                             {data.content.considerations.map((item: string, i: number) => (
-                                <div key={i} className="p-3 md:p-4 bg-white/10 rounded-xl border border-white/10 flex items-center gap-3 md:gap-4 hover:bg-white/20 transition-colors">
-                                    <CheckCircle2 size={18} className="text-fuchsia-200" />
-                                    <span className="font-medium text-sm md:text-base">{item}</span>
+                                <div key={i} className="p-4 bg-white/10 rounded-xl border border-white/10 flex items-center gap-4 hover:bg-white/20 transition-colors">
+                                    <CheckCircle2 size={24} className="text-fuchsia-200" />
+                                    <span className="font-medium text-lg">{item}</span>
                                 </div>
                             ))}
                         </div>
@@ -439,59 +446,71 @@ export const MentoringSplitSlide: React.FC<SlideProps> = ({ data }) => {
     );
 };
 
-// 8. New Academy Slide (Split 2/2)
+// 8. New Academy Slide - COMPLETE REDESIGN (Vertical Layout, Clean framing)
 export const AcademySplitSlide: React.FC<SlideProps> = ({ data }) => {
     // If using new data structure from constants, prioritize it. 
     // Fallback to manual list if not present, but based on request we use the new content.
     const topics = data.content.topics || ['Circuitos Administrativos', 'Herramientas de Gestión'];
 
     return (
-        <motion.div className="flex flex-col h-full gap-8" initial="hidden" animate="show" variants={containerVariants}>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <motion.div className="flex flex-col h-full gap-8 md:gap-10 justify-center max-w-6xl mx-auto" initial="hidden" animate="show" variants={containerVariants}>
+            
+            {/* Top Cards Row */}
+            <motion.div variants={containerVariants} className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <motion.div variants={itemVariants}>
-                    <GlassCard hover className="p-6 py-8 flex flex-col items-center text-center">
-                        <div className="mb-4 p-3 bg-fuchsia-50 rounded-2xl text-fuchsia-600">
-                             <Calendar size={24} />
+                    <GlassCard hover className="p-6 flex flex-row md:flex-col items-center gap-4 text-center md:justify-center">
+                        <div className="p-3 bg-fuchsia-50 rounded-2xl text-fuchsia-600 shrink-0">
+                             <Calendar size={28} />
                         </div>
-                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Cuándo</span>
-                        <span className="text-xl font-bold text-slate-900">Viernes 14-18hs</span>
+                        <div className="text-left md:text-center">
+                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1">Cuándo</span>
+                            <span className="text-xl md:text-2xl font-bold text-slate-900">Viernes 14-18hs</span>
+                        </div>
                     </GlassCard>
                 </motion.div>
                 <motion.div variants={itemVariants}>
-                    <GlassCard hover className="p-6 py-8 flex flex-col items-center text-center">
-                        <div className="mb-4 p-3 bg-purple-50 rounded-2xl text-purple-600">
-                             <GraduationCap size={24} />
+                    <GlassCard hover className="p-6 flex flex-row md:flex-col items-center gap-4 text-center md:justify-center">
+                        <div className="p-3 bg-purple-50 rounded-2xl text-purple-600 shrink-0">
+                             <GraduationCap size={28} />
                         </div>
-                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Frecuencia</span>
-                        <span className="text-xl font-bold text-slate-900">2 Módulos / Sem</span>
+                        <div className="text-left md:text-center">
+                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1">Frecuencia</span>
+                            <span className="text-xl md:text-2xl font-bold text-slate-900">2 Módulos / Sem</span>
+                        </div>
                     </GlassCard>
                 </motion.div>
                 <motion.div variants={itemVariants}>
-                    <GlassCard hover className="p-6 py-8 flex flex-col items-center text-center">
-                        <div className="mb-4 p-3 bg-indigo-50 rounded-2xl text-indigo-600">
-                             <BarChart3 size={24} />
+                    <GlassCard hover className="p-6 flex flex-row md:flex-col items-center gap-4 text-center md:justify-center">
+                        <div className="p-3 bg-indigo-50 rounded-2xl text-indigo-600 shrink-0">
+                             <BarChart3 size={28} />
                         </div>
-                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Evaluación</span>
-                        <span className="text-xl font-bold text-slate-900">Examen Mensual</span>
+                        <div className="text-left md:text-center">
+                             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1">Evaluación</span>
+                             <span className="text-xl md:text-2xl font-bold text-slate-900">Examen Mensual</span>
+                        </div>
                     </GlassCard>
                 </motion.div>
-            </div>
+            </motion.div>
 
+            {/* Bottom Content Area */}
             <motion.div variants={itemVariants} className="flex-1">
-                <GlassCard className="h-full p-10 flex flex-col justify-center relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-bl from-purple-100/50 to-transparent rounded-full -mr-32 -mt-32 pointer-events-none blur-3xl" />
-                    
-                    <div className="relative z-10 max-w-5xl mx-auto w-full">
-                        <h3 className="text-3xl font-bold text-slate-900 mb-6 tracking-tight">Contenidos del Programa</h3>
-                        <p className="text-lg text-slate-600 leading-relaxed mb-10 font-light max-w-3xl">
-                            BackOffice Academy es un espacio de formación técnica intensiva diseñado para nivelar conocimientos y profundizar en la operatoria del negocio, combinando teoría con casos prácticos reales.
-                        </p>
+                <GlassCard className="h-full p-8 md:p-10 relative overflow-hidden flex flex-col justify-center">
+                     {/* Decor */}
+                    <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-gradient-to-bl from-purple-100/60 to-transparent rounded-full -mr-20 -mt-20 pointer-events-none blur-3xl" />
+
+                    <div className="relative z-10 w-full">
+                        <div className="mb-8 border-b border-purple-100 pb-6">
+                            <h3 className="text-3xl font-bold text-slate-900 mb-4 tracking-tight">Contenidos del Programa</h3>
+                             <p className="text-xl text-slate-600 leading-relaxed font-light max-w-4xl">
+                                Espacio de formación técnica intensiva diseñado para nivelar conocimientos y profundizar en la operatoria, combinando teoría con casos prácticos reales.
+                            </p>
+                        </div>
                         
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                             {topics.map((item: string, i: number) => (
-                                <div key={i} className="flex items-center gap-3 p-4 rounded-xl border border-purple-50 bg-white/40 hover:bg-white/70 transition-colors hover:border-fuchsia-200">
-                                    <div className="w-2 h-2 rounded-full bg-fuchsia-500 shadow-[0_0_6px_rgba(217,70,239,0.5)] shrink-0"></div>
-                                    <span className="text-slate-800 font-medium text-sm">{item}</span>
+                                <div key={i} className="flex items-center gap-3 p-4 rounded-xl border border-purple-50 bg-white/50 hover:bg-white hover:scale-[1.02] transition-all hover:border-fuchsia-200 shadow-sm">
+                                    <div className="w-2.5 h-2.5 rounded-full bg-fuchsia-500 shadow-[0_0_6px_rgba(217,70,239,0.5)] shrink-0"></div>
+                                    <span className="text-slate-800 font-bold text-sm md:text-base">{item}</span>
                                 </div>
                             ))}
                         </div>
