@@ -15,13 +15,16 @@ import {
 
 const App: React.FC = () => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+  const [direction, setDirection] = useState(0); // -1 for prev, 1 for next
   const [isPrinting, setIsPrinting] = useState(false);
 
   const nextSlide = useCallback(() => {
+    setDirection(1);
     setCurrentSlideIndex((prev) => Math.min(prev + 1, SLIDES.length - 1));
   }, []);
 
   const prevSlide = useCallback(() => {
+    setDirection(-1);
     setCurrentSlideIndex((prev) => Math.max(prev - 1, 0));
   }, []);
 
@@ -78,11 +81,11 @@ const App: React.FC = () => {
   // If printing, render ALL slides in a list
   if (isPrinting) {
       return (
-          <div className="w-full bg-white text-slate-900">
+          <div className="w-full bg-[#f8f7ff] text-slate-900">
               {SLIDES.map((slide, index) => (
-                  <div key={slide.id} className="print-slide w-full h-screen relative overflow-hidden page-break-after-always">
+                  <div key={slide.id} className="print-slide w-full h-screen relative overflow-hidden page-break-after-always bg-[#f8f7ff]">
                       <div className="absolute top-4 left-8 text-xs text-slate-400 font-mono">
-                          {index + 1} / {SLIDES.length} - Programa JP 2025
+                          {index + 1} / {SLIDES.length} - Programa JP 2026
                       </div>
                       <div className="p-12 h-full flex flex-col justify-center">
                          {slide.title && slide.type !== 'cover' && slide.type !== 'closing' && (
@@ -91,7 +94,7 @@ const App: React.FC = () => {
                                 {slide.subtitle && <p className="text-slate-500 text-lg">{slide.subtitle}</p>}
                             </div>
                          )}
-                         <div className="flex-1">
+                         <div className="flex-1 scale-[0.9] origin-center">
                             {renderSlide(slide)}
                          </div>
                       </div>
@@ -110,6 +113,7 @@ const App: React.FC = () => {
       onPrev={prevSlide}
       title={currentSlideData.type !== 'cover' && currentSlideData.type !== 'closing' ? currentSlideData.title : undefined}
       subtitle={currentSlideData.type !== 'cover' && currentSlideData.type !== 'closing' ? currentSlideData.subtitle : undefined}
+      direction={direction}
     >
       {renderSlide(currentSlideData)}
     </SlideLayout>

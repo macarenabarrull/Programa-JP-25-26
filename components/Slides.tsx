@@ -1,7 +1,8 @@
 import React from 'react';
 import { SlideData, SLIDES } from '../constants';
-import { CheckCircle2, ArrowRight, Users, Target, BookOpen, TrendingUp, Calendar, GraduationCap, Clock, Download, FileText, Presentation, Mail } from 'lucide-react';
+import { CheckCircle2, ArrowRight, Users, Target, BookOpen, TrendingUp, Calendar, GraduationCap, Clock, Download, FileText, Presentation, Mail, BarChart3, PieChart } from 'lucide-react';
 import pptxgen from "pptxgenjs";
+import { motion } from "framer-motion";
 
 interface SlideProps {
   data: SlideData;
@@ -9,167 +10,209 @@ interface SlideProps {
   onDownloadPPTX?: () => void;
 }
 
-// 1. Cover Slide
+// --- Animation Variants ---
+const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.1,
+            delayChildren: 0.1
+        }
+    }
+};
+
+const itemVariants = {
+    hidden: { opacity: 0, y: 30, filter: 'blur(5px)' },
+    show: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { type: "spring", stiffness: 200, damping: 20 } }
+};
+
+// --- Reusable "Deep Glass" Card Component ---
+const GlassCard = ({ children, className = "", hover = false }: { children?: React.ReactNode, className?: string, hover?: boolean }) => (
+    <div className={`
+        bg-white/30 backdrop-blur-xl backdrop-saturate-150 
+        border border-white/40 rounded-2xl md:rounded-3xl
+        shadow-[0_8px_32px_0_rgba(31,38,135,0.05)]
+        ${hover ? 'transition-all duration-300 hover:bg-white/40 hover:scale-[1.02] hover:shadow-[0_15px_40px_-10px_rgba(192,132,252,0.2)] hover:border-white/60' : ''}
+        ${className}
+    `}>
+        {children}
+    </div>
+);
+
+// 1. Cover Slide - Updated for "Aurora" impact
 export const CoverSlide: React.FC<SlideProps> = ({ data }) => {
   return (
-    <div className="flex flex-col justify-center items-start h-full pl-0 md:pl-10 relative">
-      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1/3 h-2/3 bg-gradient-to-b from-fuchsia-400/20 to-purple-400/20 blur-3xl rounded-full opacity-50 pointer-events-none" />
+    <motion.div 
+        className="flex flex-col justify-center items-start h-full pl-0 md:pl-8 relative z-10"
+        initial="hidden" animate="show" variants={containerVariants}
+    >
+      <motion.div variants={itemVariants} className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full border border-fuchsia-200/50 bg-white/40 backdrop-blur-md text-fuchsia-700 text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase mb-8 shadow-sm">
+        <span className="relative flex h-2 w-2">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-fuchsia-400 opacity-75"></span>
+          <span className="relative inline-flex rounded-full h-2 w-2 bg-fuchsia-500"></span>
+        </span>
+        @fyoonline
+      </motion.div>
       
-      <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-fuchsia-500/30 bg-white/50 text-fuchsia-600 text-xs font-bold tracking-widest uppercase mb-8 shadow-sm backdrop-blur-md">
-        <span className="w-2 h-2 rounded-full bg-fuchsia-500 animate-pulse"></span>
-        Talent Program
-      </div>
-      
-      <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-slate-900 mb-6 leading-[0.9]">
+      <motion.h1 variants={itemVariants} className="text-6xl md:text-8xl lg:text-[7rem] font-black tracking-tighter text-slate-900 mb-6 leading-[0.85] drop-shadow-sm">
         PROGRAMA<br />
-        <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-600 to-purple-600">JP 2026</span>
-        <span className="text-purple-300">_</span>
-      </h1>
+        <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-600 via-purple-600 to-indigo-600 animate-gradient-x">JP 2026</span>
+        <span className="text-fuchsia-400">.</span>
+      </motion.h1>
       
-      <p className="text-xl md:text-2xl lg:text-3xl text-slate-600 font-light max-w-2xl border-l-4 border-fuchsia-400 pl-6 my-6 md:my-8">
+      <motion.p variants={itemVariants} className="text-xl md:text-2xl lg:text-3xl text-slate-600 font-light max-w-2xl border-l-4 border-fuchsia-400/50 pl-6 my-6 md:my-8 leading-normal tracking-wide">
         {data.subtitle}
-      </p>
+      </motion.p>
       
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 mt-6 md:mt-8 w-full max-w-3xl">
+      <motion.div variants={containerVariants} className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 mt-6 md:mt-8 w-full max-w-3xl">
         {data.content.tags.map((tag: string, idx: number) => (
-          <div key={idx} className="flex items-center gap-3 p-3 md:p-4 bg-white/60 border border-purple-100 rounded-lg group hover:border-fuchsia-400 hover:bg-white transition-all shadow-sm">
-            <div className="h-1.5 w-1.5 rounded-full bg-purple-400 group-hover:bg-fuchsia-500 transition-colors" />
-            <span className="text-slate-700 font-medium group-hover:text-slate-900 text-sm md:text-base">{tag}</span>
-          </div>
+          <motion.div variants={itemVariants} key={idx} className="flex items-center gap-3 p-4 bg-white/40 border border-white/50 rounded-xl hover:bg-white/60 transition-all shadow-sm backdrop-blur-sm group cursor-default">
+            <div className="h-2 w-2 rounded-full bg-purple-300 group-hover:bg-fuchsia-500 transition-colors shadow-[0_0_8px_rgba(192,132,252,0.4)]" />
+            <span className="text-slate-700 font-medium group-hover:text-slate-900 text-sm md:text-base tracking-wide">{tag}</span>
+          </motion.div>
         ))}
-      </div>
-
-       <div className="mt-8 md:mt-12 flex items-center gap-4 text-sm font-mono text-purple-900/40">
-         <span>fyo.com</span>
-         <span className="w-px h-3 bg-purple-300"></span>
-         <span>@somosfyo</span>
-       </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 
-// 2. Info Slide
+// 2. Info Slide - Deep Glass Cards
 export const InfoSlide: React.FC<SlideProps> = ({ data }) => {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 h-full items-center">
-      <div className="lg:col-span-7 space-y-6 lg:space-y-8">
-        <p className="text-xl md:text-2xl text-slate-700 font-light leading-relaxed">
+    <motion.div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 h-full items-center" initial="hidden" animate="show" variants={containerVariants}>
+      <div className="lg:col-span-7 space-y-8 lg:space-y-10">
+        <motion.p variants={itemVariants} className="text-xl md:text-3xl text-slate-700 font-light leading-relaxed tracking-wide">
           {data.content.description}
-        </p>
+        </motion.p>
         
         {data.content.bullets && (
-            <div className="space-y-3 md:space-y-4 mt-6 lg:mt-8">
+            <motion.div variants={containerVariants} className="space-y-4 mt-8">
                 {data.content.bullets.map((item: string, idx: number) => (
-                    <div key={idx} className="flex items-start gap-3 md:gap-4 p-3 md:p-4 rounded-xl hover:bg-white/40 transition-colors border border-transparent hover:border-purple-200">
-                        <CheckCircle2 className="text-fuchsia-500 shrink-0 mt-1" size={24} />
-                        <span className="text-slate-700 text-base md:text-lg">{item}</span>
-                    </div>
+                    <motion.div variants={itemVariants} key={idx} className="flex items-start gap-4 p-4 rounded-2xl hover:bg-white/40 transition-colors border border-transparent hover:border-white/50 group">
+                        <div className="mt-1 p-1 bg-fuchsia-50 rounded-full group-hover:bg-fuchsia-100 transition-colors">
+                             <CheckCircle2 className="text-fuchsia-500 shrink-0" size={20} />
+                        </div>
+                        <span className="text-slate-600 text-lg group-hover:text-slate-900 transition-colors">{item}</span>
+                    </motion.div>
                 ))}
-            </div>
+            </motion.div>
         )}
       </div>
 
-      <div className="lg:col-span-5 flex flex-col gap-3 md:gap-4">
+      <motion.div variants={containerVariants} className="lg:col-span-5 flex flex-col gap-4">
         {data.content.stats && data.content.stats.map((stat: any, idx: number) => {
             const Icon = stat.icon;
             return (
-                <div key={idx} className="p-5 md:p-6 bg-white/60 border border-purple-100 rounded-2xl flex items-center justify-between hover:border-fuchsia-300 transition-all shadow-sm group backdrop-blur-md">
-                    <div className="flex flex-col">
-                        <span className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">{stat.label}</span>
-                        <span className="text-3xl md:text-4xl font-black text-slate-900 group-hover:text-fuchsia-600 transition-colors leading-none">
-                            {stat.value}
-                        </span>
-                    </div>
-                    <div className="h-10 w-10 md:h-12 md:w-12 rounded-full bg-purple-50 flex items-center justify-center text-purple-600 group-hover:text-white group-hover:bg-fuchsia-500 transition-all shrink-0 ml-4">
-                        <Icon size={24} />
-                    </div>
-                </div>
+                <motion.div variants={itemVariants} key={idx}>
+                    <GlassCard hover className="p-6 flex items-center justify-between">
+                        <div className="flex flex-col">
+                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-2">{stat.label}</span>
+                            <span className="text-4xl md:text-5xl font-black text-slate-800 tracking-tighter">
+                                {stat.value}
+                            </span>
+                        </div>
+                        <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-fuchsia-50 to-purple-50 border border-white flex items-center justify-center text-purple-600 shadow-inner">
+                            <Icon size={28} className="drop-shadow-sm" />
+                        </div>
+                    </GlassCard>
+                </motion.div>
             )
         })}
 
         {data.content.valueProp && (
-             <div className="grid grid-cols-2 gap-3 md:gap-4">
+             <motion.div variants={containerVariants} className="grid grid-cols-2 gap-4">
                 {data.content.valueProp.map((vp: any, idx: number) => (
-                    <div key={idx} className="p-4 md:p-5 rounded-2xl bg-white/60 border border-purple-100 flex flex-col gap-2 md:gap-3 hover:-translate-y-1 transition-transform duration-300 backdrop-blur-md shadow-sm">
-                         <div className="text-fuchsia-500 font-bold text-lg">0{idx + 1}</div>
-                         <div>
-                             <span className="text-slate-900 font-bold block mb-1 text-sm md:text-base">{vp.title}</span>
-                             <span className="text-slate-600 text-xs md:text-sm leading-snug">{vp.text}</span>
-                         </div>
-                    </div>
+                    <motion.div variants={itemVariants} key={idx}>
+                        <GlassCard hover className="p-5 h-full flex flex-col justify-between">
+                             <div className="text-fuchsia-500/30 font-black text-4xl -mb-2">0{idx + 1}</div>
+                             <div>
+                                 <span className="text-slate-900 font-bold block mb-1 text-base">{vp.title}</span>
+                                 <span className="text-slate-500 text-sm leading-snug">{vp.text}</span>
+                             </div>
+                        </GlassCard>
+                    </motion.div>
                 ))}
-             </div>
+             </motion.div>
         )}
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 
-// 3. Timeline Slide (Updated for visibility)
+// 3. Timeline Slide - Glowing Connections
 export const TimelineSlide: React.FC<SlideProps> = ({ data }) => {
   return (
-    <div className="h-full flex items-center">
-        <div className="w-full relative">
-            {/* Horizontal Line (Desktop) - Made thicker and gradient */}
-            <div className="absolute top-1/2 left-0 w-full h-1.5 bg-gradient-to-r from-purple-200 via-fuchsia-500 to-purple-200 rounded-full -translate-y-1/2 hidden md:block shadow-sm" />
+    <motion.div className="h-full flex items-center" initial="hidden" animate="show" variants={containerVariants}>
+        <div className="w-full relative py-12">
+            {/* Horizontal Line with Glow */}
+            <motion.div variants={itemVariants} className="absolute top-1/2 left-0 w-full h-1 bg-gradient-to-r from-purple-200 via-fuchsia-400 to-purple-200 rounded-full -translate-y-1/2 hidden md:block shadow-[0_0_15px_rgba(217,70,239,0.4)] opacity-50" />
             
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
                 {data.content.map((item: any, idx: number) => (
-                    <div key={idx} className="relative group">
-                        {/* Dot - Larger and more prominent */}
-                        <div className="hidden md:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-white border-[5px] border-fuchsia-500 z-10 group-hover:scale-125 transition-transform shadow-[0_0_0_4px_rgba(240,171,252,0.4)]"></div>
+                    <motion.div variants={itemVariants} key={idx} className="relative group">
+                        {/* Dot - Glowing Orb */}
+                        <div className="hidden md:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white border border-fuchsia-100 items-center justify-center z-10 shadow-[0_0_20px_rgba(217,70,239,0.3)] transition-transform group-hover:scale-110">
+                            <div className="w-3 h-3 bg-fuchsia-500 rounded-full"></div>
+                        </div>
                         
                         {/* Card */}
-                        <div className={`md:absolute md:left-0 md:w-full p-2 md:p-4 ${idx % 2 === 0 ? 'md:bottom-12 md:pb-2' : 'md:top-12 md:pt-2'}`}>
-                            <div className="p-4 md:p-5 bg-white border-2 border-purple-100 rounded-2xl hover:border-fuchsia-400 transition-colors h-full flex flex-col justify-between group-hover:shadow-[0_10px_30px_-10px_rgba(192,132,252,0.3)] shadow-sm">
+                        <div className={`md:absolute md:left-0 md:w-full px-2 ${idx % 2 === 0 ? 'md:bottom-16' : 'md:top-16'}`}>
+                            <GlassCard hover className="p-6 h-full flex flex-col justify-between relative overflow-hidden">
+                                {/* Decor */}
+                                <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-fuchsia-100 to-transparent rounded-bl-full opacity-50" />
+                                
                                 <div>
-                                    <span className="text-fuchsia-600 font-mono text-xs font-bold uppercase mb-2 block">{item.month}</span>
-                                    <h3 className="text-base md:text-lg font-bold text-slate-900 mb-2 leading-tight">{item.title}</h3>
+                                    <span className="inline-block px-2 py-1 bg-fuchsia-50 rounded-md text-fuchsia-700 font-mono text-xs font-bold uppercase mb-3 border border-fuchsia-100">{item.month}</span>
+                                    <h3 className="text-lg font-bold text-slate-800 mb-2 leading-tight tracking-tight">{item.title}</h3>
                                 </div>
-                                <p className="text-slate-600 text-sm mt-2 border-t border-purple-100 pt-2 font-medium">{item.details}</p>
-                            </div>
+                                <p className="text-slate-500 text-sm border-t border-purple-100/50 pt-3 font-medium leading-relaxed">{item.details}</p>
+                            </GlassCard>
                             
-                            {/* Connecting Line - Thicker */}
-                             <div className={`hidden md:block absolute left-1/2 w-0.5 bg-fuchsia-300 -translate-x-1/2 h-10 
-                                ${idx % 2 === 0 ? 'bottom-2 translate-y-full' : 'top-2 -translate-y-full'}`} 
+                            {/* Connecting Line - Gradient Fade */}
+                             <div className={`hidden md:block absolute left-1/2 w-px bg-gradient-to-b from-fuchsia-300 to-transparent -translate-x-1/2 h-16 
+                                ${idx % 2 === 0 ? 'bottom-0 translate-y-full' : 'top-0 -translate-y-full rotate-180'}`} 
                              />
                         </div>
-                    </div>
+                    </motion.div>
                 ))}
             </div>
         </div>
-    </div>
+    </motion.div>
   );
 };
 
-// 4. Grid Slide
+// 4. Grid Slide - Refined Glass
 export const GridSlide: React.FC<SlideProps> = ({ data }) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+    <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8" initial="hidden" animate="show" variants={containerVariants}>
       {data.content.items.map((item: any, idx: number) => {
         const Icon = item.icon;
         return (
-            <div key={idx} className="relative p-6 md:p-8 bg-white/60 rounded-3xl border border-purple-100 overflow-hidden group hover:border-fuchsia-400 transition-colors backdrop-blur-md shadow-sm">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-fuchsia-100 rounded-bl-full -mr-8 -mt-8 transition-all group-hover:bg-fuchsia-200 blur-2xl" />
-                
-                <div className="relative z-10">
-                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-purple-50 border border-purple-100 flex items-center justify-center mb-4 md:mb-6 group-hover:bg-fuchsia-600 group-hover:border-fuchsia-500 group-hover:text-white transition-all text-purple-600">
-                        <Icon size={24} />
+            <motion.div variants={itemVariants} key={idx}>
+                <GlassCard hover className="relative p-8 overflow-hidden group h-full">
+                    {/* Background Blob Effect on Hover */}
+                    <div className="absolute -right-10 -top-10 w-40 h-40 bg-fuchsia-100/50 rounded-full blur-3xl transition-all duration-500 group-hover:bg-fuchsia-200/60 group-hover:scale-150" />
+                    
+                    <div className="relative z-10 flex flex-col h-full items-start">
+                        <div className="w-14 h-14 rounded-2xl bg-white/80 border border-purple-50 flex items-center justify-center mb-6 text-purple-600 shadow-sm group-hover:scale-110 transition-transform duration-300">
+                            <Icon size={28} className="drop-shadow-sm" />
+                        </div>
+                        <h3 className="text-2xl font-bold text-slate-900 mb-3 tracking-tight">{item.title}</h3>
+                        <p className="text-slate-600 text-base leading-relaxed">{item.desc}</p>
                     </div>
-                    <h3 className="text-xl md:text-2xl font-bold text-slate-900 mb-2 md:mb-3">{item.title}</h3>
-                    <p className="text-slate-600 text-sm md:text-base leading-relaxed group-hover:text-slate-800 transition-colors">{item.desc}</p>
-                </div>
-            </div>
+                </GlassCard>
+            </motion.div>
         );
       })}
-    </div>
+    </motion.div>
   );
 };
 
-// 5. Table Slide (Granos)
+// 5. Table Slide (Granos) - Data Viz Glow
 export const TableGranosSlide: React.FC<SlideProps> = () => {
   const months = ['Mes 1', 'Mes 2', 'Mes 3', 'Mes 4', 'Mes 5'];
-  const areas = ['Insumos', 'Análisis', 'Consultoría', 'Logística', 'Intel. Com.'];
+  const areas = ['Insumos', 'Análisis', 'Consultoría', 'Logística', 'Intel. y Des. Com.'];
   const matrix = [
     [1, 2, 3, 4, null],
     [null, 1, 2, 3, 4],
@@ -179,57 +222,59 @@ export const TableGranosSlide: React.FC<SlideProps> = () => {
   ];
 
   return (
-    <div className="w-full">
-      <div className="overflow-hidden rounded-2xl border border-purple-100 bg-white/60 backdrop-blur-md shadow-sm">
-        <table className="w-full text-left border-collapse">
-          <thead>
-            <tr>
-              <th className="p-3 md:p-5 bg-purple-50 text-slate-500 font-medium text-xs md:text-sm border-b border-purple-100 uppercase tracking-wider">Período</th>
-              {areas.map((area, i) => (
-                  <th key={i} className="p-3 md:p-5 bg-purple-50/50 text-slate-800 font-bold text-xs md:text-sm border-b border-purple-100 border-l border-purple-100 text-center">{area}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {months.map((month, rowIndex) => (
-              <tr key={rowIndex} className="hover:bg-white transition-colors group">
-                <td className="p-3 md:p-5 font-mono text-slate-600 text-xs md:text-sm border-b border-purple-100 bg-purple-50/30 group-hover:text-fuchsia-600">{month}</td>
-                {matrix[rowIndex].map((group, colIndex) => (
-                  <td key={colIndex} className="p-2 border-b border-purple-100 border-l border-purple-100/50 text-center">
-                    {group ? (
-                      <div className={`mx-auto w-8 h-8 md:w-12 md:h-10 rounded-md flex items-center justify-center text-xs md:text-sm font-bold shadow-sm transition-all hover:scale-105 text-white
-                        ${group === 1 ? 'bg-indigo-500' : ''}
-                        ${group === 2 ? 'bg-fuchsia-500' : ''}
-                        ${group === 3 ? 'bg-purple-600' : ''}
-                        ${group === 4 ? 'bg-rose-500' : ''}
-                      `}>
-                        G{group}
-                      </div>
-                    ) : (
-                      <span className="text-purple-200 text-xl">·</span>
-                    )}
-                  </td>
+    <motion.div className="w-full" initial="hidden" animate="show" variants={containerVariants}>
+      <motion.div variants={itemVariants}>
+        <GlassCard className="overflow-hidden">
+            <table className="w-full text-left border-collapse">
+            <thead>
+                <tr>
+                <th className="p-5 bg-purple-50/50 text-slate-400 font-bold text-xs uppercase tracking-widest border-b border-purple-100">Período</th>
+                {areas.map((area, i) => (
+                    <th key={i} className="p-5 text-slate-700 font-bold text-sm border-b border-purple-100 border-l border-purple-100/50 text-center tracking-tight">{area}</th>
                 ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+                </tr>
+            </thead>
+            <tbody>
+                {months.map((month, rowIndex) => (
+                <tr key={rowIndex} className="hover:bg-white/30 transition-colors group">
+                    <td className="p-5 font-mono text-slate-500 text-sm border-b border-purple-50 bg-purple-50/20 group-hover:text-fuchsia-600 font-medium">{month}</td>
+                    {matrix[rowIndex].map((group, colIndex) => (
+                    <td key={colIndex} className="p-3 border-b border-purple-50 border-l border-purple-50 text-center relative">
+                        {group ? (
+                        <div className={`mx-auto w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold shadow-lg transition-all hover:scale-110 hover:-translate-y-1 text-white border border-white/20
+                            ${group === 1 ? 'bg-indigo-500 shadow-indigo-500/30' : ''}
+                            ${group === 2 ? 'bg-fuchsia-500 shadow-fuchsia-500/30' : ''}
+                            ${group === 3 ? 'bg-purple-600 shadow-purple-600/30' : ''}
+                            ${group === 4 ? 'bg-rose-500 shadow-rose-500/30' : ''}
+                        `}>
+                            G{group}
+                        </div>
+                        ) : (
+                        <div className="w-1.5 h-1.5 bg-purple-100 rounded-full mx-auto" />
+                        )}
+                    </td>
+                    ))}
+                </tr>
+                ))}
+            </tbody>
+            </table>
+        </GlassCard>
+      </motion.div>
       
-      <div className="mt-6 flex flex-wrap gap-4 md:gap-6 justify-center">
+      <motion.div variants={itemVariants} className="mt-8 flex flex-wrap gap-6 justify-center">
           <LegendItem color="bg-indigo-500" label="Grupo 1 (JP 1-2)" />
           <LegendItem color="bg-fuchsia-500" label="Grupo 2 (JP 3-4)" />
           <LegendItem color="bg-purple-600" label="Grupo 3 (JP 5-6)" />
           <LegendItem color="bg-rose-500" label="Grupo 4 (JP 7-8)" />
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 
 const LegendItem = ({ color, label }: { color: string, label: string }) => (
-    <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/60 border border-purple-100">
-        <span className={`w-2.5 h-2.5 rounded-full ${color}`}></span>
-        <span className="text-slate-600 text-xs font-medium">{label}</span>
+    <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-white/40 border border-white/50 shadow-sm backdrop-blur-sm">
+        <span className={`w-3 h-3 rounded-full ${color} shadow-[0_0_8px_currentColor]`}></span>
+        <span className="text-slate-600 text-xs font-bold uppercase tracking-wide">{label}</span>
     </div>
 )
 
@@ -243,141 +288,167 @@ export const TableCapitalSlide: React.FC<SlideProps> = () => {
     ];
 
     return (
-        <div className="w-full">
-            <div className="overflow-hidden rounded-2xl border border-purple-100 bg-white/60 backdrop-blur-md shadow-sm">
-                <div className="grid grid-cols-5 bg-purple-50 border-b border-purple-100 text-xs font-bold text-slate-500 uppercase tracking-wider">
-                    <div className="p-3 md:p-5">Mes</div>
-                    <div className="p-3 md:p-5 text-fuchsia-600">JP 1</div>
-                    <div className="p-3 md:p-5 text-fuchsia-600">JP 2</div>
-                    <div className="p-3 md:p-5 text-fuchsia-600">JP 3</div>
-                    <div className="p-3 md:p-5 text-fuchsia-600">JP 4</div>
-                </div>
-                {data.map((row, idx) => (
-                    <div key={idx} className="grid grid-cols-5 border-b border-purple-100 hover:bg-white transition-colors text-xs md:text-sm group">
-                        <div className="p-3 md:p-5 font-mono text-slate-600 flex items-center bg-purple-50/30 group-hover:text-fuchsia-700">{row.month}</div>
-                        <div className="p-3 md:p-5 text-slate-700 flex items-center border-l border-purple-100">{row.jp1}</div>
-                        <div className="p-3 md:p-5 text-slate-700 flex items-center border-l border-purple-100">{row.jp2}</div>
-                        <div className="p-3 md:p-5 text-slate-700 flex items-center border-l border-purple-100">{row.jp3}</div>
-                        <div className="p-3 md:p-5 text-slate-700 flex items-center border-l border-purple-100">{row.jp4}</div>
+        <motion.div className="w-full" initial="hidden" animate="show" variants={containerVariants}>
+            <motion.div variants={itemVariants}>
+                <GlassCard className="overflow-hidden">
+                    <div className="grid grid-cols-5 bg-purple-50/50 border-b border-purple-100 text-xs font-bold text-slate-400 uppercase tracking-widest">
+                        <div className="p-5">Mes</div>
+                        <div className="p-5 text-fuchsia-600 text-center">JP 1</div>
+                        <div className="p-5 text-fuchsia-600 text-center">JP 2</div>
+                        <div className="p-5 text-fuchsia-600 text-center">JP 3</div>
+                        <div className="p-5 text-fuchsia-600 text-center">JP 4</div>
                     </div>
-                ))}
-            </div>
-            <p className="mt-4 text-center text-slate-400 text-sm">Rotación Full-Time mensual por área</p>
-        </div>
+                    {data.map((row, idx) => (
+                        <div key={idx} className="grid grid-cols-5 border-b border-purple-50 hover:bg-white/30 transition-colors text-sm group">
+                            <div className="p-5 font-mono text-slate-500 flex items-center bg-purple-50/20 font-bold group-hover:text-fuchsia-700">{row.month}</div>
+                            <div className="p-4 text-slate-700 flex items-center justify-center border-l border-purple-50">{row.jp1}</div>
+                            <div className="p-4 text-slate-700 flex items-center justify-center border-l border-purple-50">{row.jp2}</div>
+                            <div className="p-4 text-slate-700 flex items-center justify-center border-l border-purple-50">{row.jp3}</div>
+                            <div className="p-4 text-slate-700 flex items-center justify-center border-l border-purple-50">{row.jp4}</div>
+                        </div>
+                    ))}
+                </GlassCard>
+            </motion.div>
+            <motion.p variants={itemVariants} className="mt-6 text-center text-slate-400 text-sm font-medium tracking-wide">Rotación Full-Time mensual por área</motion.p>
+        </motion.div>
     );
 };
 
 // 7. New Mentoring Slide (Split 1/2)
 export const MentoringSplitSlide: React.FC<SlideProps> = ({ data }) => {
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 h-full">
+        <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-8 h-full" initial="hidden" animate="show" variants={containerVariants}>
             {/* Left Col: Lists of Mentors */}
-            <div className="space-y-4 md:space-y-6">
+            <motion.div variants={containerVariants} className="space-y-6">
                  {/* Granos */}
-                 <div className="bg-white/60 p-5 md:p-6 rounded-2xl border border-purple-100 backdrop-blur-md hover:border-fuchsia-300 transition-colors">
-                    <h3 className="text-lg md:text-xl font-bold text-slate-900 mb-3 md:mb-4 flex items-center gap-2">
-                        <span className="w-2 h-2 rounded-full bg-green-500"></span>
-                        Mentores Granos
-                    </h3>
-                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-3">
-                        {data.content.granosMentors.map((m: string, i: number) => (
-                            <li key={i} className="flex items-center gap-2 text-slate-700">
-                                <CheckCircle2 size={16} className="text-purple-400" />
-                                <span className="text-sm font-medium">{m}</span>
-                            </li>
-                        ))}
-                    </ul>
-                 </div>
+                 <motion.div variants={itemVariants}>
+                    <GlassCard hover className="p-6 md:p-8">
+                        <h3 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-3">
+                            <span className="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.4)]"></span>
+                            Mentores Granos
+                        </h3>
+                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            {data.content.granosMentors.map((m: string, i: number) => (
+                                <li key={i} className="flex items-center gap-3 text-slate-600 group">
+                                    <div className="h-1.5 w-1.5 rounded-full bg-slate-300 group-hover:bg-green-500 transition-colors"></div>
+                                    <span className="text-sm font-medium group-hover:text-slate-900 transition-colors">{m}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </GlassCard>
+                 </motion.div>
 
                  {/* Capital */}
-                 <div className="bg-white/60 p-5 md:p-6 rounded-2xl border border-purple-100 backdrop-blur-md hover:border-fuchsia-300 transition-colors">
-                    <h3 className="text-lg md:text-xl font-bold text-slate-900 mb-3 md:mb-4 flex items-center gap-2">
-                        <span className="w-2 h-2 rounded-full bg-blue-500"></span>
-                        Mentores fyoCapital
-                    </h3>
-                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-3">
-                        {data.content.capitalMentors.map((m: string, i: number) => (
-                            <li key={i} className="flex items-center gap-2 text-slate-700">
-                                <CheckCircle2 size={16} className="text-purple-400" />
-                                <span className="text-sm font-medium">{m}</span>
-                            </li>
-                        ))}
-                    </ul>
-                 </div>
-            </div>
+                 <motion.div variants={itemVariants}>
+                    <GlassCard hover className="p-6 md:p-8">
+                        <h3 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-3">
+                            <span className="w-3 h-3 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.4)]"></span>
+                            Mentores fyoCapital
+                        </h3>
+                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            {data.content.capitalMentors.map((m: string, i: number) => (
+                                <li key={i} className="flex items-center gap-3 text-slate-600 group">
+                                    <div className="h-1.5 w-1.5 rounded-full bg-slate-300 group-hover:bg-blue-500 transition-colors"></div>
+                                    <span className="text-sm font-medium group-hover:text-slate-900 transition-colors">{m}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </GlassCard>
+                 </motion.div>
+            </motion.div>
 
             {/* Right Col: Considerations */}
-            <div className="bg-fuchsia-50/50 p-6 md:p-8 rounded-3xl border border-fuchsia-100 flex flex-col justify-center backdrop-blur-md">
-                <div className="mb-4 md:mb-6 flex items-center gap-3 md:gap-4">
-                     <div className="p-2 md:p-3 bg-white rounded-xl shadow-sm text-fuchsia-600">
-                        <Users size={24} className="md:w-7 md:h-7" />
-                     </div>
-                     <h3 className="text-xl md:text-2xl font-bold text-slate-900">Consideraciones del Rol</h3>
-                </div>
-                
-                <p className="text-slate-600 mb-6 md:mb-8 leading-relaxed text-sm md:text-base">
-                    El rol del mentor es clave para facilitar la inmersión cultural y técnica del JP, brindando guía estratégica más allá del día a día.
-                </p>
-
-                <div className="grid grid-cols-1 gap-3 md:gap-4">
-                    {data.content.considerations.map((item: string, i: number) => (
-                        <div key={i} className="p-3 md:p-4 bg-white rounded-xl border border-purple-50 shadow-sm flex items-center gap-3">
-                             <div className="w-1.5 h-1.5 rounded-full bg-fuchsia-500"></div>
-                             <span className="text-slate-800 font-medium text-sm md:text-base">{item}</span>
+            <motion.div variants={itemVariants}>
+                <div className="bg-gradient-to-br from-fuchsia-500 to-purple-600 p-8 rounded-3xl border border-white/20 flex flex-col justify-center h-full text-white relative overflow-hidden shadow-2xl">
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
+                    
+                    <div className="relative z-10">
+                        <div className="mb-6 flex items-center gap-4">
+                            <div className="p-3 bg-white/20 backdrop-blur-sm rounded-xl border border-white/30 text-white">
+                                <Users size={28} />
+                            </div>
+                            <h3 className="text-2xl font-bold tracking-tight">Consideraciones del Rol</h3>
                         </div>
-                    ))}
+                        
+                        <p className="text-purple-100 mb-8 leading-relaxed text-lg font-light">
+                            El rol del mentor es clave para facilitar la inmersión cultural y técnica del JP, brindando guía estratégica más allá del día a día.
+                        </p>
+
+                        <div className="flex flex-col gap-4">
+                            {data.content.considerations.map((item: string, i: number) => (
+                                <div key={i} className="p-4 bg-white/10 rounded-xl border border-white/10 flex items-center gap-4 hover:bg-white/20 transition-colors">
+                                    <CheckCircle2 size={20} className="text-fuchsia-200" />
+                                    <span className="font-medium">{item}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+            </motion.div>
+        </motion.div>
     );
 };
 
 // 8. New Academy Slide (Split 2/2)
 export const AcademySplitSlide: React.FC<SlideProps> = ({ data }) => {
     return (
-        <div className="flex flex-col h-full gap-6 md:gap-8">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-                <div className="bg-white/60 p-4 md:p-6 rounded-2xl border border-purple-100 backdrop-blur-md flex flex-col items-center text-center justify-center hover:-translate-y-1 transition-transform">
-                    <Calendar size={28} className="text-fuchsia-500 mb-2 md:mb-3 md:w-8 md:h-8" />
-                    <span className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest">Cuándo</span>
-                    <span className="text-lg md:text-xl font-bold text-slate-900 mt-1">Viernes 14-18hs</span>
-                </div>
-                <div className="bg-white/60 p-4 md:p-6 rounded-2xl border border-purple-100 backdrop-blur-md flex flex-col items-center text-center justify-center hover:-translate-y-1 transition-transform">
-                    <GraduationCap size={28} className="text-purple-500 mb-2 md:mb-3 md:w-8 md:h-8" />
-                    <span className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest">Frecuencia</span>
-                    <span className="text-lg md:text-xl font-bold text-slate-900 mt-1">2 Módulos / Sem</span>
-                </div>
-                <div className="bg-white/60 p-4 md:p-6 rounded-2xl border border-purple-100 backdrop-blur-md flex flex-col items-center text-center justify-center hover:-translate-y-1 transition-transform">
-                    <Clock size={28} className="text-indigo-500 mb-2 md:mb-3 md:w-8 md:h-8" />
-                    <span className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest">Evaluación</span>
-                    <span className="text-lg md:text-xl font-bold text-slate-900 mt-1">Examen Mensual</span>
-                </div>
+        <motion.div className="flex flex-col h-full gap-8" initial="hidden" animate="show" variants={containerVariants}>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <motion.div variants={itemVariants}>
+                    <GlassCard hover className="p-6 py-8 flex flex-col items-center text-center">
+                        <div className="mb-4 p-3 bg-fuchsia-50 rounded-2xl text-fuchsia-600">
+                             <Calendar size={24} />
+                        </div>
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Cuándo</span>
+                        <span className="text-xl font-bold text-slate-900">Viernes 14-18hs</span>
+                    </GlassCard>
+                </motion.div>
+                <motion.div variants={itemVariants}>
+                    <GlassCard hover className="p-6 py-8 flex flex-col items-center text-center">
+                        <div className="mb-4 p-3 bg-purple-50 rounded-2xl text-purple-600">
+                             <GraduationCap size={24} />
+                        </div>
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Frecuencia</span>
+                        <span className="text-xl font-bold text-slate-900">2 Módulos / Sem</span>
+                    </GlassCard>
+                </motion.div>
+                <motion.div variants={itemVariants}>
+                    <GlassCard hover className="p-6 py-8 flex flex-col items-center text-center">
+                        <div className="mb-4 p-3 bg-indigo-50 rounded-2xl text-indigo-600">
+                             <BarChart3 size={24} />
+                        </div>
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Evaluación</span>
+                        <span className="text-xl font-bold text-slate-900">Examen Mensual</span>
+                    </GlassCard>
+                </motion.div>
             </div>
 
-            <div className="flex-1 bg-white/60 rounded-3xl border border-purple-100 p-8 md:p-12 flex flex-col justify-center items-start backdrop-blur-md relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-96 h-96 bg-fuchsia-50 rounded-bl-full -mr-20 -mt-20 pointer-events-none" />
-                
-                <div className="relative z-10 max-w-3xl">
-                    <h3 className="text-2xl md:text-3xl font-bold text-slate-900 mb-4 md:mb-6">Contenidos del Programa</h3>
-                    <p className="text-base md:text-lg text-slate-600 leading-relaxed mb-6 md:mb-8">
-                        BackOffice Academy es un espacio de formación técnica intensiva diseñado para nivelar conocimientos y profundizar en la operatoria del negocio.
-                    </p>
+            <motion.div variants={itemVariants} className="flex-1">
+                <GlassCard className="h-full p-10 flex flex-col justify-center relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-bl from-purple-100/50 to-transparent rounded-full -mr-32 -mt-32 pointer-events-none blur-3xl" />
                     
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
-                        {['Circuitos Administrativos', 'Herramientas de Gestión', 'Normativas y Compliance', 'Análisis de Contratos', 'Gestión de Riesgos', 'Logística Aplicada'].map((item, i) => (
-                            <div key={i} className="flex items-center gap-3 p-3 rounded-lg hover:bg-white/50 transition-colors">
-                                <CheckCircle2 size={20} className="text-fuchsia-500" />
-                                <span className="text-slate-800 font-medium text-sm md:text-base">{item}</span>
-                            </div>
-                        ))}
+                    <div className="relative z-10 max-w-4xl">
+                        <h3 className="text-3xl font-bold text-slate-900 mb-6 tracking-tight">Contenidos del Programa</h3>
+                        <p className="text-lg text-slate-600 leading-relaxed mb-10 font-light">
+                            BackOffice Academy es un espacio de formación técnica intensiva diseñado para nivelar conocimientos y profundizar en la operatoria del negocio, combinando teoría con casos prácticos reales.
+                        </p>
+                        
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                            {['Circuitos Administrativos', 'Herramientas de Gestión', 'Normativas y Compliance', 'Análisis de Contratos', 'Gestión de Riesgos', 'Logística Aplicada'].map((item, i) => (
+                                <div key={i} className="flex items-center gap-3 p-4 rounded-xl border border-purple-50 bg-white/40 hover:bg-white/70 transition-colors hover:border-fuchsia-200">
+                                    <div className="w-2 h-2 rounded-full bg-fuchsia-500 shadow-[0_0_6px_rgba(217,70,239,0.5)]"></div>
+                                    <span className="text-slate-800 font-medium text-sm">{item}</span>
+                                </div>
+                            ))}
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
+                </GlassCard>
+            </motion.div>
+        </motion.div>
     );
 };
 
-// 9. Closing Slide with Download Logic
+// 9. Closing Slide - Premium Finish
 export const ClosingSlide: React.FC<SlideProps> = ({ data, onPrint }) => {
 
     const generatePPTX = async () => {
@@ -389,134 +460,72 @@ export const ClosingSlide: React.FC<SlideProps> = ({ data, onPrint }) => {
 
         SLIDES.forEach((slide) => {
             const pptxSlide = pres.addSlide();
-            pptxSlide.background = { color: "F5F3FF" }; // Violet 50
+            pptxSlide.background = { color: "F8F7FF" };
 
             // Header for slides (except cover/closing)
             if (slide.type !== 'cover' && slide.type !== 'closing') {
-                pptxSlide.addText(slide.title || "", { x: 0.5, y: 0.5, fontSize: 32, bold: true, color: "0F172A" });
+                pptxSlide.addText(slide.title || "", { x: 0.5, y: 0.5, fontSize: 32, bold: true, color: "0F172A", fontFace: "Arial" });
                 if (slide.subtitle) {
-                    pptxSlide.addText(slide.subtitle, { x: 0.5, y: 1.0, fontSize: 18, color: "475569" });
-                    pptxSlide.addShape(pres.ShapeType.line, { x: 0.5, y: 1.35, w: 9, h: 0, line: { color: "C084FC", width: 2 } });
+                    pptxSlide.addText(slide.subtitle, { x: 0.5, y: 1.0, fontSize: 18, color: "475569", fontFace: "Arial" });
                 }
             }
 
-            // Content Logic
-            if (slide.type === 'cover') {
-                pptxSlide.addText("PROGRAMA JP 2026-2027", { x: 1, y: 2, w: '80%', fontSize: 54, bold: true, align: 'center', color: "0F172A" });
-                pptxSlide.addText(slide.subtitle || "", { x: 1, y: 3.5, w: '80%', fontSize: 24, align: 'center', color: "475569" });
-                if (slide.content?.tags) {
-                    pptxSlide.addText(slide.content.tags.join(" | "), { x: 1, y: 5, w: '80%', fontSize: 14, align: 'center', color: "C084FC" });
-                }
+            // Simplified Content Logic for PPTX
+             if (slide.type === 'cover') {
+                pptxSlide.addText("PROGRAMA JP 2026-2027", { x: 1, y: 2.5, w: '80%', fontSize: 54, bold: true, align: 'center', color: "0F172A" });
+            } else if (slide.type === 'info' && slide.content.description) {
+                 pptxSlide.addText(slide.content.description, { x: 0.5, y: 1.8, w: '90%', fontSize: 14, color: "334155" });
             }
-            else if (slide.type === 'info') {
-                 if(slide.content.description) {
-                    pptxSlide.addText(slide.content.description, { x: 0.5, y: 1.8, w: '45%', fontSize: 14, color: "334155" });
-                 }
-                 if (slide.content.bullets) {
-                    pptxSlide.addText(slide.content.bullets.map((b: string) => `• ${b}`).join("\n"), { x: 0.5, y: 2.5, w: '45%', fontSize: 12, color: "334155", lineSpacing: 18 });
-                 }
-                 if(slide.content.stats) {
-                     let yOffset = 1.8;
-                     slide.content.stats.forEach((stat: any) => {
-                         pptxSlide.addText(`${stat.label}: ${stat.value}`, { x: 5.5, y: yOffset, w: '40%', fontSize: 16, bold: true, color: "0F172A", fill: { color: "FFFFFF" } });
-                         yOffset += 1.0;
-                     });
-                 }
-            }
-            else if (slide.type === 'timeline') {
-                let xOffset = 0.5;
-                slide.content.forEach((item: any) => {
-                    pptxSlide.addText(item.month, { x: xOffset, y: 2, w: 1.5, fontSize: 10, bold: true, color: "C084FC" });
-                    pptxSlide.addText(item.title, { x: xOffset, y: 2.3, w: 1.5, fontSize: 12, bold: true, color: "0F172A" });
-                    pptxSlide.addText(item.details, { x: xOffset, y: 2.7, w: 1.5, fontSize: 10, color: "475569" });
-                    xOffset += 1.8;
-                });
-            }
-            else if (slide.type === 'grid') {
-                 let xPos = 0.5;
-                 let yPos = 1.8;
-                 slide.content.items.forEach((item: any, idx: number) => {
-                     if(idx === 2) { xPos = 0.5; yPos = 4; } // New row
-                     else if (idx === 1 || idx === 3) { xPos = 5.2; }
-                     
-                     pptxSlide.addText(item.title, { x: xPos, y: yPos, w: 4, fontSize: 14, bold: true, color: "0F172A" });
-                     pptxSlide.addText(item.desc, { x: xPos, y: yPos + 0.4, w: 4, fontSize: 11, color: "475569" });
-                 });
-            }
-            else if (slide.type === 'mentoring-split') {
-                 pptxSlide.addText("Mentores Granos:", { x: 0.5, y: 1.8, fontSize: 14, bold: true });
-                 pptxSlide.addText(slide.content.granosMentors.join("\n"), { x: 0.5, y: 2.2, h: 3, fontSize: 11, lineSpacing: 16 });
-                 
-                 pptxSlide.addText("Mentores Capital:", { x: 4, y: 1.8, fontSize: 14, bold: true });
-                 pptxSlide.addText(slide.content.capitalMentors.join("\n"), { x: 4, y: 2.2, h: 3, fontSize: 11, lineSpacing: 16 });
-
-                 pptxSlide.addText("Consideraciones:", { x: 7.5, y: 1.8, fontSize: 14, bold: true });
-                 pptxSlide.addText(slide.content.considerations.join("\n"), { x: 7.5, y: 2.2, h: 3, fontSize: 11, lineSpacing: 16 });
-            }
-             else if (slide.type === 'closing') {
-                pptxSlide.addText("¡Muchas gracias!", { x: 1, y: 2, w: '80%', fontSize: 54, bold: true, align: 'center', color: "0F172A" });
-                pptxSlide.addText(slide.subtitle || "", { x: 1, y: 3.5, w: '80%', fontSize: 24, align: 'center', color: "475569" });
-                if (slide.content?.contact) {
-                    pptxSlide.addText(`Contacto: ${slide.content.contact.email}`, { x: 1, y: 5, w: '80%', fontSize: 18, align: 'center', color: "C084FC" });
-                }
-            }
-            // Fallback for tables (simplified text)
-            else if (slide.type.includes('table')) {
-                 pptxSlide.addText("Ver presentación web para el detalle interactivo de la matriz.", { x: 0.5, y: 2, fontSize: 14, italic: true, color: "64748B" });
-            }
-
         });
 
         pres.writeFile({ fileName: "Programa-JP-2026-2027.pptx" });
     };
 
     return (
-        <div className="flex flex-col justify-center items-center h-full text-center relative">
-            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-tr from-fuchsia-400/20 to-purple-500/20 blur-[120px] rounded-full opacity-60 pointer-events-none" />
-
-            <div className="mb-12 relative z-10 animate-fade-in-down">
-                <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter text-slate-900 mb-6 leading-tight">
+        <motion.div className="flex flex-col justify-center items-center h-full text-center relative" initial="hidden" animate="show" variants={containerVariants}>
+            <motion.div variants={itemVariants} className="mb-12 relative z-10">
+                <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter text-slate-900 mb-8 leading-tight drop-shadow-sm">
                     ¡Muchas gracias!
                 </h1>
-                <p className="text-2xl lg:text-3xl text-slate-600 font-light max-w-2xl mx-auto">
+                <p className="text-2xl lg:text-3xl text-slate-500 font-light max-w-3xl mx-auto leading-relaxed">
                     {data.subtitle}
                 </p>
-            </div>
+            </motion.div>
 
-            <div className="relative z-10 flex flex-col items-center gap-8 animate-fade-in-up">
-                 {/* Redesigned Contact Card: Smaller, more subtle */}
-                 <div className="p-6 bg-white/40 backdrop-blur-sm rounded-2xl border border-purple-50/50 shadow-sm flex flex-col items-center gap-3 hover:-translate-y-1 transition-transform duration-300 max-w-sm w-full">
-                    <div className="flex items-center gap-3">
-                         <div className="h-10 w-10 rounded-full bg-fuchsia-50 flex items-center justify-center text-fuchsia-600">
-                             <Mail size={18} />
+            <motion.div variants={containerVariants} className="relative z-10 flex flex-col items-center gap-10">
+                 {/* Contact Card - Redesigned (Horizontal Sleek Pill) */}
+                 <motion.div variants={itemVariants}>
+                    <GlassCard hover className="px-10 py-5 flex items-center gap-6 rounded-full group">
+                        <div className="h-12 w-12 rounded-full bg-gradient-to-tr from-fuchsia-500 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-fuchsia-500/30 group-hover:scale-110 transition-transform">
+                             <Mail size={20} />
                          </div>
                          <div className="text-left">
-                             <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{data.content.contact.role}</div>
-                             <a href={`mailto:${data.content.contact.email}`} className="text-lg font-bold text-slate-900 hover:text-fuchsia-600 transition-colors">
+                             <div className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-0.5">{data.content.contact.role}</div>
+                             <a href={`mailto:${data.content.contact.email}`} className="text-xl font-bold text-slate-900 hover:text-fuchsia-600 transition-colors">
                                  {data.content.contact.email}
                              </a>
                          </div>
-                    </div>
-                 </div>
+                    </GlassCard>
+                 </motion.div>
 
-                 {/* Download Area */}
-                 <div className="mt-8 flex gap-4 no-print">
+                 {/* Actions */}
+                 <motion.div variants={itemVariants} className="flex gap-4 no-print mt-4">
                     <button 
                         onClick={onPrint}
-                        className="flex items-center gap-2 px-5 py-3 bg-white border border-slate-200 rounded-xl hover:border-fuchsia-500 hover:text-fuchsia-600 transition-all font-medium text-slate-600 group shadow-sm text-sm"
+                        className="flex items-center gap-2 px-6 py-3 bg-white/50 border border-white/60 rounded-xl hover:bg-white hover:scale-105 transition-all font-bold text-slate-600 shadow-sm backdrop-blur-sm text-sm"
                     >
-                        <FileText size={18} className="group-hover:scale-110 transition-transform" />
+                        <FileText size={18} />
                         Descargar PDF
                     </button>
                     <button 
                         onClick={generatePPTX}
-                        className="flex items-center gap-2 px-5 py-3 bg-slate-900 text-white border border-slate-900 rounded-xl hover:bg-fuchsia-600 hover:border-fuchsia-600 transition-all font-medium shadow-lg hover:shadow-fuchsia-500/30 text-sm"
+                        className="flex items-center gap-2 px-6 py-3 bg-slate-900 text-white border border-slate-900 rounded-xl hover:bg-fuchsia-600 hover:border-fuchsia-600 hover:scale-105 hover:shadow-lg hover:shadow-fuchsia-500/40 transition-all font-bold text-sm"
                     >
                         <Presentation size={18} />
                         Descargar PPTX
                     </button>
-                 </div>
-            </div>
-        </div>
+                 </motion.div>
+            </motion.div>
+        </motion.div>
     )
 }
