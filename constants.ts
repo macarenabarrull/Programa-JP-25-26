@@ -1,8 +1,9 @@
+
 import { LucideIcon, Users, Target, BookOpen, Briefcase, Calendar, TrendingUp, DollarSign, Award, Clock } from "lucide-react";
 
 export interface SlideData {
   id: string;
-  type: 'cover' | 'info' | 'timeline' | 'grid' | 'table-granos' | 'table-capital' | 'mentoring-split' | 'academy-split' | 'closing';
+  type: 'cover' | 'objectives' | 'info' | 'timeline' | 'grid' | 'table-granos' | 'table-capital' | 'mentoring-split' | 'academy-split' | 'closing';
   title?: string;
   subtitle?: string;
   content?: any;
@@ -21,15 +22,16 @@ export const SLIDES: SlideData[] = [
   },
   {
     id: 'intro',
-    type: 'info',
+    type: 'objectives', // Changed type for custom design
     title: 'Objetivos',
-    subtitle: '¿Qué esperamos de este programa?',
+    subtitle: 'Potenciando el ecosistema de negocios',
     content: {
-      description: "Diseñado para incorporar 12 jóvenes profesionales con potencial comercial y financiero. Foco en experiencia práctica e inmersión temprana.",
+      mainGoal: "Incorporar 12 Jóvenes Profesionales con alto potencial comercial y financiero.",
+      pillars: ["Inmersión Temprana", "Práctica Real", "Visión 360°"],
       stats: [
-        { label: 'Mesa de Granos', value: '6 JP', icon: Users, color: 'text-green-600' },
-        { label: 'fyoCapital', value: '4 JP', icon: DollarSign, color: 'text-blue-600' },
-        { label: 'Consultoría', value: '2 JP', icon: Briefcase, color: 'text-purple-600' }
+        { label: 'Mesa de Granos', value: '6 JP', icon: Users, color: 'text-green-600', bg: 'bg-green-50', border: 'border-green-100' },
+        { label: 'fyoCapital', value: '4 JP', icon: DollarSign, color: 'text-blue-600', bg: 'bg-blue-50', border: 'border-blue-100' },
+        { label: 'Consultoría', value: '2 JP', icon: Briefcase, color: 'text-purple-600', bg: 'bg-purple-50', border: 'border-purple-100' }
       ]
     }
   },
@@ -135,7 +137,19 @@ export const SLIDES: SlideData[] = [
     type: 'academy-split',
     title: 'BackOffice Academy',
     subtitle: 'Capacitación técnica intensiva',
-    content: {}
+    content: {
+        topics: [
+            'Apertura de Cuentas y Boletos',
+            'Canje y Finales',
+            'Mercadería',
+            'Pagos y Cobranzas',
+            'Matba Rofex',
+            'fyoDigital',
+            'Aplicaciones',
+            'Normativas y Compliance',
+            'Entre otros...'
+        ]
+    }
   },
   {
     id: 'closing',
@@ -143,10 +157,10 @@ export const SLIDES: SlideData[] = [
     title: '¡Muchas gracias!',
     subtitle: 'Quedamos a disposición para seguir construyendo juntos.',
     content: {
-      contact: {
-        role: 'TBP',
-        email: 'mbarrull@fyo.com'
-      }
+      contacts: [
+        { role: 'TBP', email: 'mbarrull@fyo.com' },
+        { role: 'Talentos', email: 'talentos@fyo.com' }
+      ]
     }
   }
 ];

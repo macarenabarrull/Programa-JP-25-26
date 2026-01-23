@@ -3,7 +3,8 @@ import { SLIDES, SlideData } from './constants';
 import { SlideLayout } from './components/SlideLayout';
 import { 
   CoverSlide, 
-  InfoSlide, 
+  InfoSlide,
+  ObjectivesSlide, 
   TimelineSlide, 
   GridSlide, 
   TableGranosSlide, 
@@ -55,6 +56,8 @@ const App: React.FC = () => {
       switch (data.type) {
         case 'cover':
           return <CoverSlide data={data} />;
+        case 'objectives':
+          return <ObjectivesSlide data={data} />;
         case 'info':
           return <InfoSlide data={data} />;
         case 'timeline':

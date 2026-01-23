@@ -1,6 +1,6 @@
 import React from 'react';
 import { SlideData, SLIDES } from '../constants';
-import { CheckCircle2, ArrowRight, Users, Target, BookOpen, TrendingUp, Calendar, GraduationCap, Clock, Download, FileText, Presentation, Mail, BarChart3, PieChart } from 'lucide-react';
+import { CheckCircle2, ArrowRight, Users, Target, BookOpen, TrendingUp, Calendar, GraduationCap, Clock, Download, FileText, Presentation, Mail, BarChart3, PieChart, Briefcase, DollarSign, Zap, Layers, Compass } from 'lucide-react';
 import pptxgen from "pptxgenjs";
 import { motion } from "framer-motion";
 
@@ -28,7 +28,7 @@ const itemVariants = {
 };
 
 // --- Reusable "Deep Glass" Card Component ---
-const GlassCard = ({ children, className = "", hover = false }: { children?: React.ReactNode, className?: string, hover?: boolean }) => (
+const GlassCard: React.FC<{ children?: React.ReactNode, className?: string, hover?: boolean }> = ({ children, className = "", hover = false }) => (
     <div className={`
         bg-white/30 backdrop-blur-xl backdrop-saturate-150 
         border border-white/40 rounded-2xl md:rounded-3xl
@@ -77,7 +77,57 @@ export const CoverSlide: React.FC<SlideProps> = ({ data }) => {
   );
 };
 
-// 2. Info Slide - Deep Glass Cards
+// 2. Objectives Slide - NEW DESIGN (Clearer, Visual Hierarchy)
+export const ObjectivesSlide: React.FC<SlideProps> = ({ data }) => {
+  return (
+    <motion.div className="flex flex-col h-full gap-8 md:gap-12 justify-center" initial="hidden" animate="show" variants={containerVariants}>
+      {/* Top Statement */}
+      <motion.div variants={itemVariants} className="text-center max-w-4xl mx-auto">
+        <h2 className="text-3xl md:text-5xl font-light text-slate-900 leading-tight mb-8">
+            {data.content.mainGoal.split("12 Jóvenes Profesionales")[0]}
+            <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-600 to-purple-600">12 Jóvenes Profesionales</span>
+            {data.content.mainGoal.split("12 Jóvenes Profesionales")[1]}
+        </h2>
+        <div className="flex flex-wrap justify-center gap-4">
+            {data.content.pillars.map((pillar: string, idx: number) => (
+                <span key={idx} className="px-4 py-2 rounded-full bg-white/50 border border-white/60 text-slate-600 text-sm md:text-base font-medium shadow-sm flex items-center gap-2">
+                    <CheckCircle2 size={16} className="text-fuchsia-500" />
+                    {pillar}
+                </span>
+            ))}
+        </div>
+      </motion.div>
+
+      {/* Cards Grid */}
+      <motion.div variants={containerVariants} className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {data.content.stats.map((stat: any, idx: number) => {
+            const Icon = stat.icon;
+            return (
+                <motion.div variants={itemVariants} key={idx} className="h-full">
+                    <GlassCard hover className={`h-full p-8 flex flex-col items-center text-center relative overflow-hidden group border-t-4 ${stat.border.replace('border', 'border-t')}`}>
+                        {/* Background Decor */}
+                        <div className={`absolute top-0 left-0 w-full h-24 ${stat.bg} opacity-50 rounded-b-[50%] -translate-y-12 group-hover:translate-y-[-10%] transition-transform duration-500`}></div>
+                        
+                        <div className={`relative z-10 w-16 h-16 rounded-2xl bg-white shadow-lg flex items-center justify-center mb-6 ${stat.color} group-hover:scale-110 transition-transform`}>
+                            <Icon size={32} />
+                        </div>
+                        
+                        <h3 className="relative z-10 text-lg font-bold text-slate-500 uppercase tracking-widest mb-2">{stat.label}</h3>
+                        <div className={`relative z-10 text-5xl md:text-6xl font-black tracking-tighter ${stat.color} drop-shadow-sm`}>
+                            {stat.value.split(" ")[0]}
+                            <span className="text-lg font-bold ml-1 text-slate-400">JP</span>
+                        </div>
+                    </GlassCard>
+                </motion.div>
+            )
+        })}
+      </motion.div>
+    </motion.div>
+  );
+};
+
+
+// 2b. Info Slide (Generic fallback or for other slides)
 export const InfoSlide: React.FC<SlideProps> = ({ data }) => {
   return (
     <motion.div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 h-full items-center" initial="hidden" animate="show" variants={containerVariants}>
@@ -391,6 +441,10 @@ export const MentoringSplitSlide: React.FC<SlideProps> = ({ data }) => {
 
 // 8. New Academy Slide (Split 2/2)
 export const AcademySplitSlide: React.FC<SlideProps> = ({ data }) => {
+    // If using new data structure from constants, prioritize it. 
+    // Fallback to manual list if not present, but based on request we use the new content.
+    const topics = data.content.topics || ['Circuitos Administrativos', 'Herramientas de Gestión'];
+
     return (
         <motion.div className="flex flex-col h-full gap-8" initial="hidden" animate="show" variants={containerVariants}>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -427,16 +481,16 @@ export const AcademySplitSlide: React.FC<SlideProps> = ({ data }) => {
                 <GlassCard className="h-full p-10 flex flex-col justify-center relative overflow-hidden">
                     <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-bl from-purple-100/50 to-transparent rounded-full -mr-32 -mt-32 pointer-events-none blur-3xl" />
                     
-                    <div className="relative z-10 max-w-4xl">
+                    <div className="relative z-10 max-w-5xl mx-auto w-full">
                         <h3 className="text-3xl font-bold text-slate-900 mb-6 tracking-tight">Contenidos del Programa</h3>
-                        <p className="text-lg text-slate-600 leading-relaxed mb-10 font-light">
+                        <p className="text-lg text-slate-600 leading-relaxed mb-10 font-light max-w-3xl">
                             BackOffice Academy es un espacio de formación técnica intensiva diseñado para nivelar conocimientos y profundizar en la operatoria del negocio, combinando teoría con casos prácticos reales.
                         </p>
                         
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                            {['Circuitos Administrativos', 'Herramientas de Gestión', 'Normativas y Compliance', 'Análisis de Contratos', 'Gestión de Riesgos', 'Logística Aplicada'].map((item, i) => (
+                            {topics.map((item: string, i: number) => (
                                 <div key={i} className="flex items-center gap-3 p-4 rounded-xl border border-purple-50 bg-white/40 hover:bg-white/70 transition-colors hover:border-fuchsia-200">
-                                    <div className="w-2 h-2 rounded-full bg-fuchsia-500 shadow-[0_0_6px_rgba(217,70,239,0.5)]"></div>
+                                    <div className="w-2 h-2 rounded-full bg-fuchsia-500 shadow-[0_0_6px_rgba(217,70,239,0.5)] shrink-0"></div>
                                     <span className="text-slate-800 font-medium text-sm">{item}</span>
                                 </div>
                             ))}
@@ -481,6 +535,9 @@ export const ClosingSlide: React.FC<SlideProps> = ({ data, onPrint }) => {
         pres.writeFile({ fileName: "Programa-JP-2026-2027.pptx" });
     };
 
+    // Fallback for contact structure if not updated in constants for some reason
+    const contacts = data.content.contacts || (data.content.contact ? [data.content.contact] : []);
+
     return (
         <motion.div className="flex flex-col justify-center items-center h-full text-center relative" initial="hidden" animate="show" variants={containerVariants}>
             <motion.div variants={itemVariants} className="mb-12 relative z-10">
@@ -493,19 +550,21 @@ export const ClosingSlide: React.FC<SlideProps> = ({ data, onPrint }) => {
             </motion.div>
 
             <motion.div variants={containerVariants} className="relative z-10 flex flex-col items-center gap-10">
-                 {/* Contact Card - Redesigned (Horizontal Sleek Pill) */}
-                 <motion.div variants={itemVariants}>
-                    <GlassCard hover className="px-10 py-5 flex items-center gap-6 rounded-full group">
-                        <div className="h-12 w-12 rounded-full bg-gradient-to-tr from-fuchsia-500 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-fuchsia-500/30 group-hover:scale-110 transition-transform">
-                             <Mail size={20} />
-                         </div>
-                         <div className="text-left">
-                             <div className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-0.5">{data.content.contact.role}</div>
-                             <a href={`mailto:${data.content.contact.email}`} className="text-xl font-bold text-slate-900 hover:text-fuchsia-600 transition-colors">
-                                 {data.content.contact.email}
-                             </a>
-                         </div>
-                    </GlassCard>
+                 {/* Contact Cards */}
+                 <motion.div variants={itemVariants} className="flex flex-wrap gap-4 justify-center">
+                    {contacts.map((contact: any, idx: number) => (
+                        <GlassCard key={idx} hover className="px-10 py-5 flex items-center gap-6 rounded-full group">
+                            <div className="h-12 w-12 rounded-full bg-gradient-to-tr from-fuchsia-500 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-fuchsia-500/30 group-hover:scale-110 transition-transform">
+                                <Mail size={20} />
+                            </div>
+                            <div className="text-left">
+                                <div className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-0.5">{contact.role}</div>
+                                <a href={`mailto:${contact.email}`} className="text-xl font-bold text-slate-900 hover:text-fuchsia-600 transition-colors">
+                                    {contact.email}
+                                </a>
+                            </div>
+                        </GlassCard>
+                    ))}
                  </motion.div>
 
                  {/* Actions */}
