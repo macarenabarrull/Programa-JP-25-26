@@ -228,20 +228,20 @@ export const TableGranosSlide: React.FC<SlideProps> = () => {
             <table className="w-full text-left border-collapse">
             <thead>
                 <tr>
-                <th className="p-5 bg-purple-50/50 text-slate-400 font-bold text-xs uppercase tracking-widest border-b border-purple-100">Período</th>
+                <th className="p-3 md:p-5 bg-purple-50/50 text-slate-400 font-bold text-xs uppercase tracking-widest border-b border-purple-100">Período</th>
                 {areas.map((area, i) => (
-                    <th key={i} className="p-5 text-slate-700 font-bold text-sm border-b border-purple-100 border-l border-purple-100/50 text-center tracking-tight">{area}</th>
+                    <th key={i} className="p-3 md:p-5 text-slate-700 font-bold text-xs md:text-sm border-b border-purple-100 border-l border-purple-100/50 text-center tracking-tight">{area}</th>
                 ))}
                 </tr>
             </thead>
             <tbody>
                 {months.map((month, rowIndex) => (
                 <tr key={rowIndex} className="hover:bg-white/30 transition-colors group">
-                    <td className="p-5 font-mono text-slate-500 text-sm border-b border-purple-50 bg-purple-50/20 group-hover:text-fuchsia-600 font-medium">{month}</td>
+                    <td className="p-3 md:p-5 font-mono text-slate-500 text-xs md:text-sm border-b border-purple-50 bg-purple-50/20 group-hover:text-fuchsia-600 font-medium">{month}</td>
                     {matrix[rowIndex].map((group, colIndex) => (
-                    <td key={colIndex} className="p-3 border-b border-purple-50 border-l border-purple-50 text-center relative">
+                    <td key={colIndex} className="p-2 md:p-3 border-b border-purple-50 border-l border-purple-50 text-center relative">
                         {group ? (
-                        <div className={`mx-auto w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold shadow-lg transition-all hover:scale-110 hover:-translate-y-1 text-white border border-white/20
+                        <div className={`mx-auto w-8 h-8 md:w-10 md:h-10 rounded-xl flex items-center justify-center text-xs md:text-sm font-bold shadow-lg transition-all hover:scale-110 hover:-translate-y-1 text-white border border-white/20
                             ${group === 1 ? 'bg-indigo-500 shadow-indigo-500/30' : ''}
                             ${group === 2 ? 'bg-fuchsia-500 shadow-fuchsia-500/30' : ''}
                             ${group === 3 ? 'bg-purple-600 shadow-purple-600/30' : ''}
@@ -292,19 +292,19 @@ export const TableCapitalSlide: React.FC<SlideProps> = () => {
             <motion.div variants={itemVariants}>
                 <GlassCard className="overflow-hidden">
                     <div className="grid grid-cols-5 bg-purple-50/50 border-b border-purple-100 text-xs font-bold text-slate-400 uppercase tracking-widest">
-                        <div className="p-5">Mes</div>
-                        <div className="p-5 text-fuchsia-600 text-center">JP 1</div>
-                        <div className="p-5 text-fuchsia-600 text-center">JP 2</div>
-                        <div className="p-5 text-fuchsia-600 text-center">JP 3</div>
-                        <div className="p-5 text-fuchsia-600 text-center">JP 4</div>
+                        <div className="p-3 md:p-5">Mes</div>
+                        <div className="p-3 md:p-5 text-fuchsia-600 text-center">JP 1</div>
+                        <div className="p-3 md:p-5 text-fuchsia-600 text-center">JP 2</div>
+                        <div className="p-3 md:p-5 text-fuchsia-600 text-center">JP 3</div>
+                        <div className="p-3 md:p-5 text-fuchsia-600 text-center">JP 4</div>
                     </div>
                     {data.map((row, idx) => (
-                        <div key={idx} className="grid grid-cols-5 border-b border-purple-50 hover:bg-white/30 transition-colors text-sm group">
-                            <div className="p-5 font-mono text-slate-500 flex items-center bg-purple-50/20 font-bold group-hover:text-fuchsia-700">{row.month}</div>
-                            <div className="p-4 text-slate-700 flex items-center justify-center border-l border-purple-50">{row.jp1}</div>
-                            <div className="p-4 text-slate-700 flex items-center justify-center border-l border-purple-50">{row.jp2}</div>
-                            <div className="p-4 text-slate-700 flex items-center justify-center border-l border-purple-50">{row.jp3}</div>
-                            <div className="p-4 text-slate-700 flex items-center justify-center border-l border-purple-50">{row.jp4}</div>
+                        <div key={idx} className="grid grid-cols-5 border-b border-purple-50 hover:bg-white/30 transition-colors text-xs md:text-sm group">
+                            <div className="p-3 md:p-5 font-mono text-slate-500 flex items-center bg-purple-50/20 font-bold group-hover:text-fuchsia-700">{row.month}</div>
+                            <div className="p-3 md:p-4 text-slate-700 flex items-center justify-center border-l border-purple-50 text-center">{row.jp1}</div>
+                            <div className="p-3 md:p-4 text-slate-700 flex items-center justify-center border-l border-purple-50 text-center">{row.jp2}</div>
+                            <div className="p-3 md:p-4 text-slate-700 flex items-center justify-center border-l border-purple-50 text-center">{row.jp3}</div>
+                            <div className="p-3 md:p-4 text-slate-700 flex items-center justify-center border-l border-purple-50 text-center">{row.jp4}</div>
                         </div>
                     ))}
                 </GlassCard>
@@ -317,21 +317,21 @@ export const TableCapitalSlide: React.FC<SlideProps> = () => {
 // 7. New Mentoring Slide (Split 1/2)
 export const MentoringSplitSlide: React.FC<SlideProps> = ({ data }) => {
     return (
-        <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-8 h-full" initial="hidden" animate="show" variants={containerVariants}>
+        <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 h-full" initial="hidden" animate="show" variants={containerVariants}>
             {/* Left Col: Lists of Mentors */}
-            <motion.div variants={containerVariants} className="space-y-6">
+            <motion.div variants={containerVariants} className="space-y-4 md:space-y-6">
                  {/* Granos */}
                  <motion.div variants={itemVariants}>
-                    <GlassCard hover className="p-6 md:p-8">
-                        <h3 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-3">
+                    <GlassCard hover className="p-6">
+                        <h3 className="text-lg md:text-xl font-bold text-slate-900 mb-4 md:mb-6 flex items-center gap-3">
                             <span className="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.4)]"></span>
                             Mentores Granos
                         </h3>
-                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
                             {data.content.granosMentors.map((m: string, i: number) => (
                                 <li key={i} className="flex items-center gap-3 text-slate-600 group">
                                     <div className="h-1.5 w-1.5 rounded-full bg-slate-300 group-hover:bg-green-500 transition-colors"></div>
-                                    <span className="text-sm font-medium group-hover:text-slate-900 transition-colors">{m}</span>
+                                    <span className="text-xs md:text-sm font-medium group-hover:text-slate-900 transition-colors">{m}</span>
                                 </li>
                             ))}
                         </ul>
@@ -340,16 +340,16 @@ export const MentoringSplitSlide: React.FC<SlideProps> = ({ data }) => {
 
                  {/* Capital */}
                  <motion.div variants={itemVariants}>
-                    <GlassCard hover className="p-6 md:p-8">
-                        <h3 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-3">
+                    <GlassCard hover className="p-6">
+                        <h3 className="text-lg md:text-xl font-bold text-slate-900 mb-4 md:mb-6 flex items-center gap-3">
                             <span className="w-3 h-3 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.4)]"></span>
                             Mentores fyoCapital
                         </h3>
-                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
                             {data.content.capitalMentors.map((m: string, i: number) => (
                                 <li key={i} className="flex items-center gap-3 text-slate-600 group">
                                     <div className="h-1.5 w-1.5 rounded-full bg-slate-300 group-hover:bg-blue-500 transition-colors"></div>
-                                    <span className="text-sm font-medium group-hover:text-slate-900 transition-colors">{m}</span>
+                                    <span className="text-xs md:text-sm font-medium group-hover:text-slate-900 transition-colors">{m}</span>
                                 </li>
                             ))}
                         </ul>
@@ -359,26 +359,26 @@ export const MentoringSplitSlide: React.FC<SlideProps> = ({ data }) => {
 
             {/* Right Col: Considerations */}
             <motion.div variants={itemVariants}>
-                <div className="bg-gradient-to-br from-fuchsia-500 to-purple-600 p-8 rounded-3xl border border-white/20 flex flex-col justify-center h-full text-white relative overflow-hidden shadow-2xl">
+                <div className="bg-gradient-to-br from-fuchsia-500 to-purple-600 p-6 md:p-8 rounded-3xl border border-white/20 flex flex-col justify-center h-full text-white relative overflow-hidden shadow-2xl">
                     <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
                     
                     <div className="relative z-10">
-                        <div className="mb-6 flex items-center gap-4">
+                        <div className="mb-4 md:mb-6 flex items-center gap-4">
                             <div className="p-3 bg-white/20 backdrop-blur-sm rounded-xl border border-white/30 text-white">
-                                <Users size={28} />
+                                <Users size={24} />
                             </div>
-                            <h3 className="text-2xl font-bold tracking-tight">Consideraciones del Rol</h3>
+                            <h3 className="text-xl md:text-2xl font-bold tracking-tight">Consideraciones del Rol</h3>
                         </div>
                         
-                        <p className="text-purple-100 mb-8 leading-relaxed text-lg font-light">
+                        <p className="text-purple-100 mb-6 md:mb-8 leading-relaxed text-base md:text-lg font-light">
                             El rol del mentor es clave para facilitar la inmersión cultural y técnica del JP, brindando guía estratégica más allá del día a día.
                         </p>
 
-                        <div className="flex flex-col gap-4">
+                        <div className="flex flex-col gap-3 md:gap-4">
                             {data.content.considerations.map((item: string, i: number) => (
-                                <div key={i} className="p-4 bg-white/10 rounded-xl border border-white/10 flex items-center gap-4 hover:bg-white/20 transition-colors">
-                                    <CheckCircle2 size={20} className="text-fuchsia-200" />
-                                    <span className="font-medium">{item}</span>
+                                <div key={i} className="p-3 md:p-4 bg-white/10 rounded-xl border border-white/10 flex items-center gap-3 md:gap-4 hover:bg-white/20 transition-colors">
+                                    <CheckCircle2 size={18} className="text-fuchsia-200" />
+                                    <span className="font-medium text-sm md:text-base">{item}</span>
                                 </div>
                             ))}
                         </div>

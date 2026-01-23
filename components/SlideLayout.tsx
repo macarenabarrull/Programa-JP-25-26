@@ -154,8 +154,8 @@ export const SlideLayout: React.FC<SlideLayoutProps> = ({
         </div>
       </header>
 
-      {/* Content Area */}
-      <main className="flex-1 w-full max-w-[1440px] mx-auto px-6 md:px-16 pt-6 md:pt-8 relative z-10 flex flex-col justify-center print:block print:max-w-none print:px-0 min-h-0">
+      {/* Content Area - Increased Top Padding */}
+      <main className="flex-1 w-full max-w-[1440px] mx-auto px-6 md:px-16 pt-20 md:pt-24 relative z-10 flex flex-col justify-center print:block print:max-w-none print:px-0 min-h-0">
         <AnimatePresence mode="wait" custom={direction}>
             <motion.div
                 key={currentSlide}
@@ -175,7 +175,7 @@ export const SlideLayout: React.FC<SlideLayoutProps> = ({
                         initial={{ opacity: 0, y: -20, filter: 'blur(5px)' }}
                         animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
                         transition={{ delay: 0.1, duration: 0.6 }}
-                        className="mb-8 md:mb-12 print:mb-4 shrink-0"
+                        className="mb-6 md:mb-10 print:mb-4 shrink-0"
                     >
                         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 tracking-tighter leading-[0.9] drop-shadow-sm">
                         {title}
@@ -191,7 +191,7 @@ export const SlideLayout: React.FC<SlideLayoutProps> = ({
                         )}
                     </motion.div>
                 )}
-                <div className="w-full h-full flex flex-col justify-center print:block overflow-y-auto md:overflow-visible py-2">
+                <div className="w-full h-full flex flex-col justify-center print:block overflow-y-auto md:overflow-visible py-2 custom-scrollbar">
                     {children}
                 </div>
             </motion.div>

@@ -83,20 +83,24 @@ const App: React.FC = () => {
       return (
           <div className="w-full bg-[#f8f7ff] text-slate-900">
               {SLIDES.map((slide, index) => (
-                  <div key={slide.id} className="print-slide w-full h-screen relative overflow-hidden page-break-after-always bg-[#f8f7ff]">
-                      <div className="absolute top-4 left-8 text-xs text-slate-400 font-mono">
-                          {index + 1} / {SLIDES.length} - Programa JP 2026
-                      </div>
-                      <div className="p-12 h-full flex flex-col justify-center">
-                         {slide.title && slide.type !== 'cover' && slide.type !== 'closing' && (
-                            <div className="mb-8 border-b border-purple-200 pb-4">
-                                <h2 className="text-3xl font-bold text-slate-900">{slide.title}</h2>
-                                {slide.subtitle && <p className="text-slate-500 text-lg">{slide.subtitle}</p>}
+                  <div key={slide.id} className="print-slide relative overflow-hidden page-break-after-always bg-[#f8f7ff]">
+                      {/* Wrapper to scale down content to fit A4 margins nicely */}
+                      <div className="print-content-scale w-[1440px] h-[900px] flex flex-col p-16">
+                           {/* Simple Header for Print Context */}
+                           <div className="absolute top-8 left-12 text-sm text-slate-400 font-mono">
+                               {index + 1} / {SLIDES.length} - Programa JP 2026
+                           </div>
+
+                           {slide.title && slide.type !== 'cover' && slide.type !== 'closing' && (
+                                <div className="mb-10 border-b border-purple-200 pb-4">
+                                    <h2 className="text-4xl font-bold text-slate-900">{slide.title}</h2>
+                                    {slide.subtitle && <p className="text-slate-500 text-xl mt-2">{slide.subtitle}</p>}
+                                </div>
+                            )}
+                            
+                            <div className="flex-1 flex flex-col justify-center">
+                                {renderSlide(slide)}
                             </div>
-                         )}
-                         <div className="flex-1 scale-[0.9] origin-center">
-                            {renderSlide(slide)}
-                         </div>
                       </div>
                   </div>
               ))}
