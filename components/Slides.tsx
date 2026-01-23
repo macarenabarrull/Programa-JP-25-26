@@ -1,6 +1,6 @@
 import React from 'react';
 import { SlideData, SLIDES } from '../constants';
-import { CheckCircle2, ArrowRight, Users, Target, BookOpen, TrendingUp, Calendar, GraduationCap, Clock, Download, FileText, Presentation, Mail, BarChart3, PieChart, Briefcase, DollarSign, Zap, Layers, Compass } from 'lucide-react';
+import { CheckCircle2, ArrowRight, Users, Target, BookOpen, TrendingUp, Calendar, GraduationCap, Clock, Download, FileText, Presentation, Mail, BarChart3, PieChart, Briefcase, DollarSign, Zap, Layers, Compass, Flag, Heart, Sparkles, BrainCircuit, PencilRuler, Search, ClipboardCheck, FileSignature, Rocket } from 'lucide-react';
 import pptxgen from "pptxgenjs";
 import { motion } from "framer-motion";
 
@@ -82,7 +82,7 @@ export const ObjectivesSlide: React.FC<SlideProps> = ({ data }) => {
   return (
     <motion.div className="flex flex-col h-full gap-8 md:gap-12 justify-center" initial="hidden" animate="show" variants={containerVariants}>
       {/* Top Statement */}
-      <motion.div variants={itemVariants} className="text-center max-w-4xl mx-auto">
+      <motion.div variants={itemVariants} className="text-center max-w-4xl mx-auto pt-4 md:pt-0">
         <h2 className="text-3xl md:text-5xl font-light text-slate-900 leading-tight mb-8">
             {data.content.mainGoal.split("12 Jóvenes Profesionales")[0]}
             <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-600 to-purple-600">12 Jóvenes Profesionales</span>
@@ -127,63 +127,92 @@ export const ObjectivesSlide: React.FC<SlideProps> = ({ data }) => {
 };
 
 
-// 2b. Info Slide (Modified for Slide 7: Tighter Right Col)
+// 3. Info Slide (Redesigned Right Column) + 7. Info Slide (Redesigned Stats)
 export const InfoSlide: React.FC<SlideProps> = ({ data }) => {
+  // Slide 3 Styles
+  const featureStyles = [
+    { icon: Flag, color: 'text-fuchsia-600', bg: 'bg-fuchsia-100', border: 'border-fuchsia-200' },
+    { icon: Users, color: 'text-blue-600', bg: 'bg-blue-100', border: 'border-blue-200' },
+    { icon: BrainCircuit, color: 'text-violet-600', bg: 'bg-violet-100', border: 'border-violet-200' },
+    { icon: Heart, color: 'text-rose-500', bg: 'bg-rose-100', border: 'border-rose-200' }
+  ];
+
+  // Slide 7 Styles (Stats/Areas)
+  const statStyles = [
+    { color: 'text-cyan-600', bg: 'bg-cyan-100', border: 'border-cyan-200', ring: 'ring-cyan-50' },
+    { color: 'text-indigo-600', bg: 'bg-indigo-100', border: 'border-indigo-200', ring: 'ring-indigo-50' },
+    { color: 'text-pink-600', bg: 'bg-pink-100', border: 'border-pink-200', ring: 'ring-pink-50' },
+    { color: 'text-orange-600', bg: 'bg-orange-100', border: 'border-orange-200', ring: 'ring-orange-50' },
+  ];
+
   return (
     <motion.div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 h-full items-center" initial="hidden" animate="show" variants={containerVariants}>
-      <div className="lg:col-span-8 space-y-8 lg:space-y-10">
+      <div className="lg:col-span-8 space-y-8 lg:space-y-10 print:space-y-4">
         <motion.p variants={itemVariants} className="text-xl md:text-3xl text-slate-700 font-light leading-relaxed tracking-wide">
           {data.content.description}
         </motion.p>
         
         {data.content.bullets && (
-            <motion.div variants={containerVariants} className="space-y-4 mt-8">
+            <motion.div variants={containerVariants} className="space-y-4 mt-8 print:mt-4 print:gap-y-2">
                 {data.content.bullets.map((item: string, idx: number) => (
-                    <motion.div variants={itemVariants} key={idx} className="flex items-start gap-4 p-4 rounded-2xl hover:bg-white/40 transition-colors border border-transparent hover:border-white/50 group">
+                    <motion.div variants={itemVariants} key={idx} className="flex items-start gap-4 p-4 rounded-2xl hover:bg-white/40 transition-colors border border-transparent hover:border-white/50 group print:py-2">
                         <div className="mt-1 p-1 bg-fuchsia-50 rounded-full group-hover:bg-fuchsia-100 transition-colors">
                              <CheckCircle2 className="text-fuchsia-500 shrink-0" size={20} />
                         </div>
-                        <span className="text-slate-600 text-lg group-hover:text-slate-900 transition-colors">{item}</span>
+                        <span className="text-slate-600 text-lg group-hover:text-slate-900 transition-colors print:text-base">{item}</span>
                     </motion.div>
                 ))}
             </motion.div>
         )}
       </div>
 
-      {/* Reduced right column size slightly (from col-span-5 to col-span-4) for visual breathability */}
-      <motion.div variants={containerVariants} className="lg:col-span-4 flex flex-col gap-4">
+      {/* Redesigned Right Column */}
+      <motion.div variants={containerVariants} className="lg:col-span-4 flex flex-col gap-5">
+        
+        {/* Slide 7: Stats / Areas - Redesigned Premium Cards */}
         {data.content.stats && data.content.stats.map((stat: any, idx: number) => {
             const Icon = stat.icon;
+            const style = statStyles[idx % statStyles.length];
             return (
-                <motion.div variants={itemVariants} key={idx}>
-                    <GlassCard hover className="p-5 flex items-center justify-between">
+                <motion.div variants={itemVariants} key={`stat-${idx}`}>
+                    <div className={`p-5 rounded-2xl bg-white/50 border ${style.border} flex items-center justify-between group hover:scale-[1.02] transition-all duration-300 shadow-sm hover:shadow-md backdrop-blur-md`}>
                         <div className="flex flex-col">
-                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-2">{stat.label}</span>
-                            <span className="text-3xl md:text-4xl font-black text-slate-800 tracking-tighter">
+                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-1">{stat.label}</span>
+                            <span className={`text-xl font-bold ${style.color} leading-tight`}>
                                 {stat.value}
                             </span>
                         </div>
-                        <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-fuchsia-50 to-purple-50 border border-white flex items-center justify-center text-purple-600 shadow-inner">
-                            <Icon size={24} className="drop-shadow-sm" />
+                        <div className={`h-12 w-12 rounded-xl ${style.bg} flex items-center justify-center ${style.color} shadow-sm group-hover:rotate-6 transition-transform`}>
+                            <Icon size={24} />
                         </div>
-                    </GlassCard>
+                    </div>
                 </motion.div>
             )
         })}
 
+        {/* Slide 3: The 4 Value Props - Premium Cards */}
         {data.content.valueProp && (
              <motion.div variants={containerVariants} className="grid grid-cols-2 gap-4">
-                {data.content.valueProp.map((vp: any, idx: number) => (
-                    <motion.div variants={itemVariants} key={idx}>
-                        <GlassCard hover className="p-5 h-full flex flex-col justify-between">
-                             <div className="text-fuchsia-500/30 font-black text-4xl -mb-2">0{idx + 1}</div>
-                             <div>
-                                 <span className="text-slate-900 font-bold block mb-1 text-base">{vp.title}</span>
-                                 <span className="text-slate-500 text-sm leading-snug">{vp.text}</span>
-                             </div>
-                        </GlassCard>
-                    </motion.div>
-                ))}
+                {data.content.valueProp.map((vp: any, idx: number) => {
+                    const style = featureStyles[idx % featureStyles.length];
+                    const Icon = style.icon;
+                    return (
+                        <motion.div variants={itemVariants} key={idx} className="h-full">
+                            <div className={`
+                                h-full p-5 rounded-2xl border ${style.border} bg-white/40 backdrop-blur-md 
+                                flex flex-col justify-between group hover:scale-[1.03] transition-all duration-300 shadow-sm hover:shadow-md
+                            `}>
+                                <div className={`w-10 h-10 rounded-full ${style.bg} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform`}>
+                                    <Icon size={20} className={style.color} />
+                                </div>
+                                <div>
+                                     <span className={`block font-black text-xl mb-1 ${style.color}`}>{vp.title}</span>
+                                     <span className="text-slate-500 text-xs font-medium leading-snug block">{vp.text}</span>
+                                </div>
+                            </div>
+                        </motion.div>
+                    );
+                })}
              </motion.div>
         )}
       </motion.div>
@@ -191,68 +220,101 @@ export const InfoSlide: React.FC<SlideProps> = ({ data }) => {
   );
 };
 
-// 3. Timeline Slide - Fixed Overlap
+// 4. Timeline Slide - Fixed Overlap & Redesigned Premium
 export const TimelineSlide: React.FC<SlideProps> = ({ data }) => {
+  const stepStyles = [
+    { icon: PencilRuler, color: 'text-indigo-600', bg: 'bg-indigo-50', border: 'border-indigo-100', accent: 'bg-indigo-500' },
+    { icon: Search, color: 'text-fuchsia-600', bg: 'bg-fuchsia-50', border: 'border-fuchsia-100', accent: 'bg-fuchsia-500' },
+    { icon: ClipboardCheck, color: 'text-violet-600', bg: 'bg-violet-50', border: 'border-violet-100', accent: 'bg-violet-500' },
+    { icon: FileSignature, color: 'text-rose-600', bg: 'bg-rose-50', border: 'border-rose-100', accent: 'bg-rose-500' },
+    { icon: Rocket, color: 'text-emerald-600', bg: 'bg-emerald-50', border: 'border-emerald-100', accent: 'bg-emerald-500' },
+  ];
+
   return (
-    <motion.div className="h-full flex items-center" initial="hidden" animate="show" variants={containerVariants}>
-        <div className="w-full relative py-8 mt-12 md:mt-16">
+    <motion.div className="h-full flex items-center print:items-start" initial="hidden" animate="show" variants={containerVariants}>
+        <div className="w-full relative py-8 mt-12 md:mt-16 print:mt-8 print:py-4">
             {/* Horizontal Line with Glow */}
-            <motion.div variants={itemVariants} className="absolute top-1/2 left-0 w-full h-1 bg-gradient-to-r from-purple-200 via-fuchsia-400 to-purple-200 rounded-full -translate-y-1/2 hidden md:block shadow-[0_0_15px_rgba(217,70,239,0.4)] opacity-50" />
+            <motion.div variants={itemVariants} className="absolute top-1/2 left-0 w-full h-1 bg-gradient-to-r from-indigo-200 via-fuchsia-400 to-emerald-200 rounded-full -translate-y-1/2 hidden md:block shadow-[0_0_15px_rgba(217,70,239,0.4)] opacity-50" />
             
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
-                {data.content.map((item: any, idx: number) => (
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-6 print:gap-2">
+                {data.content.map((item: any, idx: number) => {
+                    const style = stepStyles[idx % stepStyles.length];
+                    const Icon = style.icon;
+                    return (
                     <motion.div variants={itemVariants} key={idx} className="relative group">
                         {/* Dot - Glowing Orb */}
-                        <div className="hidden md:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white border border-fuchsia-100 items-center justify-center z-10 shadow-[0_0_20px_rgba(217,70,239,0.3)] transition-transform group-hover:scale-110">
-                            <div className="w-3 h-3 bg-fuchsia-500 rounded-full"></div>
+                        <div className={`hidden md:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white border ${style.border} items-center justify-center z-10 shadow-lg transition-transform group-hover:scale-125`}>
+                            <div className={`w-3 h-3 rounded-full ${style.accent}`}></div>
                         </div>
                         
-                        {/* Card - Adjusted positioning to avoid top overlap */}
-                        <div className={`md:absolute md:left-0 md:w-full px-2 ${idx % 2 === 0 ? 'md:bottom-14' : 'md:top-14'}`}>
-                            <GlassCard hover className="p-5 h-full flex flex-col justify-between relative overflow-hidden">
-                                {/* Decor */}
-                                <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-fuchsia-100 to-transparent rounded-bl-full opacity-50" />
+                        {/* Card - Premium Design */}
+                        <div className={`md:absolute md:left-0 md:w-full px-2 ${idx % 2 === 0 ? 'md:bottom-16' : 'md:top-16'}`}>
+                            <div className={`
+                                h-full p-5 rounded-2xl bg-white/60 backdrop-blur-xl border ${style.border} 
+                                shadow-sm hover:shadow-lg transition-all duration-300 group-hover:-translate-y-1
+                                relative overflow-hidden flex flex-col justify-between
+                            `}>
+                                {/* Top Decoration Bar */}
+                                <div className={`absolute top-0 left-0 w-full h-1 ${style.accent} opacity-50`}></div>
                                 
                                 <div>
-                                    <span className="inline-block px-2 py-1 bg-fuchsia-50 rounded-md text-fuchsia-700 font-mono text-xs font-bold uppercase mb-3 border border-fuchsia-100">{item.month}</span>
-                                    <h3 className="text-lg font-bold text-slate-800 mb-2 leading-tight tracking-tight">{item.title}</h3>
+                                    <div className="flex justify-between items-start mb-3">
+                                        <span className={`inline-block px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider ${style.bg} ${style.color}`}>
+                                            {item.month}
+                                        </span>
+                                        <Icon size={16} className={`${style.color} opacity-60`} />
+                                    </div>
+                                    <h3 className="text-base font-bold text-slate-800 leading-tight mb-2">{item.title}</h3>
                                 </div>
-                                <p className="text-slate-500 text-sm border-t border-purple-100/50 pt-3 font-medium leading-relaxed">{item.details}</p>
-                            </GlassCard>
+                                <p className="text-slate-500 text-xs font-medium leading-relaxed border-t border-slate-100 pt-3">{item.details}</p>
+                            </div>
                             
                             {/* Connecting Line */}
-                             <div className={`hidden md:block absolute left-1/2 w-px bg-gradient-to-b from-fuchsia-300 to-transparent -translate-x-1/2 h-14 
+                             <div className={`hidden md:block absolute left-1/2 w-px bg-gradient-to-b from-slate-300 to-transparent -translate-x-1/2 h-16 
                                 ${idx % 2 === 0 ? 'bottom-0 translate-y-full' : 'top-0 -translate-y-full rotate-180'}`} 
                              />
                         </div>
                     </motion.div>
-                ))}
+                )})}
             </div>
         </div>
     </motion.div>
   );
 };
 
-// 4. Grid Slide - Refined Glass
+// 5. Grid Slide - Refined Glass & Colors
 export const GridSlide: React.FC<SlideProps> = ({ data }) => {
+  const gridStyles = [
+    { color: 'text-amber-600', bg: 'bg-amber-50', border: 'border-amber-100', iconBg: 'bg-amber-100' }, // Mañana
+    { color: 'text-blue-600', bg: 'bg-blue-50', border: 'border-blue-100', iconBg: 'bg-blue-100' }, // Almuerzo
+    { color: 'text-purple-600', bg: 'bg-purple-50', border: 'border-purple-100', iconBg: 'bg-purple-100' }, // Tarde
+    { color: 'text-emerald-600', bg: 'bg-emerald-50', border: 'border-emerald-100', iconBg: 'bg-emerald-100' }, // Mentores
+  ];
+
   return (
     <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8" initial="hidden" animate="show" variants={containerVariants}>
       {data.content.items.map((item: any, idx: number) => {
         const Icon = item.icon;
+        const style = gridStyles[idx % gridStyles.length];
+
         return (
             <motion.div variants={itemVariants} key={idx}>
-                <GlassCard hover className="relative p-8 overflow-hidden group h-full">
-                    {/* Background Blob Effect on Hover */}
-                    <div className="absolute -right-10 -top-10 w-40 h-40 bg-fuchsia-100/50 rounded-full blur-3xl transition-all duration-500 group-hover:bg-fuchsia-200/60 group-hover:scale-150" />
+                <div className={`
+                    relative p-8 rounded-3xl overflow-hidden group h-full
+                    bg-white/40 backdrop-blur-xl border ${style.border}
+                    hover:bg-white/60 transition-all duration-300 hover:shadow-xl hover:shadow-purple-900/5
+                `}>
+                    {/* Background Soft Blob */}
+                    <div className={`absolute -right-12 -top-12 w-48 h-48 ${style.iconBg} rounded-full blur-3xl opacity-50 group-hover:scale-125 transition-transform duration-700`} />
                     
                     <div className="relative z-10 flex flex-col h-full items-start">
-                        <div className="w-14 h-14 rounded-2xl bg-white/80 border border-purple-50 flex items-center justify-center mb-6 text-purple-600 shadow-sm group-hover:scale-110 transition-transform duration-300">
-                            <Icon size={28} className="drop-shadow-sm" />
+                        <div className={`w-14 h-14 rounded-2xl ${style.bg} border ${style.border} flex items-center justify-center mb-6 ${style.color} shadow-sm group-hover:scale-110 group-hover:rotate-3 transition-all duration-300`}>
+                            <Icon size={28} />
                         </div>
                         <h3 className="text-2xl font-bold text-slate-900 mb-3 tracking-tight">{item.title}</h3>
                         <p className="text-slate-600 text-base leading-relaxed">{item.desc}</p>
                     </div>
-                </GlassCard>
+                </div>
             </motion.div>
         );
       })}
@@ -260,7 +322,7 @@ export const GridSlide: React.FC<SlideProps> = ({ data }) => {
   );
 };
 
-// 5. Table Slide (Granos) - Centered and Balanced
+// 6. Table Slide (Granos) - Centered and Balanced
 export const TableGranosSlide: React.FC<SlideProps> = () => {
   const months = ['Mes 1', 'Mes 2', 'Mes 3', 'Mes 4', 'Mes 5'];
   const areas = ['Insumos', 'Análisis', 'Consultoría', 'Logística', 'Intel. y Des. Com.'];
@@ -329,7 +391,7 @@ const LegendItem = ({ color, label }: { color: string, label: string }) => (
     </div>
 )
 
-// 6. Table Slide (Capital)
+// 7. Table Slide (Capital)
 export const TableCapitalSlide: React.FC<SlideProps> = () => {
     const data = [
         { month: '1', jp1: 'Finanzas (FP)', jp2: 'BackOffice fyoCapital', jp3: 'Análisis de Mercado', jp4: 'Operadores' },
@@ -365,7 +427,7 @@ export const TableCapitalSlide: React.FC<SlideProps> = () => {
     );
 };
 
-// 7. New Mentoring Slide (Adjusted size and added "Sugerencias")
+// 8. New Mentoring Slide (Adjusted size and added "Sugerencias")
 export const MentoringSplitSlide: React.FC<SlideProps> = ({ data }) => {
     return (
         <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 h-full" initial="hidden" animate="show" variants={containerVariants}>
@@ -446,7 +508,7 @@ export const MentoringSplitSlide: React.FC<SlideProps> = ({ data }) => {
     );
 };
 
-// 8. New Academy Slide - COMPLETE REDESIGN (Vertical Layout, Clean framing)
+// 9. New Academy Slide - COMPLETE REDESIGN (Vertical Layout, Clean framing)
 export const AcademySplitSlide: React.FC<SlideProps> = ({ data }) => {
     // If using new data structure from constants, prioritize it. 
     // Fallback to manual list if not present, but based on request we use the new content.
@@ -521,39 +583,8 @@ export const AcademySplitSlide: React.FC<SlideProps> = ({ data }) => {
     );
 };
 
-// 9. Closing Slide - Premium Finish
+// 10. Closing Slide - Premium Finish
 export const ClosingSlide: React.FC<SlideProps> = ({ data, onPrint }) => {
-
-    const generatePPTX = async () => {
-        const pres = new pptxgen();
-        
-        // Metadata
-        pres.title = "Programa JP 2026-2027";
-        pres.company = "fyo";
-
-        SLIDES.forEach((slide) => {
-            const pptxSlide = pres.addSlide();
-            pptxSlide.background = { color: "F8F7FF" };
-
-            // Header for slides (except cover/closing)
-            if (slide.type !== 'cover' && slide.type !== 'closing') {
-                pptxSlide.addText(slide.title || "", { x: 0.5, y: 0.5, fontSize: 32, bold: true, color: "0F172A", fontFace: "Arial" });
-                if (slide.subtitle) {
-                    pptxSlide.addText(slide.subtitle, { x: 0.5, y: 1.0, fontSize: 18, color: "475569", fontFace: "Arial" });
-                }
-            }
-
-            // Simplified Content Logic for PPTX
-             if (slide.type === 'cover') {
-                pptxSlide.addText("PROGRAMA JP 2026-2027", { x: 1, y: 2.5, w: '80%', fontSize: 54, bold: true, align: 'center', color: "0F172A" });
-            } else if (slide.type === 'info' && slide.content.description) {
-                 pptxSlide.addText(slide.content.description, { x: 0.5, y: 1.8, w: '90%', fontSize: 14, color: "334155" });
-            }
-        });
-
-        pres.writeFile({ fileName: "Programa-JP-2026-2027.pptx" });
-    };
-
     // Fallback for contact structure if not updated in constants for some reason
     const contacts = data.content.contacts || (data.content.contact ? [data.content.contact] : []);
 
@@ -594,13 +625,6 @@ export const ClosingSlide: React.FC<SlideProps> = ({ data, onPrint }) => {
                     >
                         <FileText size={18} />
                         Descargar PDF
-                    </button>
-                    <button 
-                        onClick={generatePPTX}
-                        className="flex items-center gap-2 px-6 py-3 bg-slate-900 text-white border border-slate-900 rounded-xl hover:bg-fuchsia-600 hover:border-fuchsia-600 hover:scale-105 hover:shadow-lg hover:shadow-fuchsia-500/40 transition-all font-bold text-sm"
-                    >
-                        <Presentation size={18} />
-                        Descargar PPTX
                     </button>
                  </motion.div>
             </motion.div>
