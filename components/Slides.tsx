@@ -20,26 +20,26 @@ export const CoverSlide: React.FC<SlideProps> = ({ data }) => {
         Talent Program
       </div>
       
-      <h1 className="text-6xl md:text-8xl font-black tracking-tighter text-slate-900 mb-6 leading-[0.9]">
+      <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-slate-900 mb-6 leading-[0.9]">
         PROGRAMA<br />
         <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-600 to-purple-600">JP 2026</span>
         <span className="text-purple-300">_</span>
       </h1>
       
-      <p className="text-2xl md:text-3xl text-slate-600 font-light max-w-2xl border-l-4 border-fuchsia-400 pl-6 my-8">
+      <p className="text-xl md:text-2xl lg:text-3xl text-slate-600 font-light max-w-2xl border-l-4 border-fuchsia-400 pl-6 my-6 md:my-8">
         {data.subtitle}
       </p>
       
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8 w-full max-w-3xl">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 mt-6 md:mt-8 w-full max-w-3xl">
         {data.content.tags.map((tag: string, idx: number) => (
-          <div key={idx} className="flex items-center gap-3 p-4 bg-white/60 border border-purple-100 rounded-lg group hover:border-fuchsia-400 hover:bg-white transition-all shadow-sm">
+          <div key={idx} className="flex items-center gap-3 p-3 md:p-4 bg-white/60 border border-purple-100 rounded-lg group hover:border-fuchsia-400 hover:bg-white transition-all shadow-sm">
             <div className="h-1.5 w-1.5 rounded-full bg-purple-400 group-hover:bg-fuchsia-500 transition-colors" />
-            <span className="text-slate-700 font-medium group-hover:text-slate-900">{tag}</span>
+            <span className="text-slate-700 font-medium group-hover:text-slate-900 text-sm md:text-base">{tag}</span>
           </div>
         ))}
       </div>
 
-       <div className="mt-12 flex items-center gap-4 text-sm font-mono text-purple-900/40">
+       <div className="mt-8 md:mt-12 flex items-center gap-4 text-sm font-mono text-purple-900/40">
          <span>fyo.com</span>
          <span className="w-px h-3 bg-purple-300"></span>
          <span>@somosfyo</span>
@@ -51,36 +51,36 @@ export const CoverSlide: React.FC<SlideProps> = ({ data }) => {
 // 2. Info Slide
 export const InfoSlide: React.FC<SlideProps> = ({ data }) => {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 h-full items-center">
-      <div className="lg:col-span-7 space-y-8">
-        <p className="text-2xl text-slate-700 font-light leading-relaxed">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 h-full items-center">
+      <div className="lg:col-span-7 space-y-6 lg:space-y-8">
+        <p className="text-xl md:text-2xl text-slate-700 font-light leading-relaxed">
           {data.content.description}
         </p>
         
         {data.content.bullets && (
-            <div className="space-y-4 mt-8">
+            <div className="space-y-3 md:space-y-4 mt-6 lg:mt-8">
                 {data.content.bullets.map((item: string, idx: number) => (
-                    <div key={idx} className="flex items-start gap-4 p-4 rounded-xl hover:bg-white/40 transition-colors border border-transparent hover:border-purple-200">
+                    <div key={idx} className="flex items-start gap-3 md:gap-4 p-3 md:p-4 rounded-xl hover:bg-white/40 transition-colors border border-transparent hover:border-purple-200">
                         <CheckCircle2 className="text-fuchsia-500 shrink-0 mt-1" size={24} />
-                        <span className="text-slate-700 text-lg">{item}</span>
+                        <span className="text-slate-700 text-base md:text-lg">{item}</span>
                     </div>
                 ))}
             </div>
         )}
       </div>
 
-      <div className="lg:col-span-5 flex flex-col gap-4">
+      <div className="lg:col-span-5 flex flex-col gap-3 md:gap-4">
         {data.content.stats && data.content.stats.map((stat: any, idx: number) => {
             const Icon = stat.icon;
             return (
-                <div key={idx} className="p-6 bg-white/60 border border-purple-100 rounded-2xl flex items-center justify-between hover:border-fuchsia-300 transition-all shadow-sm group backdrop-blur-md">
+                <div key={idx} className="p-5 md:p-6 bg-white/60 border border-purple-100 rounded-2xl flex items-center justify-between hover:border-fuchsia-300 transition-all shadow-sm group backdrop-blur-md">
                     <div className="flex flex-col">
                         <span className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">{stat.label}</span>
                         <span className="text-3xl md:text-4xl font-black text-slate-900 group-hover:text-fuchsia-600 transition-colors leading-none">
                             {stat.value}
                         </span>
                     </div>
-                    <div className="h-12 w-12 rounded-full bg-purple-50 flex items-center justify-center text-purple-600 group-hover:text-white group-hover:bg-fuchsia-500 transition-all shrink-0 ml-4">
+                    <div className="h-10 w-10 md:h-12 md:w-12 rounded-full bg-purple-50 flex items-center justify-center text-purple-600 group-hover:text-white group-hover:bg-fuchsia-500 transition-all shrink-0 ml-4">
                         <Icon size={24} />
                     </div>
                 </div>
@@ -88,13 +88,13 @@ export const InfoSlide: React.FC<SlideProps> = ({ data }) => {
         })}
 
         {data.content.valueProp && (
-             <div className="grid grid-cols-2 gap-4">
+             <div className="grid grid-cols-2 gap-3 md:gap-4">
                 {data.content.valueProp.map((vp: any, idx: number) => (
-                    <div key={idx} className="p-5 rounded-2xl bg-white/60 border border-purple-100 flex flex-col gap-3 hover:-translate-y-1 transition-transform duration-300 backdrop-blur-md shadow-sm">
+                    <div key={idx} className="p-4 md:p-5 rounded-2xl bg-white/60 border border-purple-100 flex flex-col gap-2 md:gap-3 hover:-translate-y-1 transition-transform duration-300 backdrop-blur-md shadow-sm">
                          <div className="text-fuchsia-500 font-bold text-lg">0{idx + 1}</div>
                          <div>
-                             <span className="text-slate-900 font-bold block mb-1">{vp.title}</span>
-                             <span className="text-slate-600 text-sm leading-snug">{vp.text}</span>
+                             <span className="text-slate-900 font-bold block mb-1 text-sm md:text-base">{vp.title}</span>
+                             <span className="text-slate-600 text-xs md:text-sm leading-snug">{vp.text}</span>
                          </div>
                     </div>
                 ))}
@@ -105,7 +105,7 @@ export const InfoSlide: React.FC<SlideProps> = ({ data }) => {
   );
 };
 
-// 3. Timeline Slide
+// 3. Timeline Slide (Minor text sizing for harmony)
 export const TimelineSlide: React.FC<SlideProps> = ({ data }) => {
   return (
     <div className="h-full flex items-center">
@@ -120,11 +120,11 @@ export const TimelineSlide: React.FC<SlideProps> = ({ data }) => {
                         <div className="hidden md:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-white border-4 border-fuchsia-500 z-10 group-hover:scale-125 transition-transform shadow-[0_0_15px_rgba(217,70,239,0.3)]"></div>
                         
                         {/* Card */}
-                        <div className={`md:absolute md:left-0 md:w-full p-4 ${idx % 2 === 0 ? 'md:bottom-10 md:pb-8' : 'md:top-10 md:pt-8'}`}>
-                            <div className="p-5 bg-white/70 border border-purple-100 rounded-xl hover:border-fuchsia-400 transition-colors h-full flex flex-col justify-between group-hover:bg-white group-hover:shadow-md backdrop-blur-md">
+                        <div className={`md:absolute md:left-0 md:w-full p-2 md:p-4 ${idx % 2 === 0 ? 'md:bottom-10 md:pb-8' : 'md:top-10 md:pt-8'}`}>
+                            <div className="p-4 md:p-5 bg-white/70 border border-purple-100 rounded-xl hover:border-fuchsia-400 transition-colors h-full flex flex-col justify-between group-hover:bg-white group-hover:shadow-md backdrop-blur-md">
                                 <div>
                                     <span className="text-fuchsia-600 font-mono text-xs font-bold uppercase mb-2 block">{item.month}</span>
-                                    <h3 className="text-lg font-bold text-slate-900 mb-2 leading-tight">{item.title}</h3>
+                                    <h3 className="text-base md:text-lg font-bold text-slate-900 mb-2 leading-tight">{item.title}</h3>
                                 </div>
                                 <p className="text-slate-500 text-xs mt-2 border-t border-purple-100 pt-2">{item.details}</p>
                             </div>
@@ -145,19 +145,19 @@ export const TimelineSlide: React.FC<SlideProps> = ({ data }) => {
 // 4. Grid Slide
 export const GridSlide: React.FC<SlideProps> = ({ data }) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
       {data.content.items.map((item: any, idx: number) => {
         const Icon = item.icon;
         return (
-            <div key={idx} className="relative p-8 bg-white/60 rounded-3xl border border-purple-100 overflow-hidden group hover:border-fuchsia-400 transition-colors backdrop-blur-md shadow-sm">
+            <div key={idx} className="relative p-6 md:p-8 bg-white/60 rounded-3xl border border-purple-100 overflow-hidden group hover:border-fuchsia-400 transition-colors backdrop-blur-md shadow-sm">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-fuchsia-100 rounded-bl-full -mr-8 -mt-8 transition-all group-hover:bg-fuchsia-200 blur-2xl" />
                 
                 <div className="relative z-10">
-                    <div className="w-12 h-12 rounded-xl bg-purple-50 border border-purple-100 flex items-center justify-center mb-6 group-hover:bg-fuchsia-600 group-hover:border-fuchsia-500 group-hover:text-white transition-all text-purple-600">
+                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-purple-50 border border-purple-100 flex items-center justify-center mb-4 md:mb-6 group-hover:bg-fuchsia-600 group-hover:border-fuchsia-500 group-hover:text-white transition-all text-purple-600">
                         <Icon size={24} />
                     </div>
-                    <h3 className="text-2xl font-bold text-slate-900 mb-3">{item.title}</h3>
-                    <p className="text-slate-600 leading-relaxed group-hover:text-slate-800 transition-colors">{item.desc}</p>
+                    <h3 className="text-xl md:text-2xl font-bold text-slate-900 mb-2 md:mb-3">{item.title}</h3>
+                    <p className="text-slate-600 text-sm md:text-base leading-relaxed group-hover:text-slate-800 transition-colors">{item.desc}</p>
                 </div>
             </div>
         );
@@ -184,20 +184,20 @@ export const TableGranosSlide: React.FC<SlideProps> = () => {
         <table className="w-full text-left border-collapse">
           <thead>
             <tr>
-              <th className="p-5 bg-purple-50 text-slate-500 font-medium text-sm border-b border-purple-100 uppercase tracking-wider">Período</th>
+              <th className="p-3 md:p-5 bg-purple-50 text-slate-500 font-medium text-xs md:text-sm border-b border-purple-100 uppercase tracking-wider">Período</th>
               {areas.map((area, i) => (
-                  <th key={i} className="p-5 bg-purple-50/50 text-slate-800 font-bold text-sm border-b border-purple-100 border-l border-purple-100 text-center">{area}</th>
+                  <th key={i} className="p-3 md:p-5 bg-purple-50/50 text-slate-800 font-bold text-xs md:text-sm border-b border-purple-100 border-l border-purple-100 text-center">{area}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             {months.map((month, rowIndex) => (
               <tr key={rowIndex} className="hover:bg-white transition-colors group">
-                <td className="p-5 font-mono text-slate-600 text-sm border-b border-purple-100 bg-purple-50/30 group-hover:text-fuchsia-600">{month}</td>
+                <td className="p-3 md:p-5 font-mono text-slate-600 text-xs md:text-sm border-b border-purple-100 bg-purple-50/30 group-hover:text-fuchsia-600">{month}</td>
                 {matrix[rowIndex].map((group, colIndex) => (
                   <td key={colIndex} className="p-2 border-b border-purple-100 border-l border-purple-100/50 text-center">
                     {group ? (
-                      <div className={`mx-auto w-12 h-10 rounded-md flex items-center justify-center text-sm font-bold shadow-sm transition-all hover:scale-105 text-white
+                      <div className={`mx-auto w-8 h-8 md:w-12 md:h-10 rounded-md flex items-center justify-center text-xs md:text-sm font-bold shadow-sm transition-all hover:scale-105 text-white
                         ${group === 1 ? 'bg-indigo-500' : ''}
                         ${group === 2 ? 'bg-fuchsia-500' : ''}
                         ${group === 3 ? 'bg-purple-600' : ''}
@@ -216,7 +216,7 @@ export const TableGranosSlide: React.FC<SlideProps> = () => {
         </table>
       </div>
       
-      <div className="mt-6 flex flex-wrap gap-6 justify-center">
+      <div className="mt-6 flex flex-wrap gap-4 md:gap-6 justify-center">
           <LegendItem color="bg-indigo-500" label="Grupo 1 (JP 1-2)" />
           <LegendItem color="bg-fuchsia-500" label="Grupo 2 (JP 3-4)" />
           <LegendItem color="bg-purple-600" label="Grupo 3 (JP 5-6)" />
@@ -246,19 +246,19 @@ export const TableCapitalSlide: React.FC<SlideProps> = () => {
         <div className="w-full">
             <div className="overflow-hidden rounded-2xl border border-purple-100 bg-white/60 backdrop-blur-md shadow-sm">
                 <div className="grid grid-cols-5 bg-purple-50 border-b border-purple-100 text-xs font-bold text-slate-500 uppercase tracking-wider">
-                    <div className="p-5">Mes</div>
-                    <div className="p-5 text-fuchsia-600">JP 1</div>
-                    <div className="p-5 text-fuchsia-600">JP 2</div>
-                    <div className="p-5 text-fuchsia-600">JP 3</div>
-                    <div className="p-5 text-fuchsia-600">JP 4</div>
+                    <div className="p-3 md:p-5">Mes</div>
+                    <div className="p-3 md:p-5 text-fuchsia-600">JP 1</div>
+                    <div className="p-3 md:p-5 text-fuchsia-600">JP 2</div>
+                    <div className="p-3 md:p-5 text-fuchsia-600">JP 3</div>
+                    <div className="p-3 md:p-5 text-fuchsia-600">JP 4</div>
                 </div>
                 {data.map((row, idx) => (
-                    <div key={idx} className="grid grid-cols-5 border-b border-purple-100 hover:bg-white transition-colors text-sm group">
-                        <div className="p-5 font-mono text-slate-600 flex items-center bg-purple-50/30 group-hover:text-fuchsia-700">{row.month}</div>
-                        <div className="p-5 text-slate-700 flex items-center border-l border-purple-100">{row.jp1}</div>
-                        <div className="p-5 text-slate-700 flex items-center border-l border-purple-100">{row.jp2}</div>
-                        <div className="p-5 text-slate-700 flex items-center border-l border-purple-100">{row.jp3}</div>
-                        <div className="p-5 text-slate-700 flex items-center border-l border-purple-100">{row.jp4}</div>
+                    <div key={idx} className="grid grid-cols-5 border-b border-purple-100 hover:bg-white transition-colors text-xs md:text-sm group">
+                        <div className="p-3 md:p-5 font-mono text-slate-600 flex items-center bg-purple-50/30 group-hover:text-fuchsia-700">{row.month}</div>
+                        <div className="p-3 md:p-5 text-slate-700 flex items-center border-l border-purple-100">{row.jp1}</div>
+                        <div className="p-3 md:p-5 text-slate-700 flex items-center border-l border-purple-100">{row.jp2}</div>
+                        <div className="p-3 md:p-5 text-slate-700 flex items-center border-l border-purple-100">{row.jp3}</div>
+                        <div className="p-3 md:p-5 text-slate-700 flex items-center border-l border-purple-100">{row.jp4}</div>
                     </div>
                 ))}
             </div>
@@ -270,16 +270,16 @@ export const TableCapitalSlide: React.FC<SlideProps> = () => {
 // 7. New Mentoring Slide (Split 1/2)
 export const MentoringSplitSlide: React.FC<SlideProps> = ({ data }) => {
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 h-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 h-full">
             {/* Left Col: Lists of Mentors */}
-            <div className="space-y-6">
+            <div className="space-y-4 md:space-y-6">
                  {/* Granos */}
-                 <div className="bg-white/60 p-6 rounded-2xl border border-purple-100 backdrop-blur-md hover:border-fuchsia-300 transition-colors">
-                    <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+                 <div className="bg-white/60 p-5 md:p-6 rounded-2xl border border-purple-100 backdrop-blur-md hover:border-fuchsia-300 transition-colors">
+                    <h3 className="text-lg md:text-xl font-bold text-slate-900 mb-3 md:mb-4 flex items-center gap-2">
                         <span className="w-2 h-2 rounded-full bg-green-500"></span>
                         Mentores Granos
                     </h3>
-                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-3">
                         {data.content.granosMentors.map((m: string, i: number) => (
                             <li key={i} className="flex items-center gap-2 text-slate-700">
                                 <CheckCircle2 size={16} className="text-purple-400" />
@@ -290,12 +290,12 @@ export const MentoringSplitSlide: React.FC<SlideProps> = ({ data }) => {
                  </div>
 
                  {/* Capital */}
-                 <div className="bg-white/60 p-6 rounded-2xl border border-purple-100 backdrop-blur-md hover:border-fuchsia-300 transition-colors">
-                    <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+                 <div className="bg-white/60 p-5 md:p-6 rounded-2xl border border-purple-100 backdrop-blur-md hover:border-fuchsia-300 transition-colors">
+                    <h3 className="text-lg md:text-xl font-bold text-slate-900 mb-3 md:mb-4 flex items-center gap-2">
                         <span className="w-2 h-2 rounded-full bg-blue-500"></span>
                         Mentores fyoCapital
                     </h3>
-                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-3">
                         {data.content.capitalMentors.map((m: string, i: number) => (
                             <li key={i} className="flex items-center gap-2 text-slate-700">
                                 <CheckCircle2 size={16} className="text-purple-400" />
@@ -307,23 +307,23 @@ export const MentoringSplitSlide: React.FC<SlideProps> = ({ data }) => {
             </div>
 
             {/* Right Col: Considerations */}
-            <div className="bg-fuchsia-50/50 p-8 rounded-3xl border border-fuchsia-100 flex flex-col justify-center backdrop-blur-md">
-                <div className="mb-6 flex items-center gap-4">
-                     <div className="p-3 bg-white rounded-xl shadow-sm text-fuchsia-600">
-                        <Users size={28} />
+            <div className="bg-fuchsia-50/50 p-6 md:p-8 rounded-3xl border border-fuchsia-100 flex flex-col justify-center backdrop-blur-md">
+                <div className="mb-4 md:mb-6 flex items-center gap-3 md:gap-4">
+                     <div className="p-2 md:p-3 bg-white rounded-xl shadow-sm text-fuchsia-600">
+                        <Users size={24} className="md:w-7 md:h-7" />
                      </div>
-                     <h3 className="text-2xl font-bold text-slate-900">Consideraciones del Rol</h3>
+                     <h3 className="text-xl md:text-2xl font-bold text-slate-900">Consideraciones del Rol</h3>
                 </div>
                 
-                <p className="text-slate-600 mb-8 leading-relaxed">
+                <p className="text-slate-600 mb-6 md:mb-8 leading-relaxed text-sm md:text-base">
                     El rol del mentor es clave para facilitar la inmersión cultural y técnica del JP, brindando guía estratégica más allá del día a día.
                 </p>
 
-                <div className="grid grid-cols-1 gap-4">
+                <div className="grid grid-cols-1 gap-3 md:gap-4">
                     {data.content.considerations.map((item: string, i: number) => (
-                        <div key={i} className="p-4 bg-white rounded-xl border border-purple-50 shadow-sm flex items-center gap-3">
+                        <div key={i} className="p-3 md:p-4 bg-white rounded-xl border border-purple-50 shadow-sm flex items-center gap-3">
                              <div className="w-1.5 h-1.5 rounded-full bg-fuchsia-500"></div>
-                             <span className="text-slate-800 font-medium">{item}</span>
+                             <span className="text-slate-800 font-medium text-sm md:text-base">{item}</span>
                         </div>
                     ))}
                 </div>
@@ -335,22 +335,22 @@ export const MentoringSplitSlide: React.FC<SlideProps> = ({ data }) => {
 // 8. New Academy Slide (Split 2/2)
 export const AcademySplitSlide: React.FC<SlideProps> = ({ data }) => {
     return (
-        <div className="flex flex-col h-full gap-8">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-white/60 p-6 rounded-2xl border border-purple-100 backdrop-blur-md flex flex-col items-center text-center justify-center hover:-translate-y-1 transition-transform">
-                    <Calendar size={32} className="text-fuchsia-500 mb-3" />
-                    <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Cuándo</span>
-                    <span className="text-xl font-bold text-slate-900 mt-1">Viernes 14-18hs</span>
+        <div className="flex flex-col h-full gap-6 md:gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+                <div className="bg-white/60 p-4 md:p-6 rounded-2xl border border-purple-100 backdrop-blur-md flex flex-col items-center text-center justify-center hover:-translate-y-1 transition-transform">
+                    <Calendar size={28} className="text-fuchsia-500 mb-2 md:mb-3 md:w-8 md:h-8" />
+                    <span className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest">Cuándo</span>
+                    <span className="text-lg md:text-xl font-bold text-slate-900 mt-1">Viernes 14-18hs</span>
                 </div>
-                <div className="bg-white/60 p-6 rounded-2xl border border-purple-100 backdrop-blur-md flex flex-col items-center text-center justify-center hover:-translate-y-1 transition-transform">
-                    <GraduationCap size={32} className="text-purple-500 mb-3" />
-                    <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Frecuencia</span>
-                    <span className="text-xl font-bold text-slate-900 mt-1">2 Módulos / Sem</span>
+                <div className="bg-white/60 p-4 md:p-6 rounded-2xl border border-purple-100 backdrop-blur-md flex flex-col items-center text-center justify-center hover:-translate-y-1 transition-transform">
+                    <GraduationCap size={28} className="text-purple-500 mb-2 md:mb-3 md:w-8 md:h-8" />
+                    <span className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest">Frecuencia</span>
+                    <span className="text-lg md:text-xl font-bold text-slate-900 mt-1">2 Módulos / Sem</span>
                 </div>
-                <div className="bg-white/60 p-6 rounded-2xl border border-purple-100 backdrop-blur-md flex flex-col items-center text-center justify-center hover:-translate-y-1 transition-transform">
-                    <Clock size={32} className="text-indigo-500 mb-3" />
-                    <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Evaluación</span>
-                    <span className="text-xl font-bold text-slate-900 mt-1">Examen Mensual</span>
+                <div className="bg-white/60 p-4 md:p-6 rounded-2xl border border-purple-100 backdrop-blur-md flex flex-col items-center text-center justify-center hover:-translate-y-1 transition-transform">
+                    <Clock size={28} className="text-indigo-500 mb-2 md:mb-3 md:w-8 md:h-8" />
+                    <span className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest">Evaluación</span>
+                    <span className="text-lg md:text-xl font-bold text-slate-900 mt-1">Examen Mensual</span>
                 </div>
             </div>
 
@@ -358,16 +358,16 @@ export const AcademySplitSlide: React.FC<SlideProps> = ({ data }) => {
                 <div className="absolute top-0 right-0 w-96 h-96 bg-fuchsia-50 rounded-bl-full -mr-20 -mt-20 pointer-events-none" />
                 
                 <div className="relative z-10 max-w-3xl">
-                    <h3 className="text-3xl font-bold text-slate-900 mb-6">Contenidos del Programa</h3>
-                    <p className="text-lg text-slate-600 leading-relaxed mb-8">
+                    <h3 className="text-2xl md:text-3xl font-bold text-slate-900 mb-4 md:mb-6">Contenidos del Programa</h3>
+                    <p className="text-base md:text-lg text-slate-600 leading-relaxed mb-6 md:mb-8">
                         BackOffice Academy es un espacio de formación técnica intensiva diseñado para nivelar conocimientos y profundizar en la operatoria del negocio.
                     </p>
                     
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
                         {['Circuitos Administrativos', 'Herramientas de Gestión', 'Normativas y Compliance', 'Análisis de Contratos', 'Gestión de Riesgos', 'Logística Aplicada'].map((item, i) => (
                             <div key={i} className="flex items-center gap-3 p-3 rounded-lg hover:bg-white/50 transition-colors">
                                 <CheckCircle2 size={20} className="text-fuchsia-500" />
-                                <span className="text-slate-800 font-medium">{item}</span>
+                                <span className="text-slate-800 font-medium text-sm md:text-base">{item}</span>
                             </div>
                         ))}
                     </div>
@@ -475,41 +475,44 @@ export const ClosingSlide: React.FC<SlideProps> = ({ data, onPrint }) => {
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-tr from-fuchsia-400/20 to-purple-500/20 blur-[120px] rounded-full opacity-60 pointer-events-none" />
 
             <div className="mb-12 relative z-10 animate-fade-in-down">
-                <h1 className="text-6xl md:text-8xl font-black tracking-tighter text-slate-900 mb-6 leading-tight">
+                <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter text-slate-900 mb-6 leading-tight">
                     ¡Muchas gracias!
                 </h1>
-                <p className="text-2xl text-slate-600 font-light">
+                <p className="text-2xl lg:text-3xl text-slate-600 font-light max-w-2xl mx-auto">
                     {data.subtitle}
                 </p>
             </div>
 
-            <div className="relative z-10 flex flex-col items-center gap-6 animate-fade-in-up">
-                 <div className="p-8 bg-white/70 backdrop-blur-md rounded-3xl border border-purple-100 shadow-sm flex flex-col items-center gap-4 hover:-translate-y-2 transition-transform duration-300">
-                    <div className="h-16 w-16 rounded-full bg-fuchsia-100 flex items-center justify-center text-fuchsia-600">
-                        <Mail size={32} />
-                    </div>
-                    <div>
-                        <div className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-1">{data.content.contact.role}</div>
-                        <a href={`mailto:${data.content.contact.email}`} className="text-2xl font-bold text-slate-900 hover:text-fuchsia-600 transition-colors">
-                            {data.content.contact.email}
-                        </a>
+            <div className="relative z-10 flex flex-col items-center gap-8 animate-fade-in-up">
+                 {/* Redesigned Contact Card: Smaller, more subtle */}
+                 <div className="p-6 bg-white/40 backdrop-blur-sm rounded-2xl border border-purple-50/50 shadow-sm flex flex-col items-center gap-3 hover:-translate-y-1 transition-transform duration-300 max-w-sm w-full">
+                    <div className="flex items-center gap-3">
+                         <div className="h-10 w-10 rounded-full bg-fuchsia-50 flex items-center justify-center text-fuchsia-600">
+                             <Mail size={18} />
+                         </div>
+                         <div className="text-left">
+                             <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{data.content.contact.role}</div>
+                             <a href={`mailto:${data.content.contact.email}`} className="text-lg font-bold text-slate-900 hover:text-fuchsia-600 transition-colors">
+                                 {data.content.contact.email}
+                             </a>
+                         </div>
                     </div>
                  </div>
 
                  {/* Download Area */}
-                 <div className="mt-12 flex gap-4 no-print">
+                 <div className="mt-8 flex gap-4 no-print">
                     <button 
                         onClick={onPrint}
-                        className="flex items-center gap-3 px-6 py-4 bg-white border border-slate-200 rounded-xl hover:border-fuchsia-500 hover:text-fuchsia-600 transition-all font-medium text-slate-600 group shadow-sm"
+                        className="flex items-center gap-2 px-5 py-3 bg-white border border-slate-200 rounded-xl hover:border-fuchsia-500 hover:text-fuchsia-600 transition-all font-medium text-slate-600 group shadow-sm text-sm"
                     >
-                        <FileText size={20} className="group-hover:scale-110 transition-transform" />
+                        <FileText size={18} className="group-hover:scale-110 transition-transform" />
                         Descargar PDF
                     </button>
                     <button 
                         onClick={generatePPTX}
-                        className="flex items-center gap-3 px-6 py-4 bg-slate-900 text-white border border-slate-900 rounded-xl hover:bg-fuchsia-600 hover:border-fuchsia-600 transition-all font-medium shadow-lg hover:shadow-fuchsia-500/30"
+                        className="flex items-center gap-2 px-5 py-3 bg-slate-900 text-white border border-slate-900 rounded-xl hover:bg-fuchsia-600 hover:border-fuchsia-600 transition-all font-medium shadow-lg hover:shadow-fuchsia-500/30 text-sm"
                     >
-                        <Presentation size={20} />
+                        <Presentation size={18} />
                         Descargar PPTX
                     </button>
                  </div>

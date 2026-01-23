@@ -54,79 +54,79 @@ export const SlideLayout: React.FC<SlideLayoutProps> = ({
       {/* Grid Pattern Overlay */}
       <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-40 pointer-events-none mix-blend-soft-light print:hidden"></div>
 
-      {/* Header */}
-      <header className="flex-none px-8 py-6 flex justify-between items-center z-10 border-b border-purple-200/50 bg-white/40 backdrop-blur-md print:hidden">
+      {/* Header - Compacted for better visual harmony */}
+      <header className="flex-none px-6 py-4 md:px-8 flex justify-between items-center z-10 border-b border-purple-200/50 bg-white/40 backdrop-blur-md print:hidden h-16">
         <div className="flex items-center gap-4">
           {/* Fyo Logo Placeholder / Brand Name */}
-          <div className="font-black text-2xl tracking-tighter flex items-center gap-1">
+          <div className="font-black text-xl md:text-2xl tracking-tighter flex items-center gap-1">
             <span className="text-slate-800">fyo</span>
             <span className="text-fuchsia-600">.</span>
           </div>
           <div className="h-6 w-px bg-purple-200 mx-2"></div>
           <div className="flex flex-col">
-             <span className="text-xs font-bold tracking-widest text-purple-700 uppercase">Programa JP</span>
-             <span className="text-xs text-slate-500">2026 / 2027</span>
+             <span className="text-[10px] md:text-xs font-bold tracking-widest text-purple-700 uppercase">Programa JP</span>
+             <span className="text-[10px] md:text-xs text-slate-500">2026 / 2027</span>
           </div>
         </div>
         
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3 md:gap-4">
             <button 
               onClick={toggleFullscreen}
-              className="p-2 text-slate-500 hover:text-fuchsia-600 transition-colors"
+              className="p-1.5 md:p-2 text-slate-500 hover:text-fuchsia-600 transition-colors rounded-lg hover:bg-white/50"
               title={isFullscreen ? "Salir de pantalla completa" : "Pantalla completa"}
             >
-              {isFullscreen ? <Minimize size={20} /> : <Maximize size={20} />}
+              {isFullscreen ? <Minimize size={18} /> : <Maximize size={18} />}
             </button>
-             <span className="text-slate-500 font-mono text-sm">{currentSlide + 1} / {totalSlides}</span>
+             <span className="text-slate-500 font-mono text-xs md:text-sm bg-white/50 px-2 py-1 rounded-md">{currentSlide + 1} / {totalSlides}</span>
         </div>
       </header>
 
-      {/* Content Area */}
-      <main className="flex-1 w-full max-w-[1400px] mx-auto px-6 md:px-12 relative z-10 flex flex-col justify-center print:block print:max-w-none print:px-0">
+      {/* Content Area - Maximized vertical space */}
+      <main className="flex-1 w-full max-w-[1400px] mx-auto px-6 md:px-12 relative z-10 flex flex-col justify-center print:block print:max-w-none print:px-0 min-h-0">
         {title && (
-            <div className="mb-8 md:mb-12 animate-fade-in-down print:mb-4">
-                <h1 className="text-3xl md:text-5xl font-bold text-slate-900 tracking-tight leading-tight">
+            <div className="mb-6 md:mb-8 lg:mb-10 animate-fade-in-down print:mb-4 shrink-0">
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 tracking-tight leading-tight">
                   {title}
                   <span className="text-fuchsia-500">.</span>
                 </h1>
                 {subtitle && (
-                    <p className="text-slate-600 text-lg md:text-xl mt-2 font-light max-w-3xl border-l-2 border-fuchsia-400 pl-4">
+                    <p className="text-slate-600 text-base md:text-lg lg:text-xl mt-2 font-light max-w-3xl border-l-2 border-fuchsia-400 pl-4">
                         {subtitle}
                     </p>
                 )}
             </div>
         )}
-        <div className="animate-fade-in-up w-full h-full flex flex-col justify-center print:block">
+        <div className="animate-fade-in-up w-full h-full flex flex-col justify-center print:block overflow-y-auto md:overflow-visible">
             {children}
         </div>
       </main>
 
-      {/* Footer / Navigation Controls */}
-      <footer className="flex-none p-6 md:p-8 flex justify-between items-center z-10 print:hidden">
+      {/* Footer / Navigation Controls - Compacted */}
+      <footer className="flex-none px-6 py-4 md:px-8 md:py-6 flex justify-between items-center z-10 print:hidden h-20 md:h-24">
         <div className="flex gap-1.5">
             {Array.from({ length: totalSlides }).map((_, idx) => (
                 <div 
                     key={idx}
-                    className={`h-1.5 rounded-full transition-all duration-300 ${idx === currentSlide ? 'w-12 bg-fuchsia-500 shadow-lg shadow-fuchsia-500/30' : 'w-3 bg-purple-200'}`}
+                    className={`h-1 md:h-1.5 rounded-full transition-all duration-300 ${idx === currentSlide ? 'w-8 md:w-12 bg-fuchsia-500 shadow-lg shadow-fuchsia-500/30' : 'w-2 md:w-3 bg-purple-200'}`}
                 />
             ))}
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3 md:gap-4">
             <button 
             onClick={onPrev}
             disabled={currentSlide === 0}
-            className="group p-4 rounded-full border border-purple-100 bg-white/50 hover:bg-white hover:border-purple-200 disabled:opacity-30 disabled:hover:bg-transparent transition-all shadow-sm"
+            className="group p-3 md:p-4 rounded-full border border-purple-100 bg-white/50 hover:bg-white hover:border-purple-200 disabled:opacity-30 disabled:hover:bg-transparent transition-all shadow-sm"
             >
-            <ChevronLeft size={20} className="text-slate-600 group-hover:text-purple-600 transition-colors" />
+            <ChevronLeft size={18} className="text-slate-600 group-hover:text-purple-600 transition-colors md:w-5 md:h-5" />
             </button>
 
             <button 
             onClick={onNext}
             disabled={currentSlide === totalSlides - 1}
-            className="group p-4 rounded-full border border-fuchsia-200 bg-fuchsia-100/50 hover:bg-fuchsia-500 hover:text-white disabled:opacity-30 disabled:hover:bg-transparent transition-all shadow-[0_4px_15px_rgba(217,70,239,0.2)] hover:shadow-[0_4px_20px_rgba(217,70,239,0.4)]"
+            className="group p-3 md:p-4 rounded-full border border-fuchsia-200 bg-fuchsia-100/50 hover:bg-fuchsia-500 hover:text-white disabled:opacity-30 disabled:hover:bg-transparent transition-all shadow-[0_4px_15px_rgba(217,70,239,0.2)] hover:shadow-[0_4px_20px_rgba(217,70,239,0.4)]"
             >
-            <ChevronRight size={20} className="text-fuchsia-600 group-hover:text-white transition-colors" />
+            <ChevronRight size={18} className="text-fuchsia-600 group-hover:text-white transition-colors md:w-5 md:h-5" />
             </button>
         </div>
       </footer>
