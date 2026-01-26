@@ -441,23 +441,23 @@ export const TableCapitalSlide: React.FC<SlideProps> = () => {
 export const MentoringSplitSlide: React.FC<SlideProps> = ({ data }) => {
     return (
         <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 h-full" initial="hidden" animate="show" variants={containerVariants}>
-            {/* Left Col: Lists of Mentors - Larger Box */}
-            <motion.div variants={containerVariants} className="flex flex-col justify-center gap-4">
+            {/* Left Col: Lists of Mentors - Compacted for better fit */}
+            <motion.div variants={containerVariants} className="flex flex-col justify-center gap-3">
                  {/* Granos */}
                  <motion.div variants={itemVariants}>
-                    <GlassCard hover className="p-5 md:p-6">
-                        <div className="flex justify-between items-start mb-4">
-                            <h3 className="text-xl md:text-2xl font-bold text-slate-900 flex items-center gap-3">
-                                <span className="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.4)]"></span>
+                    <GlassCard hover className="p-4 md:p-5">
+                        <div className="flex justify-between items-center mb-3">
+                            <h3 className="text-lg md:text-xl font-bold text-slate-900 flex items-center gap-2">
+                                <span className="w-2.5 h-2.5 rounded-full bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.4)]"></span>
                                 Mentores Granos
                             </h3>
-                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest bg-white/50 px-2 py-1 rounded-md border border-white/60">Sugerencias</span>
+                            <span className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-widest bg-white/50 px-2 py-0.5 rounded-md border border-white/60">Sugerencias</span>
                         </div>
-                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-2">
                             {data.content.granosMentors.map((m: string, i: number) => (
-                                <li key={i} className="flex items-center gap-3 text-slate-700 group">
-                                    <div className="h-2 w-2 rounded-full bg-slate-300 group-hover:bg-green-500 transition-colors"></div>
-                                    <span className="text-lg font-medium group-hover:text-slate-900 transition-colors">{m}</span>
+                                <li key={i} className="flex items-center gap-2 text-slate-700 group">
+                                    <div className="h-1.5 w-1.5 rounded-full bg-slate-300 group-hover:bg-green-500 transition-colors"></div>
+                                    <span className="text-base font-medium group-hover:text-slate-900 transition-colors leading-tight">{m}</span>
                                 </li>
                             ))}
                         </ul>
@@ -466,19 +466,19 @@ export const MentoringSplitSlide: React.FC<SlideProps> = ({ data }) => {
 
                  {/* Capital */}
                  <motion.div variants={itemVariants}>
-                    <GlassCard hover className="p-5 md:p-6">
-                        <div className="flex justify-between items-start mb-4">
-                            <h3 className="text-xl md:text-2xl font-bold text-slate-900 flex items-center gap-3">
-                                <span className="w-3 h-3 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.4)]"></span>
+                    <GlassCard hover className="p-4 md:p-5">
+                        <div className="flex justify-between items-center mb-3">
+                            <h3 className="text-lg md:text-xl font-bold text-slate-900 flex items-center gap-2">
+                                <span className="w-2.5 h-2.5 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.4)]"></span>
                                 Mentores fyoCapital
                             </h3>
-                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest bg-white/50 px-2 py-1 rounded-md border border-white/60">Sugerencias</span>
+                            <span className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-widest bg-white/50 px-2 py-0.5 rounded-md border border-white/60">Sugerencias</span>
                         </div>
-                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-2">
                             {data.content.capitalMentors.map((m: string, i: number) => (
-                                <li key={i} className="flex items-center gap-3 text-slate-700 group">
-                                    <div className="h-2 w-2 rounded-full bg-slate-300 group-hover:bg-blue-500 transition-colors"></div>
-                                    <span className="text-lg font-medium group-hover:text-slate-900 transition-colors">{m}</span>
+                                <li key={i} className="flex items-center gap-2 text-slate-700 group">
+                                    <div className="h-1.5 w-1.5 rounded-full bg-slate-300 group-hover:bg-blue-500 transition-colors"></div>
+                                    <span className="text-base font-medium group-hover:text-slate-900 transition-colors leading-tight">{m}</span>
                                 </li>
                             ))}
                         </ul>
@@ -487,19 +487,19 @@ export const MentoringSplitSlide: React.FC<SlideProps> = ({ data }) => {
 
                  {/* Consultoria - New */}
                  <motion.div variants={itemVariants}>
-                    <GlassCard hover className="p-5 md:p-6">
-                        <div className="flex justify-between items-start mb-4">
-                            <h3 className="text-xl md:text-2xl font-bold text-slate-900 flex items-center gap-3">
-                                <span className="w-3 h-3 rounded-full bg-purple-500 shadow-[0_0_10px_rgba(168,85,247,0.4)]"></span>
+                    <GlassCard hover className="p-4 md:p-5">
+                        <div className="flex justify-between items-center mb-3">
+                            <h3 className="text-lg md:text-xl font-bold text-slate-900 flex items-center gap-2">
+                                <span className="w-2.5 h-2.5 rounded-full bg-purple-500 shadow-[0_0_10px_rgba(168,85,247,0.4)]"></span>
                                 Mentores Consultoría
                             </h3>
-                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest bg-white/50 px-2 py-1 rounded-md border border-white/60">Sugerencias</span>
+                            <span className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-widest bg-white/50 px-2 py-0.5 rounded-md border border-white/60">Sugerencias</span>
                         </div>
-                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-2">
                             {data.content.consultoriaMentors?.map((m: string, i: number) => (
-                                <li key={i} className="flex items-center gap-3 text-slate-700 group">
-                                    <div className="h-2 w-2 rounded-full bg-slate-300 group-hover:bg-purple-500 transition-colors"></div>
-                                    <span className="text-lg font-medium group-hover:text-slate-900 transition-colors">{m}</span>
+                                <li key={i} className="flex items-center gap-2 text-slate-700 group">
+                                    <div className="h-1.5 w-1.5 rounded-full bg-slate-300 group-hover:bg-purple-500 transition-colors"></div>
+                                    <span className="text-base font-medium group-hover:text-slate-900 transition-colors leading-tight">{m}</span>
                                 </li>
                             ))}
                         </ul>
