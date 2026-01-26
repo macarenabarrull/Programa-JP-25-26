@@ -77,45 +77,45 @@ export const CoverSlide: React.FC<SlideProps> = ({ data }) => {
   );
 };
 
-// 2. Objectives Slide - NEW DESIGN (Clearer, Visual Hierarchy)
+// 2. Objectives Slide - COMPACT DESIGN TO FIT SCREEN
 export const ObjectivesSlide: React.FC<SlideProps> = ({ data }) => {
   return (
-    <motion.div className="flex flex-col h-full gap-8 md:gap-12 justify-center" initial="hidden" animate="show" variants={containerVariants}>
+    <motion.div className="flex flex-col h-full gap-6 md:gap-8 justify-center" initial="hidden" animate="show" variants={containerVariants}>
       {/* Top Statement */}
-      <motion.div variants={itemVariants} className="text-center max-w-4xl mx-auto pt-4 md:pt-0">
-        <h2 className="text-3xl md:text-5xl font-light text-slate-900 leading-tight mb-8">
+      <motion.div variants={itemVariants} className="text-center max-w-4xl mx-auto pt-2 md:pt-0">
+        <h2 className="text-3xl md:text-5xl font-light text-slate-900 leading-tight mb-4">
             {data.content.mainGoal.split("12 Jóvenes Profesionales")[0]}
             <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-600 to-purple-600">12 Jóvenes Profesionales</span>
             {data.content.mainGoal.split("12 Jóvenes Profesionales")[1]}
         </h2>
-        <div className="flex flex-wrap justify-center gap-4">
+        <div className="flex flex-wrap justify-center gap-3">
             {data.content.pillars.map((pillar: string, idx: number) => (
-                <span key={idx} className="px-4 py-2 rounded-full bg-white/50 border border-white/60 text-slate-600 text-sm md:text-base font-medium shadow-sm flex items-center gap-2">
-                    <CheckCircle2 size={16} className="text-fuchsia-500" />
+                <span key={idx} className="px-3 py-1.5 rounded-full bg-white/50 border border-white/60 text-slate-600 text-sm font-medium shadow-sm flex items-center gap-2">
+                    <CheckCircle2 size={14} className="text-fuchsia-500" />
                     {pillar}
                 </span>
             ))}
         </div>
       </motion.div>
 
-      {/* Cards Grid */}
-      <motion.div variants={containerVariants} className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {/* Cards Grid - Reduced padding */}
+      <motion.div variants={containerVariants} className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
         {data.content.stats.map((stat: any, idx: number) => {
             const Icon = stat.icon;
             return (
                 <motion.div variants={itemVariants} key={idx} className="h-full">
-                    <GlassCard hover className={`h-full p-8 flex flex-col items-center text-center relative overflow-hidden group border-t-4 ${stat.border.replace('border', 'border-t')}`}>
+                    <GlassCard hover className={`h-full p-6 flex flex-col items-center text-center relative overflow-hidden group border-t-4 ${stat.border.replace('border', 'border-t')}`}>
                         {/* Background Decor */}
-                        <div className={`absolute top-0 left-0 w-full h-24 ${stat.bg} opacity-50 rounded-b-[50%] -translate-y-12 group-hover:translate-y-[-10%] transition-transform duration-500`}></div>
+                        <div className={`absolute top-0 left-0 w-full h-20 ${stat.bg} opacity-50 rounded-b-[50%] -translate-y-12 group-hover:translate-y-[-10%] transition-transform duration-500`}></div>
                         
-                        <div className={`relative z-10 w-16 h-16 rounded-2xl bg-white shadow-lg flex items-center justify-center mb-6 ${stat.color} group-hover:scale-110 transition-transform`}>
-                            <Icon size={32} />
+                        <div className={`relative z-10 w-14 h-14 rounded-2xl bg-white shadow-lg flex items-center justify-center mb-4 ${stat.color} group-hover:scale-110 transition-transform`}>
+                            <Icon size={28} />
                         </div>
                         
-                        <h3 className="relative z-10 text-lg font-bold text-slate-500 uppercase tracking-widest mb-2">{stat.label}</h3>
-                        <div className={`relative z-10 text-5xl md:text-6xl font-black tracking-tighter ${stat.color} drop-shadow-sm`}>
+                        <h3 className="relative z-10 text-base font-bold text-slate-500 uppercase tracking-widest mb-1">{stat.label}</h3>
+                        <div className={`relative z-10 text-4xl md:text-5xl font-black tracking-tighter ${stat.color} drop-shadow-sm`}>
                             {stat.value.split(" ")[0]}
-                            <span className="text-lg font-bold ml-1 text-slate-400">JP</span>
+                            <span className="text-base font-bold ml-1 text-slate-400">JP</span>
                         </div>
                     </GlassCard>
                 </motion.div>
@@ -143,23 +143,26 @@ export const InfoSlide: React.FC<SlideProps> = ({ data }) => {
     { color: 'text-indigo-600', bg: 'bg-indigo-100', border: 'border-indigo-200', ring: 'ring-indigo-50' },
     { color: 'text-pink-600', bg: 'bg-pink-100', border: 'border-pink-200', ring: 'ring-pink-50' },
     { color: 'text-orange-600', bg: 'bg-orange-100', border: 'border-orange-200', ring: 'ring-orange-50' },
+    { color: 'text-emerald-600', bg: 'bg-emerald-100', border: 'border-emerald-200', ring: 'ring-emerald-50' }, // Added 5th style
   ];
 
   return (
-    <motion.div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 h-full items-center" initial="hidden" animate="show" variants={containerVariants}>
-      <div className="lg:col-span-8 space-y-8 lg:space-y-10 print:space-y-4">
-        <motion.p variants={itemVariants} className="text-xl md:text-3xl text-slate-700 font-light leading-relaxed tracking-wide">
+    <motion.div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 h-full items-center" initial="hidden" animate="show" variants={containerVariants}>
+      <div className="lg:col-span-8 space-y-6 lg:space-y-8 print:space-y-4">
+        {/* Adjusted Font Size: Smaller as requested */}
+        <motion.p variants={itemVariants} className="text-lg md:text-xl lg:text-2xl text-slate-700 font-light leading-relaxed tracking-wide">
           {data.content.description}
         </motion.p>
         
         {data.content.bullets && (
-            <motion.div variants={containerVariants} className="space-y-4 mt-8 print:mt-4 print:gap-y-2">
+            <motion.div variants={containerVariants} className="space-y-3 mt-6 print:mt-4 print:gap-y-2">
                 {data.content.bullets.map((item: string, idx: number) => (
-                    <motion.div variants={itemVariants} key={idx} className="flex items-start gap-4 p-4 rounded-2xl hover:bg-white/40 transition-colors border border-transparent hover:border-white/50 group print:py-2">
+                    <motion.div variants={itemVariants} key={idx} className="flex items-start gap-3 p-3 rounded-2xl hover:bg-white/40 transition-colors border border-transparent hover:border-white/50 group print:py-2">
                         <div className="mt-1 p-1 bg-fuchsia-50 rounded-full group-hover:bg-fuchsia-100 transition-colors">
-                             <CheckCircle2 className="text-fuchsia-500 shrink-0" size={20} />
+                             <CheckCircle2 className="text-fuchsia-500 shrink-0" size={16} />
                         </div>
-                        <span className="text-slate-600 text-lg group-hover:text-slate-900 transition-colors print:text-base">{item}</span>
+                        {/* Smaller font for bullets too */}
+                        <span className="text-slate-600 text-sm md:text-base group-hover:text-slate-900 transition-colors print:text-base">{item}</span>
                     </motion.div>
                 ))}
             </motion.div>
@@ -167,47 +170,54 @@ export const InfoSlide: React.FC<SlideProps> = ({ data }) => {
       </div>
 
       {/* Redesigned Right Column */}
-      <motion.div variants={containerVariants} className="lg:col-span-4 flex flex-col gap-5">
+      <motion.div variants={containerVariants} className="lg:col-span-4 flex flex-col gap-4">
         
-        {/* Slide 7: Stats / Areas - Redesigned Premium Cards */}
-        {data.content.stats && data.content.stats.map((stat: any, idx: number) => {
-            const Icon = stat.icon;
-            const style = statStyles[idx % statStyles.length];
-            return (
-                <motion.div variants={itemVariants} key={`stat-${idx}`}>
-                    <div className={`p-5 rounded-2xl bg-white/50 border ${style.border} flex items-center justify-between group hover:scale-[1.02] transition-all duration-300 shadow-sm hover:shadow-md backdrop-blur-md`}>
-                        <div className="flex flex-col">
-                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-1">{stat.label}</span>
-                            <span className={`text-xl font-bold ${style.color} leading-tight`}>
-                                {stat.value}
-                            </span>
-                        </div>
-                        <div className={`h-12 w-12 rounded-xl ${style.bg} flex items-center justify-center ${style.color} shadow-sm group-hover:rotate-6 transition-transform`}>
-                            <Icon size={24} />
-                        </div>
-                    </div>
-                </motion.div>
-            )
-        })}
+        {/* Slide 7 & 5: Stats / Areas - Redesigned Premium Cards */}
+        {data.content.stats && (
+            <div className={`grid gap-3 ${data.content.stats.length > 4 ? 'grid-cols-1' : 'grid-cols-1'}`}>
+                {data.content.stats.map((stat: any, idx: number) => {
+                    const Icon = stat.icon;
+                    const style = statStyles[idx % statStyles.length];
+                    // Compact padding if many items
+                    const paddingClass = data.content.stats.length > 4 ? 'p-3' : 'p-4'; 
+                    return (
+                        <motion.div variants={itemVariants} key={`stat-${idx}`}>
+                            <div className={`${paddingClass} rounded-2xl bg-white/50 border ${style.border} flex items-center justify-between group hover:scale-[1.02] transition-all duration-300 shadow-sm hover:shadow-md backdrop-blur-md`}>
+                                <div className="flex flex-col">
+                                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-1">{stat.label}</span>
+                                    <span className={`text-base md:text-lg font-bold ${style.color} leading-tight`}>
+                                        {stat.value}
+                                    </span>
+                                </div>
+                                <div className={`h-10 w-10 rounded-xl ${style.bg} flex items-center justify-center ${style.color} shadow-sm group-hover:rotate-6 transition-transform`}>
+                                    <Icon size={20} />
+                                </div>
+                            </div>
+                        </motion.div>
+                    )
+                })}
+            </div>
+        )}
 
-        {/* Slide 3: The 4 Value Props - Premium Cards */}
+        {/* Slide 3: The 4 Value Props - Premium Cards VERTICAL STACK LARGER */}
         {data.content.valueProp && (
-             <motion.div variants={containerVariants} className="grid grid-cols-2 gap-4">
+             <motion.div variants={containerVariants} className="flex flex-col gap-5">
                 {data.content.valueProp.map((vp: any, idx: number) => {
                     const style = featureStyles[idx % featureStyles.length];
                     const Icon = style.icon;
                     return (
-                        <motion.div variants={itemVariants} key={idx} className="h-full">
+                        <motion.div variants={itemVariants} key={idx} className="w-full">
+                            {/* Larger padding (p-5), larger spacing to make them 'agrandados' */}
                             <div className={`
-                                h-full p-5 rounded-2xl border ${style.border} bg-white/40 backdrop-blur-md 
-                                flex flex-col justify-between group hover:scale-[1.03] transition-all duration-300 shadow-sm hover:shadow-md
+                                w-full p-5 rounded-2xl border ${style.border} bg-white/40 backdrop-blur-md 
+                                flex items-center gap-4 group hover:scale-[1.02] transition-all duration-300 shadow-sm hover:shadow-md
                             `}>
-                                <div className={`w-10 h-10 rounded-full ${style.bg} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform`}>
-                                    <Icon size={20} className={style.color} />
+                                <div className={`w-12 h-12 shrink-0 rounded-full ${style.bg} flex items-center justify-center group-hover:scale-110 transition-transform`}>
+                                    <Icon size={24} className={style.color} />
                                 </div>
                                 <div>
-                                     <span className={`block font-black text-xl mb-1 ${style.color}`}>{vp.title}</span>
-                                     <span className="text-slate-500 text-xs font-medium leading-snug block">{vp.text}</span>
+                                     <span className={`block font-black text-lg ${style.color}`}>{vp.title}</span>
+                                     <span className="text-slate-500 text-xs md:text-sm font-medium leading-snug block">{vp.text}</span>
                                 </div>
                             </div>
                         </motion.div>
@@ -232,7 +242,7 @@ export const TimelineSlide: React.FC<SlideProps> = ({ data }) => {
 
   return (
     <motion.div className="h-full flex items-center print:items-start" initial="hidden" animate="show" variants={containerVariants}>
-        <div className="w-full relative py-8 mt-12 md:mt-16 print:mt-8 print:py-4">
+        <div className="w-full relative py-8 mt-8 md:mt-12 print:mt-8 print:py-4">
             {/* Horizontal Line with Glow */}
             <motion.div variants={itemVariants} className="absolute top-1/2 left-0 w-full h-1 bg-gradient-to-r from-indigo-200 via-fuchsia-400 to-emerald-200 rounded-full -translate-y-1/2 hidden md:block shadow-[0_0_15px_rgba(217,70,239,0.4)] opacity-50" />
             
@@ -250,7 +260,7 @@ export const TimelineSlide: React.FC<SlideProps> = ({ data }) => {
                         {/* Card - Premium Design */}
                         <div className={`md:absolute md:left-0 md:w-full px-2 ${idx % 2 === 0 ? 'md:bottom-16' : 'md:top-16'}`}>
                             <div className={`
-                                h-full p-5 rounded-2xl bg-white/60 backdrop-blur-xl border ${style.border} 
+                                h-full p-4 rounded-2xl bg-white/60 backdrop-blur-xl border ${style.border} 
                                 shadow-sm hover:shadow-lg transition-all duration-300 group-hover:-translate-y-1
                                 relative overflow-hidden flex flex-col justify-between
                             `}>
@@ -258,15 +268,15 @@ export const TimelineSlide: React.FC<SlideProps> = ({ data }) => {
                                 <div className={`absolute top-0 left-0 w-full h-1 ${style.accent} opacity-50`}></div>
                                 
                                 <div>
-                                    <div className="flex justify-between items-start mb-3">
+                                    <div className="flex justify-between items-start mb-2">
                                         <span className={`inline-block px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider ${style.bg} ${style.color}`}>
                                             {item.month}
                                         </span>
-                                        <Icon size={16} className={`${style.color} opacity-60`} />
+                                        <Icon size={14} className={`${style.color} opacity-60`} />
                                     </div>
-                                    <h3 className="text-base font-bold text-slate-800 leading-tight mb-2">{item.title}</h3>
+                                    <h3 className="text-sm font-bold text-slate-800 leading-tight mb-2">{item.title}</h3>
                                 </div>
-                                <p className="text-slate-500 text-xs font-medium leading-relaxed border-t border-slate-100 pt-3">{item.details}</p>
+                                <p className="text-slate-500 text-[10px] font-medium leading-relaxed border-t border-slate-100 pt-2">{item.details}</p>
                             </div>
                             
                             {/* Connecting Line */}
@@ -432,22 +442,22 @@ export const MentoringSplitSlide: React.FC<SlideProps> = ({ data }) => {
     return (
         <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 h-full" initial="hidden" animate="show" variants={containerVariants}>
             {/* Left Col: Lists of Mentors - Larger Box */}
-            <motion.div variants={containerVariants} className="space-y-6 flex flex-col justify-center">
+            <motion.div variants={containerVariants} className="flex flex-col justify-center gap-4">
                  {/* Granos */}
                  <motion.div variants={itemVariants}>
-                    <GlassCard hover className="p-8">
-                        <div className="flex justify-between items-start mb-6">
+                    <GlassCard hover className="p-5 md:p-6">
+                        <div className="flex justify-between items-start mb-4">
                             <h3 className="text-xl md:text-2xl font-bold text-slate-900 flex items-center gap-3">
                                 <span className="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.4)]"></span>
                                 Mentores Granos
                             </h3>
                             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest bg-white/50 px-2 py-1 rounded-md border border-white/60">Sugerencias</span>
                         </div>
-                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
                             {data.content.granosMentors.map((m: string, i: number) => (
                                 <li key={i} className="flex items-center gap-3 text-slate-700 group">
                                     <div className="h-2 w-2 rounded-full bg-slate-300 group-hover:bg-green-500 transition-colors"></div>
-                                    <span className="text-base font-medium group-hover:text-slate-900 transition-colors">{m}</span>
+                                    <span className="text-lg font-medium group-hover:text-slate-900 transition-colors">{m}</span>
                                 </li>
                             ))}
                         </ul>
@@ -456,19 +466,40 @@ export const MentoringSplitSlide: React.FC<SlideProps> = ({ data }) => {
 
                  {/* Capital */}
                  <motion.div variants={itemVariants}>
-                    <GlassCard hover className="p-8">
-                        <div className="flex justify-between items-start mb-6">
+                    <GlassCard hover className="p-5 md:p-6">
+                        <div className="flex justify-between items-start mb-4">
                             <h3 className="text-xl md:text-2xl font-bold text-slate-900 flex items-center gap-3">
                                 <span className="w-3 h-3 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.4)]"></span>
                                 Mentores fyoCapital
                             </h3>
                             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest bg-white/50 px-2 py-1 rounded-md border border-white/60">Sugerencias</span>
                         </div>
-                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
                             {data.content.capitalMentors.map((m: string, i: number) => (
                                 <li key={i} className="flex items-center gap-3 text-slate-700 group">
                                     <div className="h-2 w-2 rounded-full bg-slate-300 group-hover:bg-blue-500 transition-colors"></div>
-                                    <span className="text-base font-medium group-hover:text-slate-900 transition-colors">{m}</span>
+                                    <span className="text-lg font-medium group-hover:text-slate-900 transition-colors">{m}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </GlassCard>
+                 </motion.div>
+
+                 {/* Consultoria - New */}
+                 <motion.div variants={itemVariants}>
+                    <GlassCard hover className="p-5 md:p-6">
+                        <div className="flex justify-between items-start mb-4">
+                            <h3 className="text-xl md:text-2xl font-bold text-slate-900 flex items-center gap-3">
+                                <span className="w-3 h-3 rounded-full bg-purple-500 shadow-[0_0_10px_rgba(168,85,247,0.4)]"></span>
+                                Mentores Consultoría
+                            </h3>
+                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest bg-white/50 px-2 py-1 rounded-md border border-white/60">Sugerencias</span>
+                        </div>
+                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+                            {data.content.consultoriaMentors?.map((m: string, i: number) => (
+                                <li key={i} className="flex items-center gap-3 text-slate-700 group">
+                                    <div className="h-2 w-2 rounded-full bg-slate-300 group-hover:bg-purple-500 transition-colors"></div>
+                                    <span className="text-lg font-medium group-hover:text-slate-900 transition-colors">{m}</span>
                                 </li>
                             ))}
                         </ul>
@@ -515,40 +546,40 @@ export const AcademySplitSlide: React.FC<SlideProps> = ({ data }) => {
     const topics = data.content.topics || ['Circuitos Administrativos', 'Herramientas de Gestión'];
 
     return (
-        <motion.div className="flex flex-col h-full gap-8 md:gap-10 justify-center max-w-6xl mx-auto" initial="hidden" animate="show" variants={containerVariants}>
+        <motion.div className="flex flex-col h-full gap-6 md:gap-8 justify-center max-w-6xl mx-auto" initial="hidden" animate="show" variants={containerVariants}>
             
             {/* Top Cards Row */}
-            <motion.div variants={containerVariants} className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <motion.div variants={containerVariants} className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                 <motion.div variants={itemVariants}>
-                    <GlassCard hover className="p-6 flex flex-row md:flex-col items-center gap-4 text-center md:justify-center">
-                        <div className="p-3 bg-fuchsia-50 rounded-2xl text-fuchsia-600 shrink-0">
-                             <Calendar size={28} />
+                    <GlassCard hover className="p-4 flex flex-row md:flex-col items-center gap-3 text-center md:justify-center">
+                        <div className="p-2 bg-fuchsia-50 rounded-2xl text-fuchsia-600 shrink-0">
+                             <Calendar size={24} />
                         </div>
                         <div className="text-left md:text-center">
-                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1">Cuándo</span>
-                            <span className="text-xl md:text-2xl font-bold text-slate-900">Viernes 14-18hs</span>
+                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-0.5">Cuándo</span>
+                            <span className="text-lg md:text-xl font-bold text-slate-900">Viernes 14-18hs</span>
                         </div>
                     </GlassCard>
                 </motion.div>
                 <motion.div variants={itemVariants}>
-                    <GlassCard hover className="p-6 flex flex-row md:flex-col items-center gap-4 text-center md:justify-center">
-                        <div className="p-3 bg-purple-50 rounded-2xl text-purple-600 shrink-0">
-                             <GraduationCap size={28} />
+                    <GlassCard hover className="p-4 flex flex-row md:flex-col items-center gap-3 text-center md:justify-center">
+                        <div className="p-2 bg-purple-50 rounded-2xl text-purple-600 shrink-0">
+                             <GraduationCap size={24} />
                         </div>
                         <div className="text-left md:text-center">
-                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1">Frecuencia</span>
-                            <span className="text-xl md:text-2xl font-bold text-slate-900">2 Módulos / Sem</span>
+                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-0.5">Frecuencia</span>
+                            <span className="text-lg md:text-xl font-bold text-slate-900">2 Módulos / Sem</span>
                         </div>
                     </GlassCard>
                 </motion.div>
                 <motion.div variants={itemVariants}>
-                    <GlassCard hover className="p-6 flex flex-row md:flex-col items-center gap-4 text-center md:justify-center">
-                        <div className="p-3 bg-indigo-50 rounded-2xl text-indigo-600 shrink-0">
-                             <BarChart3 size={28} />
+                    <GlassCard hover className="p-4 flex flex-row md:flex-col items-center gap-3 text-center md:justify-center">
+                        <div className="p-2 bg-indigo-50 rounded-2xl text-indigo-600 shrink-0">
+                             <BarChart3 size={24} />
                         </div>
                         <div className="text-left md:text-center">
-                             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1">Evaluación</span>
-                             <span className="text-xl md:text-2xl font-bold text-slate-900">Examen Mensual</span>
+                             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-0.5">Evaluación</span>
+                             <span className="text-lg md:text-xl font-bold text-slate-900">Examen Mensual</span>
                         </div>
                     </GlassCard>
                 </motion.div>
@@ -556,23 +587,23 @@ export const AcademySplitSlide: React.FC<SlideProps> = ({ data }) => {
 
             {/* Bottom Content Area */}
             <motion.div variants={itemVariants} className="flex-1">
-                <GlassCard className="h-full p-8 md:p-10 relative overflow-hidden flex flex-col justify-center">
+                <GlassCard className="h-full p-6 relative overflow-hidden flex flex-col justify-center">
                      {/* Decor */}
                     <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-gradient-to-bl from-purple-100/60 to-transparent rounded-full -mr-20 -mt-20 pointer-events-none blur-3xl" />
 
                     <div className="relative z-10 w-full">
-                        <div className="mb-8 border-b border-purple-100 pb-6">
-                            <h3 className="text-3xl font-bold text-slate-900 mb-4 tracking-tight">Contenidos del Programa</h3>
-                             <p className="text-xl text-slate-600 leading-relaxed font-light max-w-4xl">
-                                Espacio de formación técnica intensiva diseñado para nivelar conocimientos y profundizar en la operatoria, combinando teoría con casos prácticos reales.
+                        <div className="mb-4 border-b border-purple-100 pb-3">
+                            <h3 className="text-2xl font-bold text-slate-900 mb-2 tracking-tight">Contenidos del Programa</h3>
+                             <p className="text-base text-slate-600 leading-relaxed font-light max-w-4xl">
+                                Espacio de formación técnica intensiva diseñado para nivelar conocimientos y profundizar en la operatoria.
                             </p>
                         </div>
                         
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3">
                             {topics.map((item: string, i: number) => (
-                                <div key={i} className="flex items-center gap-3 p-4 rounded-xl border border-purple-50 bg-white/50 hover:bg-white hover:scale-[1.02] transition-all hover:border-fuchsia-200 shadow-sm">
-                                    <div className="w-2.5 h-2.5 rounded-full bg-fuchsia-500 shadow-[0_0_6px_rgba(217,70,239,0.5)] shrink-0"></div>
-                                    <span className="text-slate-800 font-bold text-sm md:text-base">{item}</span>
+                                <div key={i} className="flex items-center gap-2 p-2 rounded-lg border border-purple-50 bg-white/50 hover:bg-white hover:scale-[1.02] transition-all hover:border-fuchsia-200 shadow-sm">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-fuchsia-500 shadow-[0_0_4px_rgba(217,70,239,0.5)] shrink-0"></div>
+                                    <span className="text-slate-800 font-bold text-xs md:text-sm leading-tight">{item}</span>
                                 </div>
                             ))}
                         </div>

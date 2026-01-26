@@ -1,5 +1,5 @@
 
-import { LucideIcon, Users, Target, BookOpen, Briefcase, Calendar, TrendingUp, DollarSign, Award, Clock } from "lucide-react";
+import { LucideIcon, Users, Target, BookOpen, Briefcase, Calendar, TrendingUp, DollarSign, Award, Clock, Layers, BarChart3, Compass, BrainCircuit } from "lucide-react";
 
 export interface SlideData {
   id: string;
@@ -22,7 +22,7 @@ export const SLIDES: SlideData[] = [
   },
   {
     id: 'intro',
-    type: 'objectives', // Changed type for custom design
+    type: 'objectives',
     title: 'Objetivos',
     subtitle: 'Potenciando el ecosistema de negocios',
     content: {
@@ -70,25 +70,51 @@ export const SLIDES: SlideData[] = [
     ]
   },
   {
-    id: 'rotations-granos',
-    type: 'grid',
-    title: 'Rotaciones: Granos y Consultoría',
-    subtitle: 'Estructura Dinámica (8 JPs)',
+    id: 'training-granos',
+    type: 'info',
+    title: 'Capacitación: Granos',
+    subtitle: 'Asignación Full-Time + Formación Específica',
     content: {
-      items: [
-        { title: 'Mañana (09-12hs)', desc: 'Mesa Comercial de Granos. Foco en ejecución y mercado en vivo.', icon: TrendingUp },
-        { title: 'Almuerzo (13-14hs)', desc: 'Espacio de networking informal.', icon: Clock },
-        { title: 'Tarde (14-18hs)', desc: 'Áreas Asignadas (Insumos, Análisis, Logística, etc.). Visión sistémica.', icon: Target },
-        { title: 'Mentores', desc: 'Acompañamiento en duplas para inmersión real.', icon: Users }
+      description: "La asignación principal es Full-Time en la Mesa Comercial, complementada con una semana mensual dedicada exclusivamente a capacitaciones en áreas de soporte.",
+      bullets: [
+        "Rol activo en la Mesa Comercial de Granos.",
+        "1 semana al mes rotativa en áreas técnicas.",
+        "Visión integral de la cadena de valor."
+      ],
+      stats: [
+        { label: 'ÁREA 1', value: 'Insumos', icon: Layers },
+        { label: 'ÁREA 2', value: 'Análisis de Mercado', icon: BarChart3 },
+        { label: 'ÁREA 3', value: 'Logística', icon: Compass },
+        { label: 'ÁREA 4', value: 'Intel. Comercial', icon: BrainCircuit },
+        { label: 'ÁREA 5', value: 'Desarrollo Comercial', icon: TrendingUp }
       ]
     }
   },
   {
-    id: 'matrix-granos',
-    type: 'table-granos',
-    title: 'Matriz de Rotación: Granos',
-    subtitle: '5 Meses - 4 Grupos - 5 Áreas',
-    content: {}
+    id: 'academy-split',
+    type: 'academy-split',
+    title: 'Capacitaciones BackOffice',
+    subtitle: 'Formación técnica transversal',
+    content: {
+        topics: [
+            'Apertura, Cuentas y Boletos',
+            'Confirmaciones',
+            'Descargas',
+            'Aplicaciones',
+            'Parciales',
+            'Notas Rectificatorias',
+            'Depósito',
+            'Calidades y Finales',
+            'Canjes y Finales',
+            'Matba',
+            'Sustentable',
+            'Cobranzas',
+            'Pagos',
+            'fyo Digital',
+            'Créditos',
+            'Mercaderías'
+        ]
+    }
   },
   {
     id: 'rotations-capital',
@@ -96,26 +122,19 @@ export const SLIDES: SlideData[] = [
     title: 'Rotaciones: fyoCapital',
     subtitle: 'Inmersión Full-Time (4 JPs)',
     content: {
-      description: "A diferencia de Granos, la inmersión es jornada completa en cada área debido a la complejidad de los instrumentos financieros.",
+      description: "En este caso, la inmersión se plantea como jornada completa en cada área, para acompañar adecuadamente el proceso de aprendizaje sobre los instrumentos financieros.",
       bullets: [
         "Rotación mensual por área específica.",
         "Cobertura total de las 4 áreas clave.",
         "Mayor profundidad técnica necesaria para finanzas."
       ],
       stats: [
-        { label: 'ÁREA 1', value: 'Finanzas (FP)', icon: Target, color: 'text-indigo-600' },
-        { label: 'ÁREA 2', value: 'BackOffice fyoCapital', icon: BookOpen, color: 'text-indigo-600' },
-        { label: 'ÁREA 3', value: 'Análisis de Mercado', icon: TrendingUp, color: 'text-indigo-600' },
-        { label: 'ÁREA 4', value: 'Operadores', icon: Users, color: 'text-indigo-600' }
+        { label: 'ÁREA 1', value: 'Finanzas (FP)', icon: Target },
+        { label: 'ÁREA 2', value: 'BackOffice fyoCapital', icon: BookOpen },
+        { label: 'ÁREA 3', value: 'Análisis de Mercado', icon: TrendingUp },
+        { label: 'ÁREA 4', value: 'Operadores', icon: Users }
       ]
     }
-  },
-  {
-    id: 'matrix-capital',
-    type: 'table-capital',
-    title: 'Matriz de Rotación: fyoCapital',
-    subtitle: 'Programa JP 25-26',
-    content: {}
   },
   {
     id: 'mentoring-split',
@@ -123,31 +142,17 @@ export const SLIDES: SlideData[] = [
     title: 'Mentoreo',
     subtitle: 'Acompañamiento estratégico',
     content: {
-        granosMentors: ['Gastón Colombres', 'Augusto Theiler', 'Iván Ratner', 'José Rainaudo', 'Juan Fagnano', 'Mateo Beli'],
+        // Interleaved for Row-Fill Grid to appear as Columns: 
+        // Row 1: Left (Augusto), Right (Mateo)
+        // Row 2: Left (Ivan), Right (Jose)
+        // Row 3: Left (Gaston), Right (Juan)
+        granosMentors: ['Augusto Theiler', 'Mateo Beli', 'Iván Ratner', 'José Rainaudo', 'Gastón Colombres', 'Juan Fagnano'],
         capitalMentors: ['Martín Rissi', 'Inés Dumas', 'Stefania Lattuga', 'Ángeles Tirelli', 'Fabricio Casanova'],
+        consultoriaMentors: ['Giuliana Quirici', 'A definir'],
         considerations: [
             "Feedback Mensual (45 min)",
             "Seguimiento de carrera",
             "Espacio de networking"
-        ]
-    }
-  },
-  {
-    id: 'academy-split',
-    type: 'academy-split',
-    title: 'BackOffice Academy',
-    subtitle: 'Capacitación técnica intensiva',
-    content: {
-        topics: [
-            'Apertura de Cuentas y Boletos',
-            'Canje y Finales',
-            'Mercadería',
-            'Pagos y Cobranzas',
-            'Matba Rofex',
-            'fyoDigital',
-            'Aplicaciones',
-            'Normativas y Compliance',
-            'Entre otros...'
         ]
     }
   },
