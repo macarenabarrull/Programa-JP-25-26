@@ -13,6 +13,7 @@ import {
   AcademySplitSlide,
   ClosingSlide
 } from './components/Slides';
+import { ReportView } from './components/ReportView';
 
 const App: React.FC = () => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
@@ -81,47 +82,9 @@ const App: React.FC = () => {
 
   const currentSlideData = SLIDES[currentSlideIndex];
 
-  // If printing, render ALL slides in a list
+  // If printing, render the clean Report View
   if (isPrinting) {
-      return (
-          <div className="w-full bg-[#f8f7ff] text-slate-900">
-              {SLIDES.map((slide, index) => (
-                  <div key={slide.id} className="print-slide relative overflow-visible page-break-after-always bg-[#f8f7ff]">
-                      {/* 
-                          Use auto height to allow content to expand if needed, 
-                          but min-height ensures it takes up space. 
-                          Scale 0.6 to be safe on A4.
-                      */}
-                      <div 
-                          className="print-content-scale flex flex-col p-8 origin-top-center mx-auto"
-                          style={{ 
-                              width: '1440px', 
-                              minHeight: '900px', 
-                              height: 'auto',
-                              transform: 'scale(0.60)',
-                              marginBottom: '-30%' /* Counteract the white space created by scaling down a large div */
-                          }}
-                      >
-                           {/* Simple Header for Print Context */}
-                           <div className="absolute top-8 left-8 text-sm text-slate-400 font-mono">
-                               {index + 1} / {SLIDES.length} - Programa JP 2026
-                           </div>
-
-                           {slide.title && slide.type !== 'cover' && slide.type !== 'closing' && (
-                                <div className="mb-6 border-b border-purple-200 pb-4">
-                                    <h2 className="text-5xl font-bold text-slate-900">{slide.title}</h2>
-                                    {slide.subtitle && <p className="text-slate-500 text-2xl mt-2">{slide.subtitle}</p>}
-                                </div>
-                            )}
-                            
-                            <div className="flex-1 flex flex-col justify-start pt-4">
-                                {renderSlide(slide)}
-                            </div>
-                      </div>
-                  </div>
-              ))}
-          </div>
-      )
+      return <ReportView slides={SLIDES} />;
   }
 
   // Normal View

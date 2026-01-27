@@ -59,12 +59,15 @@
 
       @media print {
         @page {
+          /* Allow auto to support both portrait/landscape based on content, or default to landscape if user prefers. 
+             Given the report is tabular, landscape usually works well, but 'auto' lets browser decide best fit. */
           size: landscape;
-          margin: 0;
+          margin: 1cm;
         }
         body {
           overflow: visible !important;
-          background-color: #f8f7ff !important;
+          background-color: #ffffff !important;
+          color: #000000 !important;
           -webkit-print-color-adjust: exact !important;
           print-color-adjust: exact !important;
           height: auto !important;
@@ -85,25 +88,6 @@
           width: 100%;
           height: auto;
           overflow: visible;
-        }
-        .print-slide {
-            break-after: page;
-            page-break-after: always;
-            width: 100%;
-            height: 100%; 
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background-color: #f8f7ff !important;
-            overflow: visible !important;
-            position: relative;
-        }
-        .print-content-scale {
-            /* Transform is handled in React style, keeping layout logic there */
-            transform-origin: center top;
-            overflow: visible !important;
         }
       }
     </style>
