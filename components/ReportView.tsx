@@ -114,18 +114,18 @@ export const ReportView: React.FC<ReportViewProps> = ({ slides }) => {
             <Users size={12} /> 3. Estructura y Asignaciones
          </h3>
          
-         <div className="grid grid-cols-2 gap-4">
+         <div className="grid grid-cols-3 gap-3">
             {/* Granos */}
-            <div className="bg-slate-50 p-2.5 rounded border border-slate-200">
+            <div className="bg-slate-50 p-2 rounded border border-slate-200 flex flex-col h-full">
                 <div className="flex justify-between items-center mb-1.5 border-b border-slate-200 pb-1">
-                    <h4 className="font-bold text-[10px] text-slate-800 uppercase">Mesa de Granos</h4>
-                    <span className="bg-slate-800 text-white text-[9px] font-bold px-1.5 py-0.5 rounded">6 VACANTES</span>
+                    <h4 className="font-bold text-[9px] text-slate-800 uppercase">Mesa de Granos</h4>
+                    <span className="bg-slate-800 text-white text-[8px] font-bold px-1 py-0.5 rounded">6 VAC</span>
                 </div>
-                <p className="text-[9px] text-slate-600 mb-2 leading-tight text-justify">
-                    {granos.content.description} Se prioriza la visión integral de la cadena de valor mediante rotaciones técnicas.
+                <p className="text-[9px] text-slate-600 mb-2 leading-tight text-justify flex-grow">
+                    Asignación Full-Time en Mesa Comercial + 1 semana mensual de rotación técnica.
                 </p>
                 <div>
-                    <span className="text-[9px] font-bold text-slate-500 uppercase block mb-1">Áreas de Inmersión:</span>
+                    <span className="text-[8px] font-bold text-slate-500 uppercase block mb-0.5">Rotaciones:</span>
                     <div className="flex flex-wrap gap-1">
                         {granos.content.stats.map((s: any) => (
                             <span key={s.label} className="text-[8px] font-semibold border border-slate-300 px-1 py-0.5 bg-white text-slate-700 rounded-sm">
@@ -137,18 +137,39 @@ export const ReportView: React.FC<ReportViewProps> = ({ slides }) => {
             </div>
 
             {/* Capital */}
-            <div className="bg-slate-50 p-2.5 rounded border border-slate-200">
+            <div className="bg-slate-50 p-2 rounded border border-slate-200 flex flex-col h-full">
                 <div className="flex justify-between items-center mb-1.5 border-b border-slate-200 pb-1">
-                    <h4 className="font-bold text-[10px] text-slate-800 uppercase">fyoCapital</h4>
-                    <span className="bg-slate-800 text-white text-[9px] font-bold px-1.5 py-0.5 rounded">4 VACANTES</span>
+                    <h4 className="font-bold text-[9px] text-slate-800 uppercase">fyoCapital</h4>
+                    <span className="bg-slate-800 text-white text-[8px] font-bold px-1 py-0.5 rounded">4 VAC</span>
                 </div>
-                <p className="text-[9px] text-slate-600 mb-2 leading-tight text-justify">
-                    {capital.content.description} El esquema de rotación mensual asegura profundidad técnica en instrumentos financieros.
+                <p className="text-[9px] text-slate-600 mb-2 leading-tight text-justify flex-grow">
+                    Inmersión total con rotación mensual por cada unidad de negocio financiera.
                 </p>
                 <div>
-                    <span className="text-[9px] font-bold text-slate-500 uppercase block mb-1">Rotaciones Clave:</span>
+                    <span className="text-[8px] font-bold text-slate-500 uppercase block mb-0.5">Áreas:</span>
                     <div className="flex flex-wrap gap-1">
                          {capital.content.stats.map((s: any) => (
+                            <span key={s.label} className="text-[8px] font-semibold border border-slate-300 px-1 py-0.5 bg-white text-slate-700 rounded-sm">
+                                {s.value}
+                            </span>
+                        ))}
+                    </div>
+                </div>
+            </div>
+
+            {/* Consultoría */}
+            <div className="bg-slate-50 p-2 rounded border border-slate-200 flex flex-col h-full">
+                <div className="flex justify-between items-center mb-1.5 border-b border-slate-200 pb-1">
+                    <h4 className="font-bold text-[9px] text-slate-800 uppercase">Consultoría</h4>
+                    <span className="bg-slate-800 text-white text-[8px] font-bold px-1 py-0.5 rounded">2 VAC</span>
+                </div>
+                <p className="text-[9px] text-slate-600 mb-2 leading-tight text-justify flex-grow">
+                   Misma dinámica que Mesa de Granos: asignación comercial + rotaciones soporte.
+                </p>
+                <div>
+                    <span className="text-[8px] font-bold text-slate-500 uppercase block mb-0.5">Rotaciones:</span>
+                    <div className="flex flex-wrap gap-1">
+                        {granos.content.stats.map((s: any) => (
                             <span key={s.label} className="text-[8px] font-semibold border border-slate-300 px-1 py-0.5 bg-white text-slate-700 rounded-sm">
                                 {s.value}
                             </span>
