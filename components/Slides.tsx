@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { SlideData, SLIDES } from '../constants';
 import { CheckCircle2, ArrowRight, Users, Target, BookOpen, TrendingUp, Calendar, GraduationCap, Clock, Download, FileText, Presentation, Mail, BarChart3, PieChart, Briefcase, DollarSign, Zap, Layers, Compass, Flag, Heart, Sparkles, BrainCircuit, PencilRuler, Search, ClipboardCheck, FileSignature, Rocket } from 'lucide-react';
@@ -241,7 +242,7 @@ export const TimelineSlide: React.FC<SlideProps> = ({ data }) => {
   ];
 
   return (
-    <motion.div className="h-full flex items-center print:items-start" initial="hidden" animate="show" variants={containerVariants}>
+    <motion.div className="h-full flex flex-col justify-center print:justify-start" initial="hidden" animate="show" variants={containerVariants}>
         <div className="w-full relative py-8 mt-8 md:mt-12 print:mt-8 print:py-4">
             {/* Horizontal Line with Glow */}
             <motion.div variants={itemVariants} className="absolute top-1/2 left-0 w-full h-1 bg-gradient-to-r from-indigo-200 via-fuchsia-400 to-emerald-200 rounded-full -translate-y-1/2 hidden md:block shadow-[0_0_15px_rgba(217,70,239,0.4)] opacity-50" />
@@ -288,6 +289,18 @@ export const TimelineSlide: React.FC<SlideProps> = ({ data }) => {
                 )})}
             </div>
         </div>
+        
+        <motion.div variants={itemVariants} className="mt-8 md:mt-16 w-full relative z-20 px-4 flex justify-end">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/40 border border-fuchsia-200/50 backdrop-blur-sm shadow-sm transition-all hover:bg-white/60">
+                 <span className="flex h-1.5 w-1.5 relative">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-fuchsia-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-fuchsia-500"></span>
+                 </span>
+                 <p className="text-slate-500 text-[9px] md:text-[10px] font-medium tracking-wide">
+                    Ingreso a la Mesa de Granos: <span className="font-bold text-slate-700">1 de Octubre</span>
+                 </p>
+            </div>
+        </motion.div>
     </motion.div>
   );
 };
