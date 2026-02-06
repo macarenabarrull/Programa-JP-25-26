@@ -85,8 +85,7 @@ export const SLIDES: SlideData[] = [
         { label: 'ÁREA 1', value: 'Insumos', icon: Layers },
         { label: 'ÁREA 2', value: 'Análisis de Mercado', icon: BarChart3 },
         { label: 'ÁREA 3', value: 'Logística', icon: Compass },
-        { label: 'ÁREA 4', value: 'Intel. Comercial', icon: BrainCircuit },
-        { label: 'ÁREA 5', value: 'Desarrollo Comercial', icon: TrendingUp }
+        { label: 'ÁREA 4', value: 'Inteligencia y Desarrollo Comercial', icon: BrainCircuit }
       ]
     }
   },
@@ -125,14 +124,13 @@ export const SLIDES: SlideData[] = [
       description: "En este caso, la inmersión se plantea como jornada completa en cada área, para acompañar adecuadamente el proceso de aprendizaje sobre los instrumentos financieros.",
       bullets: [
         "Rotación mensual por área específica.",
-        "Cobertura total de las 4 áreas clave.",
+        "Cobertura total de las áreas clave.",
         "Mayor profundidad técnica necesaria para finanzas."
       ],
       stats: [
         { label: 'ÁREA 1', value: 'Finanzas (FP)', icon: Target },
         { label: 'ÁREA 2', value: 'BackOffice fyoCapital', icon: BookOpen },
-        { label: 'ÁREA 3', value: 'Análisis de Mercado', icon: TrendingUp },
-        { label: 'ÁREA 4', value: 'Operadores', icon: Users }
+        { label: 'ÁREA 3', value: 'Análisis de Mercado', icon: TrendingUp }
       ]
     }
   },
@@ -142,13 +140,9 @@ export const SLIDES: SlideData[] = [
     title: 'Mentoreo',
     subtitle: 'Acompañamiento estratégico',
     content: {
-        // Interleaved for Row-Fill Grid to appear as Columns: 
-        // Row 1: Left (Augusto), Right (Mateo)
-        // Row 2: Left (Ivan), Right (Jose)
-        // Row 3: Left (Gaston), Right (Juan)
         granosMentors: ['Augusto Theiler', 'Mateo Beli', 'Iván Ratner', 'José Rainaudo', 'Gastón Colombres', 'Juan Fagnano'],
-        capitalMentors: ['Martín Rissi', 'Inés Dumas', 'Stefania Lattuga', 'Ángeles Tirelli', 'Fabricio Casanova'],
-        consultoriaMentors: ['Giuliana Quirici', 'A definir'],
+        capitalMentors: ['Martín Rissi', 'Stefania Lattuga', 'Ángeles Tirelli', 'Fabricio Casanova'],
+        consultoriaMentors: ['Giuliana Quirici', 'Dante Romano'],
         considerations: [
             "Feedback Mensual (45 min)",
             "Seguimiento de carrera",

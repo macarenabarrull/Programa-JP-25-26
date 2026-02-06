@@ -242,8 +242,9 @@ export const TimelineSlide: React.FC<SlideProps> = ({ data }) => {
   ];
 
   return (
-    <motion.div className="h-full flex flex-col justify-center print:justify-start" initial="hidden" animate="show" variants={containerVariants}>
-        <div className="w-full relative py-8 mt-8 md:mt-12 print:mt-8 print:py-4">
+    <motion.div className="h-full flex flex-col justify-center print:justify-start -mt-8 md:-mt-12" initial="hidden" animate="show" variants={containerVariants}>
+        {/* Adjusted top margin to move roadmap up. Removed mt-4 and py-8 to tighten. */}
+        <div className="w-full relative py-4 print:mt-8 print:py-4">
             {/* Horizontal Line with Glow */}
             <motion.div variants={itemVariants} className="absolute top-1/2 left-0 w-full h-1 bg-gradient-to-r from-indigo-200 via-fuchsia-400 to-emerald-200 rounded-full -translate-y-1/2 hidden md:block shadow-[0_0_15px_rgba(217,70,239,0.4)] opacity-50" />
             
@@ -290,7 +291,8 @@ export const TimelineSlide: React.FC<SlideProps> = ({ data }) => {
             </div>
         </div>
         
-        <motion.div variants={itemVariants} className="mt-8 md:mt-16 w-full relative z-20 px-4 flex justify-end">
+        {/* Adjusted margin to ensure it sits below roadmap without overlapping and IS CENTERED */}
+        <motion.div variants={itemVariants} className="mt-8 w-full relative z-20 px-4 flex justify-center">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/40 border border-fuchsia-200/50 backdrop-blur-sm shadow-sm transition-all hover:bg-white/60">
                  <span className="flex h-1.5 w-1.5 relative">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-fuchsia-400 opacity-75"></span>
