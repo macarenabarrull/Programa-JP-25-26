@@ -242,7 +242,7 @@ export const TimelineSlide: React.FC<SlideProps> = ({ data }) => {
   ];
 
   return (
-    <motion.div className="h-full flex flex-col justify-center print:justify-start -mt-8 md:-mt-12" initial="hidden" animate="show" variants={containerVariants}>
+    <motion.div className="h-full flex flex-col justify-center print:justify-start -mt-12 md:-mt-20 pb-12" initial="hidden" animate="show" variants={containerVariants}>
         {/* Adjusted top margin to move roadmap up. Removed mt-4 and py-8 to tighten. */}
         <div className="w-full relative py-4 print:mt-8 print:py-4">
             {/* Horizontal Line with Glow */}

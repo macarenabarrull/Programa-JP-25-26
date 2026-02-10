@@ -130,7 +130,8 @@ export const SLIDES: SlideData[] = [
       stats: [
         { label: 'ÁREA 1', value: 'Finanzas (FP)', icon: Target },
         { label: 'ÁREA 2', value: 'BackOffice fyoCapital', icon: BookOpen },
-        { label: 'ÁREA 3', value: 'Análisis de Mercado', icon: TrendingUp }
+        { label: 'ÁREA 3', value: 'Análisis de Mercado', icon: TrendingUp },
+        { label: 'ÁREA 4', value: 'Inteligencia y Desarrollo Comercial', icon: BrainCircuit }
       ]
     }
   },
