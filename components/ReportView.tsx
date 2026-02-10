@@ -1,7 +1,6 @@
-
 import React from 'react';
 import { SlideData } from '../constants';
-import { Users, BookOpen, Target, Calendar, Layers, ArrowRight } from 'lucide-react';
+import { Users, BookOpen, Target, Calendar, Layers, ArrowRight, BrainCircuit, TrendingUp, DollarSign, Briefcase } from 'lucide-react';
 
 interface ReportViewProps {
   slides: SlideData[];
@@ -10,7 +9,6 @@ interface ReportViewProps {
 export const ReportView: React.FC<ReportViewProps> = ({ slides }) => {
   const findSlide = (id: string) => slides.find(s => s.id === id);
 
-  const cover = findSlide('cover');
   const objectives = findSlide('intro');
   const profile = findSlide('profile');
   const timeline = findSlide('timeline');
@@ -19,213 +17,256 @@ export const ReportView: React.FC<ReportViewProps> = ({ slides }) => {
   const academy = findSlide('academy-split');
   const mentoring = findSlide('mentoring-split');
 
-  const today = new Date().toLocaleDateString('es-AR', { year: 'numeric', month: 'long', day: 'numeric' });
-
-  if (!cover || !objectives || !profile || !timeline || !granos || !capital || !mentoring || !academy) {
-    return <div>Error: Falta información para generar el reporte.</div>;
+  if (!objectives || !profile || !timeline || !granos || !capital || !mentoring || !academy) {
+    return <div className="p-8 text-center text-red-600">Faltan datos para generar el reporte.</div>;
   }
 
-  // Helper for Consultoria logic
+  const today = new Date().toLocaleDateString('es-AR', { day: 'numeric', month: 'long', year: 'numeric' });
+
+  // Helper for Consultoria logic if not explicit in constants
   const consultoriaCount = objectives.content.stats.find((s:any) => s.label === 'Consultoría')?.value || '2 JP';
 
   return (
-    <div className="w-full bg-white text-slate-900 font-sans text-[10px] leading-tight selection:bg-none p-8 max-w-[210mm] mx-auto">
+    <div className="w-full max-w-[210mm] mx-auto bg-white text-slate-900 font-sans selection:bg-fuchsia-100 p-8 md:p-12 print:p-0 print:max-w-none">
       
-      {/* HEADER */}
-      <div className="flex justify-between items-end mb-6 border-b-2 border-slate-900 pb-4">
-        <div>
-           <p className="text-[10px] text-slate-500 font-medium mb-1 uppercase tracking-wider">{today}</p>
-           <h2 className="text-sm font-bold text-slate-700 uppercase tracking-widest">Reporte de Gestión</h2>
-        </div>
-        <div className="text-right">
-            <div className="text-3xl font-black uppercase tracking-tighter leading-none text-slate-900 mb-1">PROGRAMA JP</div>
-            <div className="text-xs font-bold text-slate-500 uppercase tracking-wide">Talentos 2026-2027 | fyo</div>
-        </div>
-      </div>
-      
-      {/* INTRO: 3 PROGRAMAS EN 1 */}
-      <div className="mb-8 p-4 bg-slate-50 rounded-xl border border-slate-200">
-         <div className="flex items-start gap-4">
-            <div className="flex-1">
-                <h3 className="text-sm font-black uppercase text-slate-900 mb-2 flex items-center gap-2">
-                    <Target size={14} className="text-fuchsia-600"/> Visión Estratégica: 3 Perfiles, 1 Ecosistema
-                </h3>
-                <p className="text-[11px] text-slate-700 leading-relaxed text-justify mb-2">
-                    {objectives.content.mainGoal} El programa se estructura para potenciar tres perfiles de negocio distintos, 
-                    unificando la excelencia en la formación base pero especializando la experiencia práctica.
-                </p>
-                <div className="flex gap-4 mt-2">
-                    <span className="px-2 py-1 bg-white border border-slate-200 rounded text-[10px] font-bold text-green-700 uppercase">Mesa de Granos (6 JP)</span>
-                    <span className="px-2 py-1 bg-white border border-slate-200 rounded text-[10px] font-bold text-blue-700 uppercase">fyoCapital (4 JP)</span>
-                    <span className="px-2 py-1 bg-white border border-slate-200 rounded text-[10px] font-bold text-purple-700 uppercase">Consultoría (2 JP)</span>
-                </div>
-            </div>
-            <div className="w-1/3 border-l border-slate-200 pl-4">
-                <h4 className="font-bold text-[10px] uppercase text-slate-500 mb-1">Perfil General Buscado</h4>
-                <ul className="space-y-1">
-                    {profile.content.bullets.slice(0, 3).map((b: string, i: number) => (
-                        <li key={i} className="flex items-start gap-1.5">
-                            <span className="mt-1 w-1 h-1 bg-fuchsia-500 rounded-full shrink-0"></span>
-                            <span className="text-slate-600 leading-snug text-[9px]">{b}</span>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-         </div>
-      </div>
-
-      {/* SECTION 1: LO QUE COINCIDE (COMMON GROUND) */}
-      <div className="mb-8">
-        <h3 className="text-xs font-black uppercase mb-4 pb-1 border-b border-slate-300 text-slate-800 flex items-center gap-2">
-            <Layers size={14} /> Núcleo Común: Roadmap & Formación
-        </h3>
+      {/* --- PAGE 1 --- */}
+      <div className="flex flex-col min-h-[1050px] relative print:h-auto print:block">
         
-        <div className="grid grid-cols-2 gap-8">
-            {/* Timeline */}
+        {/* Header */}
+        <header className="flex justify-between items-end border-b-4 border-fuchsia-600 pb-6 mb-8">
             <div>
-                <h4 className="font-bold text-[10px] uppercase text-slate-500 mb-3 flex items-center gap-1">
-                    <Calendar size={12} /> Cronograma Unificado
-                </h4>
-                <div className="relative border-l border-slate-200 ml-1.5 space-y-4">
-                    {timeline.content.map((item: any, idx: number) => (
-                        <div key={idx} className="relative pl-4">
-                            <div className="absolute -left-1 top-1.5 w-2 h-2 rounded-full bg-slate-300 border-2 border-white"></div>
-                            <span className="text-[9px] font-black uppercase text-fuchsia-600 block mb-0.5">{item.month}</span>
-                            <span className="text-[10px] font-bold text-slate-800 block">{item.title}</span>
-                            <span className="text-[9px] text-slate-500 leading-tight block">{item.details}</span>
+                <h1 className="text-4xl font-black tracking-tighter text-slate-900 mb-2">
+                    PROGRAMA JP <span className="text-fuchsia-600">2026</span>
+                </h1>
+                <p className="text-sm font-bold text-slate-500 uppercase tracking-widest">
+                    Talentos Comerciales & Financieros
+                </p>
+            </div>
+            <div className="text-right">
+                <div className="text-3xl font-bold text-slate-900 tracking-tight">fyo.</div>
+                <div className="text-xs font-medium text-slate-400 mt-1">{today}</div>
+            </div>
+        </header>
+
+        {/* Executive Summary */}
+        <section className="mb-8">
+            <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100 flex gap-8">
+                <div className="flex-1">
+                    <h2 className="text-sm font-black uppercase text-slate-400 mb-3 tracking-widest flex items-center gap-2">
+                        <Target size={16} className="text-fuchsia-500"/> Visión del Programa
+                    </h2>
+                    <p className="text-slate-800 text-sm leading-relaxed text-justify font-medium">
+                        {objectives.content.mainGoal} Buscamos potenciar el ecosistema de negocios integrando perfiles con alta capacidad de aprendizaje y visión comercial.
+                    </p>
+                </div>
+                <div className="w-px bg-slate-200"></div>
+                <div className="w-1/3 space-y-2">
+                    {objectives.content.stats.map((s: any, i: number) => (
+                        <div key={i} className="flex justify-between items-center text-sm">
+                            <span className="font-bold text-slate-600">{s.label}</span>
+                            <span className={`font-black px-2 py-0.5 rounded ${s.bg} ${s.color} text-xs`}>{s.value}</span>
                         </div>
                     ))}
                 </div>
             </div>
+        </section>
 
-            {/* Academy */}
-            <div>
-                 <h4 className="font-bold text-[10px] uppercase text-slate-500 mb-3 flex items-center gap-1">
-                    <BookOpen size={12} /> Capacitación BackOffice (Transversal)
-                </h4>
-                <div className="bg-white border border-slate-200 rounded-lg p-3 shadow-sm">
-                    <p className="text-[9px] text-slate-600 mb-3 italic">
-                        Formación técnica intensiva niveladora para los 12 JPs, independientemente de su asignación.
-                    </p>
-                    <div className="grid grid-cols-2 gap-y-1.5 gap-x-2 mb-3">
-                        {academy.content.topics.slice(0, 10).map((topic: string, i: number) => ( 
-                             <div key={i} className="flex items-center gap-1.5">
-                                <div className="w-1 h-1 bg-slate-400 rounded-full shrink-0"></div>
-                                <span className="text-[9px] font-medium text-slate-700 truncate">{topic}</span>
+        {/* Profile & Roadmap Row */}
+        <div className="grid grid-cols-2 gap-8 mb-8">
+            {/* Profile */}
+            <section>
+                <h2 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2 border-b border-slate-200 pb-2">
+                    <Users size={18} className="text-slate-400"/> Perfil Buscado
+                </h2>
+                <ul className="space-y-3">
+                    {profile.content.bullets.map((item: string, i: number) => (
+                        <li key={i} className="flex items-start gap-3 text-sm text-slate-700 leading-snug">
+                            <div className="mt-1 w-1.5 h-1.5 rounded-full bg-fuchsia-500 shrink-0"></div>
+                            {item}
+                        </li>
+                    ))}
+                </ul>
+            </section>
+
+            {/* Timeline */}
+            <section>
+                <h2 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2 border-b border-slate-200 pb-2">
+                    <Calendar size={18} className="text-slate-400"/> Cronograma
+                </h2>
+                <div className="space-y-4 pl-2 border-l-2 border-slate-100">
+                    {timeline.content.map((t: any, i: number) => (
+                        <div key={i} className="relative pl-4">
+                            <div className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-white border-2 border-slate-300"></div>
+                            <div className="flex flex-col">
+                                <span className="text-xs font-black uppercase text-fuchsia-600">{t.month}</span>
+                                <span className="text-sm font-bold text-slate-800">{t.title}</span>
                             </div>
-                        ))}
-                        <div className="text-[9px] text-slate-400 italic pl-2.5">+ 6 módulos adicionales...</div>
-                    </div>
-                    <div className="flex gap-2 text-[8px] font-bold text-slate-500 uppercase border-t border-slate-100 pt-2">
-                        <span className="px-2 py-0.5 bg-slate-100 rounded">Viernes 14-18hs</span>
-                        <span className="px-2 py-0.5 bg-slate-100 rounded">Examen Mensual</span>
-                    </div>
+                        </div>
+                    ))}
+                </div>
+            </section>
+        </div>
+
+        {/* Academy / Core */}
+        <section className="flex-1">
+            <h2 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2 border-b border-slate-200 pb-2">
+                <BookOpen size={18} className="text-slate-400"/> Formación Común (Academy)
+            </h2>
+            <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+                <p className="text-sm text-slate-600 mb-4 italic">
+                    Espacio de nivelación técnica transversal a todos los perfiles (Viernes 14-18hs).
+                </p>
+                <div className="flex flex-wrap gap-2">
+                    {academy.content.topics.map((topic: string, i: number) => (
+                        <span key={i} className="px-2 py-1 bg-slate-50 border border-slate-100 rounded text-xs font-medium text-slate-700">
+                            {topic}
+                        </span>
+                    ))}
                 </div>
             </div>
+        </section>
+
+        {/* Footer Page 1 */}
+        <div className="mt-auto pt-6 border-t border-slate-200 flex justify-between text-xs text-slate-400 print:hidden">
+            <span>Página 1 de 2</span>
+            <span>Documento Confidencial</span>
         </div>
       </div>
 
-      {/* SECTION 2: LO QUE SE DIFERENCIA (SPECIFIC TRACKS) */}
-      <div>
-         <h3 className="text-xs font-black uppercase mb-4 pb-1 border-b border-slate-300 text-slate-800 flex items-center gap-2">
-            <Users size={14} /> Especialización: 3 Tracks de Carrera
-         </h3>
+      <div className="print:block h-8 hidden"></div> {/* Spacer for screen view */}
+      <div className="print:break-before-page"></div>
 
-         <div className="grid grid-cols-3 gap-4">
+      {/* --- PAGE 2 --- */}
+      <div className="flex flex-col min-h-[1050px] relative print:h-auto print:block pt-8 print:pt-0">
+        
+        <h2 className="text-2xl font-black text-slate-900 mb-6 uppercase tracking-tight flex items-center gap-3">
+            <Layers className="text-fuchsia-600" /> Tracks de Especialización
+        </h2>
+
+        <div className="space-y-6">
             
-            {/* TRACK 1: GRANOS */}
-            <div className="border border-green-200 rounded-xl overflow-hidden">
-                <div className="bg-green-50 p-2 border-b border-green-100 flex justify-between items-center">
-                    <h4 className="font-bold text-[10px] text-green-800 uppercase">1. Mesa de Granos</h4>
-                    <span className="bg-green-200 text-green-800 text-[8px] font-bold px-1.5 py-0.5 rounded-full">6 JP</span>
-                </div>
-                <div className="p-3">
-                    <div className="mb-3">
-                        <p className="text-[8px] font-bold text-slate-400 uppercase mb-1">Estructura</p>
-                        <p className="text-[9px] text-slate-700 leading-snug">
-                            <strong>Full-Time Comercial</strong> + 1 semana rotativa mensual en áreas de soporte.
-                        </p>
+            {/* Granos */}
+            <div className="border border-green-200 bg-green-50/30 rounded-2xl p-6 break-inside-avoid">
+                <div className="flex justify-between items-start mb-4">
+                    <div>
+                        <h3 className="text-xl font-bold text-green-800">Mesa de Granos</h3>
+                        <p className="text-sm text-green-700 font-medium">6 Vacantes | Perfil Comercial</p>
                     </div>
-                    <div className="mb-3">
-                         <p className="text-[8px] font-bold text-slate-400 uppercase mb-1">Rotaciones (Soporte)</p>
-                         <ul className="text-[9px] text-slate-600 space-y-0.5">
-                            {granos.content.stats.map((s:any) => (
-                                <li key={s.value} className="flex items-center gap-1">
-                                    <ArrowRight size={8} className="text-green-400" /> {s.value}
+                    <div className="p-2 bg-white rounded-lg shadow-sm text-green-600">
+                        <Users size={20} />
+                    </div>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 className="text-xs font-black uppercase text-green-900/50 mb-2">Dinámica</h4>
+                        <p className="text-sm text-slate-700 mb-3">
+                            {granos.content.description}
+                        </p>
+                        <ul className="text-sm space-y-1">
+                            {granos.content.stats.map((s: any, i:number) => (
+                                <li key={i} className="flex items-center gap-2">
+                                    <ArrowRight size={12} className="text-green-500"/>
+                                    <span className="text-slate-800 font-medium">{s.label}: {s.value}</span>
                                 </li>
                             ))}
-                         </ul>
+                        </ul>
                     </div>
                     <div>
-                        <p className="text-[8px] font-bold text-slate-400 uppercase mb-1">Mentores</p>
-                        <p className="text-[9px] text-slate-600 leading-snug">
-                            {mentoring.content.granosMentors.join(', ')}.
-                        </p>
+                        <h4 className="text-xs font-black uppercase text-green-900/50 mb-2">Mentores</h4>
+                        <div className="flex flex-wrap gap-2">
+                            {mentoring.content.granosMentors.map((m:string, i:number) => (
+                                <span key={i} className="px-2 py-1 bg-white border border-green-100 text-green-800 text-xs font-bold rounded shadow-sm">
+                                    {m}
+                                </span>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
 
-            {/* TRACK 2: CAPITAL */}
-            <div className="border border-blue-200 rounded-xl overflow-hidden">
-                <div className="bg-blue-50 p-2 border-b border-blue-100 flex justify-between items-center">
-                    <h4 className="font-bold text-[10px] text-blue-800 uppercase">2. fyoCapital</h4>
-                    <span className="bg-blue-200 text-blue-800 text-[8px] font-bold px-1.5 py-0.5 rounded-full">4 JP</span>
-                </div>
-                 <div className="p-3">
-                    <div className="mb-3">
-                        <p className="text-[8px] font-bold text-slate-400 uppercase mb-1">Estructura</p>
-                        <p className="text-[9px] text-slate-700 leading-snug">
-                            <strong>Rotación Full-Time</strong> mensual por cada unidad de negocio financiera.
-                        </p>
+            {/* Capital */}
+            <div className="border border-blue-200 bg-blue-50/30 rounded-2xl p-6 break-inside-avoid">
+                <div className="flex justify-between items-start mb-4">
+                    <div>
+                        <h3 className="text-xl font-bold text-blue-800">fyoCapital</h3>
+                        <p className="text-sm text-blue-700 font-medium">4 Vacantes | Perfil Financiero</p>
                     </div>
-                    <div className="mb-3">
-                         <p className="text-[8px] font-bold text-slate-400 uppercase mb-1">Áreas de Rotación</p>
-                         <ul className="text-[9px] text-slate-600 space-y-0.5">
-                            {capital.content.stats.map((s:any) => (
-                                <li key={s.value} className="flex items-center gap-1">
-                                    <ArrowRight size={8} className="text-blue-400" /> {s.value}
+                    <div className="p-2 bg-white rounded-lg shadow-sm text-blue-600">
+                        <DollarSign size={20} />
+                    </div>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 className="text-xs font-black uppercase text-blue-900/50 mb-2">Dinámica</h4>
+                        <p className="text-sm text-slate-700 mb-3">
+                            {capital.content.description}
+                        </p>
+                        <ul className="text-sm space-y-1">
+                            {capital.content.stats.map((s: any, i:number) => (
+                                <li key={i} className="flex items-center gap-2">
+                                    <ArrowRight size={12} className="text-blue-500"/>
+                                    <span className="text-slate-800 font-medium">{s.label}: {s.value}</span>
                                 </li>
                             ))}
-                         </ul>
+                        </ul>
                     </div>
                     <div>
-                        <p className="text-[8px] font-bold text-slate-400 uppercase mb-1">Mentores</p>
-                        <p className="text-[9px] text-slate-600 leading-snug">
-                            {mentoring.content.capitalMentors.join(', ')}.
-                        </p>
+                        <h4 className="text-xs font-black uppercase text-blue-900/50 mb-2">Mentores</h4>
+                        <div className="flex flex-wrap gap-2">
+                            {mentoring.content.capitalMentors.map((m:string, i:number) => (
+                                <span key={i} className="px-2 py-1 bg-white border border-blue-100 text-blue-800 text-xs font-bold rounded shadow-sm">
+                                    {m}
+                                </span>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
 
-            {/* TRACK 3: CONSULTORIA */}
-            <div className="border border-purple-200 rounded-xl overflow-hidden">
-                <div className="bg-purple-50 p-2 border-b border-purple-100 flex justify-between items-center">
-                    <h4 className="font-bold text-[10px] text-purple-800 uppercase">3. Consultoría</h4>
-                    <span className="bg-purple-200 text-purple-800 text-[8px] font-bold px-1.5 py-0.5 rounded-full">{consultoriaCount}</span>
-                </div>
-                 <div className="p-3">
-                    <div className="mb-3">
-                        <p className="text-[8px] font-bold text-slate-400 uppercase mb-1">Estructura</p>
-                        <p className="text-[9px] text-slate-700 leading-snug">
-                            <strong>Full-Time Consultoría</strong> + Rotaciones de soporte (Misma dinámica que Granos).
-                        </p>
+            {/* Consultoria */}
+             <div className="border border-purple-200 bg-purple-50/30 rounded-2xl p-6 break-inside-avoid">
+                <div className="flex justify-between items-start mb-4">
+                    <div>
+                        <h3 className="text-xl font-bold text-purple-800">Consultoría</h3>
+                        <p className="text-sm text-purple-700 font-medium">{consultoriaCount} | Perfil Analítico</p>
                     </div>
-                    <div className="mb-3">
-                         <p className="text-[8px] font-bold text-slate-400 uppercase mb-1">Foco</p>
-                         <p className="text-[9px] text-slate-600">
-                             Asesoramiento comercial, análisis de mercado y estrategias de cobertura.
-                         </p>
+                    <div className="p-2 bg-white rounded-lg shadow-sm text-purple-600">
+                        <Briefcase size={20} />
+                    </div>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 className="text-xs font-black uppercase text-purple-900/50 mb-2">Dinámica</h4>
+                        <p className="text-sm text-slate-700 mb-3">
+                            Full-time en Consultoría con rotaciones de soporte similares a la Mesa de Granos. Foco en asesoramiento y estrategia.
+                        </p>
                     </div>
                     <div>
-                        <p className="text-[8px] font-bold text-slate-400 uppercase mb-1">Mentores</p>
-                        <p className="text-[9px] text-slate-600 leading-snug">
-                            {mentoring.content.consultoriaMentors.join(', ')}.
-                        </p>
+                        <h4 className="text-xs font-black uppercase text-purple-900/50 mb-2">Mentores</h4>
+                        <div className="flex flex-wrap gap-2">
+                            {mentoring.content.consultoriaMentors.map((m:string, i:number) => (
+                                <span key={i} className="px-2 py-1 bg-white border border-purple-100 text-purple-800 text-xs font-bold rounded shadow-sm">
+                                    {m}
+                                </span>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
 
-         </div>
+        </div>
+
+        {/* Closing Contact */}
+        <div className="mt-auto pt-8 flex items-center justify-between border-t-2 border-slate-900">
+             <div>
+                <h4 className="font-bold text-slate-900 text-sm">Talento & Cultura</h4>
+                <p className="text-slate-500 text-xs">talentos@fyo.com</p>
+             </div>
+             <div className="text-right text-xs text-slate-400 print:hidden">
+                Página 2 de 2
+            </div>
+        </div>
+
       </div>
 
     </div>
