@@ -1,6 +1,6 @@
 import React from 'react';
 import { SlideData } from '../constants';
-import { Users, BookOpen, Target, Calendar, Layers, ArrowRight, BrainCircuit, DollarSign, Briefcase, ChevronRight } from 'lucide-react';
+import { Users, BookOpen, Target, Calendar, Layers, ArrowRight, BrainCircuit, DollarSign, Briefcase, Mail } from 'lucide-react';
 
 interface ReportViewProps {
   slides: SlideData[];
@@ -16,43 +16,47 @@ export const ReportView: React.FC<ReportViewProps> = ({ slides }) => {
   const capital = findSlide('rotations-capital');
   const academy = findSlide('academy-split');
   const mentoring = findSlide('mentoring-split');
+  const closing = findSlide('closing');
 
-  if (!objectives || !profile || !timeline || !granos || !capital || !mentoring || !academy) {
+  if (!objectives || !profile || !timeline || !granos || !capital || !mentoring || !academy || !closing) {
     return <div className="p-12 text-center text-red-600 font-bold">Error: Datos incompletos para el reporte.</div>;
   }
 
-  // Helper for Consultoria count
   const consultoriaCount = objectives.content.stats.find((s:any) => s.label === 'Consultoría')?.value || '2 JP';
 
+  // Helper to ensure we don't use english in dates if possible
+  const monthMap: Record<string, string> = {
+      'Enero': 'Enero', 'Febrero': 'Febrero', 'Mar-Abr': 'Marzo-Abril', 'Abril': 'Abril', 'Mayo': 'Mayo'
+  };
+
   const Header = ({ continuation = false }) => (
-    <header className="mb-8">
-        <div className="flex justify-between items-end mb-2">
+    <header className="mb-8 border-b-2 border-slate-900 pb-2">
+        <div className="flex justify-between items-end">
             <div>
-                <h3 className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1">
-                    REPORTE EJECUTIVO PARA LÍDERES {continuation && <span className="text-slate-300">| CONTINUACIÓN</span>}
+                <h3 className="text-[10px] text-slate-500 font-bold uppercase tracking-wider mb-1">
+                    REPORTE EJECUTIVO {continuation && <span className="text-slate-400">| CONTINUACIÓN</span>}
                 </h3>
-                <h1 className="text-2xl font-bold text-slate-900 uppercase tracking-tight leading-none">
-                    PROGRAMA JP 2026–2027
+                <h1 className="text-3xl font-black text-slate-900 uppercase tracking-tight leading-none">
+                    PROGRAMA JP 25-26
                 </h1>
             </div>
             <div className="text-right">
-                <div className="text-4xl font-bold text-slate-200 tracking-tighter leading-none">FYO</div>
+                <div className="text-5xl font-black text-slate-200 tracking-tighter leading-none">fyo<span className="text-fuchsia-600">.</span></div>
                 <div className="text-[9px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">TALENTO Y CULTURA</div>
             </div>
         </div>
-        <div className="w-full h-0.5 bg-slate-900"></div>
     </header>
   );
 
   const Footer = ({ page }: { page: number }) => (
-    <footer className="mt-auto pt-4 flex justify-between items-center text-[9px] text-slate-400 border-t border-slate-100">
-        <div>Programa JP 2026 - Página {page}/2</div>
-        <div>fyo Talento y Cultura</div>
+    <footer className="mt-auto pt-4 flex justify-between items-center text-[9px] text-slate-400 border-t border-slate-200">
+        <div className="font-bold">PROGRAMA JP 25-26</div>
+        <div>Uso Interno | Página {page}/2</div>
     </footer>
   );
 
   return (
-    <div className="w-full bg-white text-slate-800 font-sans text-[10px] leading-relaxed print:p-0">
+    <div className="w-full bg-white text-slate-800 font-sans text-[11px] leading-relaxed print:p-0">
         
       {/* --- PAGE 1 --- */}
       <div className="w-full max-w-[210mm] min-h-[297mm] mx-auto p-[1.5cm] relative flex flex-col bg-white print:w-full print:max-w-none print:min-h-screen">
@@ -60,106 +64,92 @@ export const ReportView: React.FC<ReportViewProps> = ({ slides }) => {
         
         {/* 01. CONTEXTO */}
         <section className="mb-8">
-            <h2 className="text-sm font-bold text-slate-900 uppercase mb-1 flex items-center gap-2">
-                <span className="text-slate-400">01.</span> VISIÓN: 3 PERFILES, 1 ECOSISTEMA
+            <h2 className="text-sm font-black text-slate-900 uppercase mb-2 flex items-center gap-2">
+                <span className="text-fuchsia-600">01.</span> OBJETIVOS Y ALCANCE
             </h2>
-            <p className="text-slate-500 italic mb-4 text-[10px] border-b border-slate-100 pb-2">
-               {objectives.content.mainGoal} El programa unifica la formación base pero especializa la experiencia práctica.
-            </p>
+            <div className="bg-slate-50 p-4 border-l-4 border-slate-900 mb-4">
+                 <p className="text-slate-700 font-medium italic">
+                    "{objectives.content.mainGoal}"
+                 </p>
+            </div>
 
             <div className="grid grid-cols-3 gap-4">
-                {/* Box 1: Granos */}
-                <div className="bg-green-50/50 p-4 rounded-sm">
+                <div className="p-3 border border-slate-200 rounded bg-white">
                     <div className="flex items-center gap-2 mb-2">
-                        <Users size={12} className="text-green-700"/>
-                        <h3 className="font-bold text-slate-800 uppercase text-[9px]">Mesa de Granos</h3>
+                        <Users size={14} className="text-green-600"/>
+                        <h3 className="font-bold text-slate-900 uppercase text-[10px]">Mesa de Granos</h3>
                     </div>
-                    <p className="text-slate-600 text-[9px] leading-snug mb-2">
-                        Perfil comercial con visión de cadena de valor.
-                    </p>
-                    <span className="text-[10px] font-bold text-slate-900">6 Vacantes</span>
+                    <span className="text-lg font-black text-slate-900 block">{objectives.content.stats[0].value}</span>
                 </div>
 
-                {/* Box 2: Capital */}
-                <div className="bg-blue-50/50 p-4 rounded-sm">
+                <div className="p-3 border border-slate-200 rounded bg-white">
                     <div className="flex items-center gap-2 mb-2">
-                        <DollarSign size={12} className="text-blue-700"/>
-                        <h3 className="font-bold text-slate-800 uppercase text-[9px]">fyoCapital</h3>
+                        <DollarSign size={14} className="text-blue-600"/>
+                        <h3 className="font-bold text-slate-900 uppercase text-[10px]">fyoCapital</h3>
                     </div>
-                    <p className="text-slate-600 text-[9px] leading-snug mb-2">
-                        Perfil financiero técnico con rotación específica.
-                    </p>
-                    <span className="text-[10px] font-bold text-slate-900">4 Vacantes</span>
+                    <span className="text-lg font-black text-slate-900 block">{objectives.content.stats[1].value}</span>
                 </div>
 
-                {/* Box 3: Consultoria */}
-                <div className="bg-purple-50/50 p-4 rounded-sm">
+                <div className="p-3 border border-slate-200 rounded bg-white">
                     <div className="flex items-center gap-2 mb-2">
-                        <Briefcase size={12} className="text-purple-700"/>
-                        <h3 className="font-bold text-slate-800 uppercase text-[9px]">Consultoría</h3>
+                        <Briefcase size={14} className="text-purple-600"/>
+                        <h3 className="font-bold text-slate-900 uppercase text-[10px]">Consultoría</h3>
                     </div>
-                    <p className="text-slate-600 text-[9px] leading-snug mb-2">
-                        Perfil analítico enfocado en estrategia de mercado.
-                    </p>
-                    <span className="text-[10px] font-bold text-slate-900">{consultoriaCount}</span>
+                    <span className="text-lg font-black text-slate-900 block">{consultoriaCount}</span>
                 </div>
             </div>
         </section>
 
         {/* 02. PERFIL */}
         <section className="mb-8">
-            <h2 className="text-sm font-bold text-slate-900 uppercase mb-4 flex items-center gap-2">
-                <span className="text-slate-400">02.</span> DEFINICIÓN: PERFIL DEL CANDIDATO
+            <h2 className="text-sm font-black text-slate-900 uppercase mb-3 flex items-center gap-2">
+                <span className="text-fuchsia-600">02.</span> PERFIL DEL CANDIDATO
             </h2>
             
             <div className="flex gap-6">
-                {/* Purple Box Style */}
-                <div className="w-1/3 bg-purple-50 p-4 rounded-sm">
-                    <h3 className="text-purple-900 font-bold uppercase text-[9px] mb-3">Competencias Clave</h3>
+                <div className="w-1/3 bg-fuchsia-50 p-4 rounded-sm border border-fuchsia-100">
+                    <h3 className="text-fuchsia-900 font-bold uppercase text-[10px] mb-2">Requisitos Clave</h3>
                     <ul className="space-y-2">
-                        {profile.content.bullets.slice(0,4).map((b: string, i: number) => (
-                            <li key={i} className="flex items-start gap-1.5 text-purple-800 text-[9px] leading-tight">
-                                <span className="text-purple-400 mt-0.5">•</span> {b}
+                        {profile.content.bullets.map((b: string, i: number) => (
+                            <li key={i} className="flex items-start gap-2 text-fuchsia-900 text-[10px] leading-tight">
+                                <span className="text-fuchsia-500 mt-0.5">•</span> {b}
                             </li>
                         ))}
                     </ul>
                 </div>
 
-                {/* Description */}
-                <div className="flex-1 space-y-4">
-                    <div>
-                        <h4 className="font-bold text-slate-900 uppercase text-[9px] mb-1">PASO 1: REQUISITOS</h4>
-                        <p className="text-slate-600 text-[10px]">
-                            Estudiantes avanzados o graduados de Cs. Económicas, Agronomía o afines. Experiencia previa (1 año) valorada pero no excluyente. Foco en actitud proactiva y curiosidad intelectual.
-                        </p>
-                    </div>
-                    <div>
-                        <h4 className="font-bold text-slate-900 uppercase text-[9px] mb-1">PASO 2: PROPUESTA DE VALOR</h4>
-                        <p className="text-slate-600 text-[10px]">
-                            Integración inmediata a equipos reales ("Aprender haciendo"). Liderazgo del propio desarrollo. Visión 360° del negocio agroindustrial.
-                        </p>
+                <div className="flex-1">
+                    <h3 className="font-bold text-slate-900 uppercase text-[10px] mb-2 border-b border-slate-200 pb-1">Propuesta de Valor</h3>
+                    <div className="grid grid-cols-2 gap-4">
+                        {profile.content.valueProp.map((vp: any, i: number) => (
+                             <div key={i}>
+                                <span className="font-bold text-slate-800 text-[10px] uppercase block">{vp.title}</span>
+                                <span className="text-slate-600 text-[10px]">{vp.text}</span>
+                             </div>
+                        ))}
                     </div>
                 </div>
             </div>
         </section>
 
-        {/* 03. ROADMAP */}
-        <section className="mb-6 flex-1">
-             <h2 className="text-sm font-bold text-slate-900 uppercase mb-4 flex items-center gap-2">
-                <span className="text-slate-400">03.</span> HOJA DE RUTA (ETAPAS)
+        {/* 03. CRONOGRAMA */}
+        <section className="flex-1">
+             <h2 className="text-sm font-black text-slate-900 uppercase mb-3 flex items-center gap-2">
+                <span className="text-fuchsia-600">03.</span> CRONOGRAMA DE ETAPAS
             </h2>
             
-            <div className="grid grid-cols-2 gap-x-8 gap-y-4">
+            <div className="space-y-3">
                 {timeline.content.map((item: any, i: number) => (
-                    <div key={i} className="flex gap-3">
-                        <div className="w-5 h-5 bg-slate-900 text-white font-bold text-[10px] flex items-center justify-center rounded-sm shrink-0">
+                    <div key={i} className="flex items-start gap-4 pb-3 border-b border-slate-100 last:border-0">
+                        <div className="w-6 h-6 bg-slate-900 text-white font-bold text-[10px] flex items-center justify-center rounded shrink-0">
                             {i + 1}
                         </div>
-                        <div>
-                            <h4 className="font-bold text-slate-800 uppercase text-[9px] mb-0.5">{item.title}</h4>
-                            <p className="text-slate-500 text-[9px] leading-tight">
-                                {item.month}: {item.details}
-                            </p>
+                        <div className="grid grid-cols-[100px_1fr] gap-4 w-full">
+                             <div className="font-bold text-fuchsia-600 uppercase text-[10px] pt-0.5">{monthMap[item.month] || item.month}</div>
+                             <div>
+                                <h4 className="font-bold text-slate-900 text-[10px] uppercase mb-0.5">{item.title}</h4>
+                                <p className="text-slate-500 text-[10px]">{item.details}</p>
+                             </div>
                         </div>
                     </div>
                 ))}
@@ -175,28 +165,23 @@ export const ReportView: React.FC<ReportViewProps> = ({ slides }) => {
       <div className="w-full max-w-[210mm] min-h-[297mm] mx-auto p-[1.5cm] relative flex flex-col bg-white print:w-full print:max-w-none print:min-h-screen">
         <Header continuation />
 
-        {/* 04. ACADEMY (Table Style from Ref Page 2) */}
-        <section className="mb-10">
-             <h2 className="text-sm font-bold text-slate-900 uppercase mb-4 flex items-center gap-2">
-                <span className="text-slate-400">04.</span> FORMACIÓN TRANSVERSAL (ACADEMY)
+        {/* 04. CAPACITACIONES (Full List) */}
+        <section className="mb-8">
+             <h2 className="text-sm font-black text-slate-900 uppercase mb-3 flex items-center gap-2">
+                <span className="text-fuchsia-600">04.</span> CAPACITACIONES BACKOFFICE
             </h2>
             
-            <div className="border border-slate-200 rounded-sm overflow-hidden">
-                <div className="flex bg-slate-50 border-b border-slate-200 text-[9px] font-bold text-slate-500 uppercase p-2">
-                    <div className="w-1/4">Formato</div>
-                    <div className="flex-1">Contenidos Clave (Muestreo)</div>
+            <div className="border border-slate-200 rounded-sm">
+                <div className="bg-slate-50 p-3 border-b border-slate-200 flex justify-between items-center">
+                    <div className="text-[10px] font-bold text-slate-600 uppercase">Formación Transversal (Viernes 14-18hs)</div>
+                    <div className="text-[10px] font-bold text-slate-400 uppercase">Evaluación Mensual</div>
                 </div>
-                <div className="flex text-[9px] p-3 text-slate-600">
-                    <div className="w-1/4 pr-4 border-r border-slate-100">
-                        <div className="mb-2"><strong className="text-slate-900">Frecuencia:</strong><br/>Viernes 14-18hs</div>
-                        <div className="mb-2"><strong className="text-slate-900">Duración:</strong><br/>6 Meses</div>
-                        <div><strong className="text-slate-900">Evaluación:</strong><br/>Examen Mensual</div>
-                    </div>
-                    <div className="flex-1 pl-4 grid grid-cols-3 gap-2">
-                        {academy.content.topics.slice(0, 12).map((t: string, i: number) => (
-                            <div key={i} className="flex items-center gap-1.5">
-                                <div className="w-1 h-1 bg-fuchsia-400 rounded-full"></div>
-                                {t}
+                <div className="p-4 bg-white">
+                    <div className="grid grid-cols-4 gap-y-2 gap-x-4">
+                        {academy.content.topics.map((t: string, i: number) => (
+                            <div key={i} className="flex items-start gap-1.5">
+                                <div className="w-1 h-1 bg-fuchsia-500 rounded-full mt-1.5 shrink-0"></div>
+                                <span className="text-[9px] text-slate-700 font-medium leading-tight">{t}</span>
                             </div>
                         ))}
                     </div>
@@ -204,92 +189,116 @@ export const ReportView: React.FC<ReportViewProps> = ({ slides }) => {
             </div>
         </section>
 
-        {/* 05. TRACKS DETAIL (Matrix Style from Ref Page 2 'Matriz de Evaluacion') */}
+        {/* 05. DETALLE AREAS */}
         <section className="mb-8">
-            <h2 className="text-sm font-bold text-slate-900 uppercase mb-4 flex items-center gap-2">
-                <span className="text-slate-400">05.</span> DETALLE POR TRACK
+            <h2 className="text-sm font-black text-slate-900 uppercase mb-3 flex items-center gap-2">
+                <span className="text-fuchsia-600">05.</span> ÁREAS DE ESPECIALIZACIÓN
             </h2>
 
-            <div className="grid grid-cols-3 gap-4">
-                {/* Track 1 */}
-                <div className="border border-slate-200 p-4 rounded-sm">
-                    <h3 className="text-green-700 font-bold uppercase text-[10px] mb-3 border-b border-slate-100 pb-1">Mesa de Granos</h3>
-                    <div className="mb-3">
-                        <span className="text-[9px] font-bold text-slate-400 uppercase block mb-0.5">DINÁMICA:</span>
-                        <p className="text-[9px] text-slate-700">Full-Time Comercial + 1 Sem/Mes en Soporte.</p>
+            <div className="grid grid-cols-1 gap-4">
+                {/* Granos */}
+                <div className="border border-slate-200 p-4 rounded bg-white">
+                    <div className="flex justify-between items-center border-b border-slate-100 pb-2 mb-2">
+                        <h3 className="text-green-700 font-bold uppercase text-[10px]">Mesa de Granos</h3>
+                        <span className="text-[9px] font-bold text-slate-400">6 VACANTES</span>
                     </div>
-                    <div className="mb-3">
-                         <span className="text-[9px] font-bold text-slate-400 uppercase block mb-0.5">FOCO:</span>
-                         <p className="text-[9px] text-slate-700">Insumos, Logística, Análisis, IDC.</p>
-                    </div>
-                     <div>
-                         <span className="text-[9px] font-bold text-slate-400 uppercase block mb-0.5">MENTORES:</span>
-                         <p className="text-[9px] text-slate-500">{mentoring.content.granosMentors.slice(0,4).join(', ')}...</p>
-                    </div>
-                </div>
-
-                {/* Track 2 */}
-                <div className="border border-slate-200 p-4 rounded-sm">
-                    <h3 className="text-blue-700 font-bold uppercase text-[10px] mb-3 border-b border-slate-100 pb-1">fyoCapital</h3>
-                    <div className="mb-3">
-                        <span className="text-[9px] font-bold text-slate-400 uppercase block mb-0.5">DINÁMICA:</span>
-                        <p className="text-[9px] text-slate-700">Rotación Full-Time mensual por área.</p>
-                    </div>
-                    <div className="mb-3">
-                         <span className="text-[9px] font-bold text-slate-400 uppercase block mb-0.5">FOCO:</span>
-                         <p className="text-[9px] text-slate-700">Finanzas, BackOffice, Mercado, IDC.</p>
-                    </div>
-                     <div>
-                         <span className="text-[9px] font-bold text-slate-400 uppercase block mb-0.5">MENTORES:</span>
-                         <p className="text-[9px] text-slate-500">{mentoring.content.capitalMentors.join(', ')}.</p>
+                    <div className="grid grid-cols-[1fr_1fr] gap-6">
+                        <div>
+                             <span className="text-[9px] font-bold text-slate-900 uppercase block mb-1">Dinámica</span>
+                             <p className="text-[10px] text-slate-600 mb-2">{granos.content.description}</p>
+                             <ul className="text-[9px] text-slate-500 space-y-0.5">
+                                {granos.content.bullets.map((b:string, i:number) => <li key={i}>- {b}</li>)}
+                             </ul>
+                        </div>
+                        <div>
+                             <span className="text-[9px] font-bold text-slate-900 uppercase block mb-1">Mentores Asignados</span>
+                             <div className="flex flex-wrap gap-1">
+                                {mentoring.content.granosMentors.map((m:string, i:number) => (
+                                    <span key={i} className="px-1.5 py-0.5 bg-green-50 text-green-800 text-[9px] font-medium rounded border border-green-100">{m}</span>
+                                ))}
+                             </div>
+                        </div>
                     </div>
                 </div>
 
-                {/* Track 3 */}
-                <div className="border border-slate-200 p-4 rounded-sm">
-                    <h3 className="text-purple-700 font-bold uppercase text-[10px] mb-3 border-b border-slate-100 pb-1">Consultoría</h3>
-                     <div className="mb-3">
-                        <span className="text-[9px] font-bold text-slate-400 uppercase block mb-0.5">DINÁMICA:</span>
-                        <p className="text-[9px] text-slate-700">Full-Time Consultoría + Soporte Rotativo.</p>
+                {/* Capital */}
+                <div className="border border-slate-200 p-4 rounded bg-white">
+                    <div className="flex justify-between items-center border-b border-slate-100 pb-2 mb-2">
+                        <h3 className="text-blue-700 font-bold uppercase text-[10px]">fyoCapital</h3>
+                        <span className="text-[9px] font-bold text-slate-400">4 VACANTES</span>
                     </div>
-                    <div className="mb-3">
-                         <span className="text-[9px] font-bold text-slate-400 uppercase block mb-0.5">FOCO:</span>
-                         <p className="text-[9px] text-slate-700">Asesoramiento comercial y estrategia.</p>
+                    <div className="grid grid-cols-[1fr_1fr] gap-6">
+                         <div>
+                             <span className="text-[9px] font-bold text-slate-900 uppercase block mb-1">Dinámica</span>
+                             <p className="text-[10px] text-slate-600 mb-2">{capital.content.description}</p>
+                             <ul className="text-[9px] text-slate-500 space-y-0.5">
+                                {capital.content.bullets.map((b:string, i:number) => <li key={i}>- {b}</li>)}
+                             </ul>
+                        </div>
+                        <div>
+                             <span className="text-[9px] font-bold text-slate-900 uppercase block mb-1">Mentores Asignados</span>
+                             <div className="flex flex-wrap gap-1">
+                                {mentoring.content.capitalMentors.map((m:string, i:number) => (
+                                    <span key={i} className="px-1.5 py-0.5 bg-blue-50 text-blue-800 text-[9px] font-medium rounded border border-blue-100">{m}</span>
+                                ))}
+                             </div>
+                        </div>
                     </div>
-                     <div>
-                         <span className="text-[9px] font-bold text-slate-400 uppercase block mb-0.5">MENTORES:</span>
-                         <p className="text-[9px] text-slate-500">{mentoring.content.consultoriaMentors.join(', ')}.</p>
+                </div>
+
+                {/* Consultoria */}
+                <div className="border border-slate-200 p-4 rounded bg-white">
+                    <div className="flex justify-between items-center border-b border-slate-100 pb-2 mb-2">
+                        <h3 className="text-purple-700 font-bold uppercase text-[10px]">Consultoría</h3>
+                        <span className="text-[9px] font-bold text-slate-400">{consultoriaCount}</span>
+                    </div>
+                    <div className="grid grid-cols-[1fr_1fr] gap-6">
+                         <div>
+                             <span className="text-[9px] font-bold text-slate-900 uppercase block mb-1">Enfoque</span>
+                             <p className="text-[10px] text-slate-600">
+                                Desarrollo de perfil analítico con foco en estrategia comercial y asesoramiento de mercado.
+                             </p>
+                        </div>
+                        <div>
+                             <span className="text-[9px] font-bold text-slate-900 uppercase block mb-1">Mentores Asignados</span>
+                             <div className="flex flex-wrap gap-1">
+                                {mentoring.content.consultoriaMentors.map((m:string, i:number) => (
+                                    <span key={i} className="px-1.5 py-0.5 bg-purple-50 text-purple-800 text-[9px] font-medium rounded border border-purple-100">{m}</span>
+                                ))}
+                             </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-         {/* 06. CLOSING (Reference style 07 'Cierre y Propuesta') */}
-        <section className="mb-8 flex-1">
-             <h2 className="text-sm font-bold text-slate-900 uppercase mb-4 flex items-center gap-2">
-                <span className="text-slate-400">06.</span> CIERRE Y PRÓXIMOS PASOS
+         {/* 06. CONTACTO */}
+        <section className="flex-1">
+             <h2 className="text-sm font-black text-slate-900 uppercase mb-3 flex items-center gap-2">
+                <span className="text-fuchsia-600">06.</span> CONTACTO
             </h2>
-            <div className="flex gap-4 border-l-2 border-fuchsia-500 pl-4 py-1">
+            <div className="flex gap-8 items-start bg-slate-50 p-4 border border-slate-200 rounded">
                 <div className="flex-1">
-                    <h4 className="font-bold text-slate-900 uppercase text-[9px] mb-1">1. VALIDACIÓN</h4>
-                    <p className="text-slate-600 text-[9px]">Confirmación de vacantes y mentores asignados.</p>
+                    <p className="text-[10px] text-slate-600 mb-2 italic">"{closing.subtitle}"</p>
                 </div>
-                <div className="w-px bg-slate-200"></div>
-                 <div className="flex-1">
-                    <h4 className="font-bold text-slate-900 uppercase text-[9px] mb-1">2. DIFUSIÓN</h4>
-                    <p className="text-slate-600 text-[9px]">Lanzamiento de campaña interna y externa.</p>
-                </div>
-                <div className="w-px bg-slate-200"></div>
-                 <div className="flex-1">
-                    <h4 className="font-bold text-slate-900 uppercase text-[9px] mb-1">3. INICIO</h4>
-                    <p className="text-slate-600 text-[9px]">Ingreso proyectado para Mayo 2026.</p>
+                <div className="flex gap-6">
+                    {closing.content.contacts.map((c: any, i: number) => (
+                        <div key={i} className="flex items-center gap-2">
+                            <div className="bg-slate-200 p-1.5 rounded-full">
+                                <Mail size={12} className="text-slate-600" />
+                            </div>
+                            <div>
+                                <span className="text-[9px] font-bold text-slate-500 uppercase block">{c.role}</span>
+                                <span className="text-[10px] font-bold text-slate-900">{c.email}</span>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </div>
         </section>
 
         <Footer page={2} />
       </div>
-
     </div>
   );
 };
