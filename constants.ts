@@ -64,7 +64,7 @@ export const SLIDES: SlideData[] = [
     content: [
       { month: 'Enero', title: 'Diseño & Alineamiento', details: 'Armado integral, presentación a líderes, campaña de marketing.' },
       { month: 'Febrero', title: 'Reclutamiento', details: 'Hunting activo, universidades, referidos.' },
-      { month: 'Mar-Abr', title: 'Evaluación', details: 'Entrevistas, 3 Assessment Centers, Psicotécnicos, FODA.' },
+      { month: 'Mar-Abr', title: 'Evaluación', details: 'Entrevistas, 2 Assessment Centers, Psicotécnicos, FODA.' },
       { month: 'Abril', title: 'Cierre', details: 'Entrevistas finales, asignaciones de equipos y propuestas.' },
       { month: 'MAY-JUN', title: 'Ingreso & Onboarding', details: 'Bienvenida, inducción, asignación de mentores.' }
     ]
