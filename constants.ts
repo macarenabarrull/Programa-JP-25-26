@@ -16,7 +16,7 @@ export const SLIDES: SlideData[] = [
     title: 'PROGRAMA DE JP 2026–2027',
     subtitle: 'Formando el futuro del ecosistema de negocios comerciales',
     content: {
-      highlight: '12 Jóvenes Profesionales',
+      highlight: '10 Jóvenes Profesionales',
       tags: ['Mesa de Granos', 'Mercado de Capitales', 'Consultoría']
     }
   },
@@ -26,10 +26,10 @@ export const SLIDES: SlideData[] = [
     title: 'Objetivos',
     subtitle: 'Potenciando el ecosistema de negocios',
     content: {
-      mainGoal: "Incorporar 12 Jóvenes Profesionales con alto potencial comercial y financiero.",
+      mainGoal: "Incorporar 10 Jóvenes Profesionales con alto potencial comercial y financiero.",
       pillars: ["Inmersión Temprana", "Práctica Real", "Visión 360°"],
       stats: [
-        { label: 'Mesa de Granos', value: '6 JP', icon: Users, color: 'text-green-600', bg: 'bg-green-50', border: 'border-green-100' },
+        { label: 'Mesa de Granos', value: '4 JP', icon: Users, color: 'text-green-600', bg: 'bg-green-50', border: 'border-green-100' },
         { label: 'fyoCapital', value: '4 JP', icon: DollarSign, color: 'text-blue-600', bg: 'bg-blue-50', border: 'border-blue-100' },
         { label: 'Consultoría', value: '2 JP', icon: Briefcase, color: 'text-purple-600', bg: 'bg-purple-50', border: 'border-purple-100' }
       ]
@@ -66,7 +66,7 @@ export const SLIDES: SlideData[] = [
       { month: 'Febrero', title: 'Reclutamiento', details: 'Hunting activo, universidades, referidos.' },
       { month: 'Mar-Abr', title: 'Evaluación', details: 'Entrevistas, 3 Assessment Centers, Psicotécnicos, FODA.' },
       { month: 'Abril', title: 'Cierre', details: 'Entrevistas finales, asignaciones de equipos y propuestas.' },
-      { month: 'Mayo', title: 'Ingreso & Onboarding', details: 'Bienvenida, inducción, asignación de mentores.' }
+      { month: 'MAY-JUN', title: 'Ingreso & Onboarding', details: 'Bienvenida, inducción, asignación de mentores.' }
     ]
   },
   {

@@ -85,9 +85,9 @@ export const ObjectivesSlide: React.FC<SlideProps> = ({ data }) => {
       {/* Top Statement */}
       <motion.div variants={itemVariants} className="text-center max-w-4xl mx-auto pt-2 md:pt-0">
         <h2 className="text-3xl md:text-5xl font-light text-slate-900 leading-tight mb-4">
-            {data.content.mainGoal.split("12 Jóvenes Profesionales")[0]}
-            <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-600 to-purple-600">12 Jóvenes Profesionales</span>
-            {data.content.mainGoal.split("12 Jóvenes Profesionales")[1]}
+            {data.content.mainGoal.split("10 Jóvenes Profesionales")[0]}
+            <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-600 to-purple-600">10 Jóvenes Profesionales</span>
+            {data.content.mainGoal.split("10 Jóvenes Profesionales")[1]}
         </h2>
         <div className="flex flex-wrap justify-center gap-3">
             {data.content.pillars.map((pillar: string, idx: number) => (
@@ -242,7 +242,7 @@ export const TimelineSlide: React.FC<SlideProps> = ({ data }) => {
   ];
 
   return (
-    <motion.div className="h-full flex flex-col justify-center print:justify-start -mt-12 md:-mt-20 pb-12" initial="hidden" animate="show" variants={containerVariants}>
+    <motion.div className="h-full flex flex-col justify-center print:justify-start pb-12" initial="hidden" animate="show" variants={containerVariants}>
         {/* Adjusted top margin to move roadmap up. Removed mt-4 and py-8 to tighten. */}
         <div className="w-full relative py-4 print:mt-8 print:py-4">
             {/* Horizontal Line with Glow */}
@@ -489,7 +489,7 @@ export const MentoringSplitSlide: React.FC<SlideProps> = ({ data }) => {
                             </h3>
                             <span className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-widest bg-white/50 px-2 py-0.5 rounded-md border border-white/60">Sugerencias</span>
                         </div>
-                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-2">
+                        <ul className="flex flex-col gap-y-2">
                             {data.content.capitalMentors.map((m: string, i: number) => (
                                 <li key={i} className="flex items-center gap-2 text-slate-700 group">
                                     <div className="h-1.5 w-1.5 rounded-full bg-slate-300 group-hover:bg-blue-500 transition-colors"></div>
@@ -510,7 +510,7 @@ export const MentoringSplitSlide: React.FC<SlideProps> = ({ data }) => {
                             </h3>
                             <span className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-widest bg-white/50 px-2 py-0.5 rounded-md border border-white/60">Sugerencias</span>
                         </div>
-                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-2">
+                        <ul className="flex flex-col gap-y-2">
                             {data.content.consultoriaMentors?.map((m: string, i: number) => (
                                 <li key={i} className="flex items-center gap-2 text-slate-700 group">
                                     <div className="h-1.5 w-1.5 rounded-full bg-slate-300 group-hover:bg-purple-500 transition-colors"></div>
