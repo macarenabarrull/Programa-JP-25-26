@@ -242,13 +242,13 @@ export const TimelineSlide: React.FC<SlideProps> = ({ data }) => {
   ];
 
   return (
-    <motion.div className="h-full flex flex-col justify-center print:justify-start pb-12" initial="hidden" animate="show" variants={containerVariants}>
+    <motion.div className="h-full flex flex-col justify-start print:justify-start pb-12" initial="hidden" animate="show" variants={containerVariants}>
         {/* Adjusted top margin to move roadmap up. Removed mt-4 and py-8 to tighten. */}
-        <div className="w-full relative py-4 print:mt-8 print:py-4">
+        <div className="w-full relative pt-48 pb-32 print:mt-8 print:py-4">
             {/* Horizontal Line with Glow */}
             <motion.div variants={itemVariants} className="absolute top-1/2 left-0 w-full h-1 bg-gradient-to-r from-indigo-200 via-fuchsia-400 to-emerald-200 rounded-full -translate-y-1/2 hidden md:block shadow-[0_0_15px_rgba(217,70,239,0.4)] opacity-50" />
             
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-6 print:gap-2">
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-10 print:gap-2">
                 {data.content.map((item: any, idx: number) => {
                     const style = stepStyles[idx % stepStyles.length];
                     const Icon = style.icon;
@@ -260,7 +260,7 @@ export const TimelineSlide: React.FC<SlideProps> = ({ data }) => {
                         </div>
                         
                         {/* Card - Premium Design */}
-                        <div className={`md:absolute md:left-0 md:w-full px-2 ${idx % 2 === 0 ? 'md:bottom-16' : 'md:top-16'}`}>
+                        <div className={`md:absolute md:left-0 md:w-full px-2 ${idx % 2 === 0 ? 'md:bottom-12' : 'md:top-12'}`}>
                             <div className={`
                                 h-full p-4 rounded-2xl bg-white/60 backdrop-blur-xl border ${style.border} 
                                 shadow-sm hover:shadow-lg transition-all duration-300 group-hover:-translate-y-1
@@ -282,7 +282,7 @@ export const TimelineSlide: React.FC<SlideProps> = ({ data }) => {
                             </div>
                             
                             {/* Connecting Line */}
-                             <div className={`hidden md:block absolute left-1/2 w-px bg-gradient-to-b from-slate-300 to-transparent -translate-x-1/2 h-16 
+                             <div className={`hidden md:block absolute left-1/2 w-px bg-gradient-to-b from-slate-300 to-transparent -translate-x-1/2 h-12 
                                 ${idx % 2 === 0 ? 'bottom-0 translate-y-full' : 'top-0 -translate-y-full rotate-180'}`} 
                              />
                         </div>
@@ -291,8 +291,8 @@ export const TimelineSlide: React.FC<SlideProps> = ({ data }) => {
             </div>
         </div>
         
-        {/* Adjusted margin to ensure it sits below roadmap without overlapping and IS CENTERED */}
-        <motion.div variants={itemVariants} className="mt-8 w-full relative z-20 px-4 flex justify-center">
+        {/* Positioned below February and April globos, away from the center */}
+        <motion.div variants={itemVariants} className="mt-24 w-full relative z-20 px-4 flex justify-end md:pr-48">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/40 border border-fuchsia-200/50 backdrop-blur-sm shadow-sm transition-all hover:bg-white/60">
                  <span className="flex h-1.5 w-1.5 relative">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-fuchsia-400 opacity-75"></span>
@@ -468,7 +468,7 @@ export const MentoringSplitSlide: React.FC<SlideProps> = ({ data }) => {
                             </h3>
                             <span className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-widest bg-white/50 px-2 py-0.5 rounded-md border border-white/60">Sugerencias</span>
                         </div>
-                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-2">
+                        <ul className="flex flex-col gap-y-2">
                             {data.content.granosMentors.map((m: string, i: number) => (
                                 <li key={i} className="flex items-center gap-2 text-slate-700 group">
                                     <div className="h-1.5 w-1.5 rounded-full bg-slate-300 group-hover:bg-green-500 transition-colors"></div>
