@@ -85,9 +85,9 @@ export const ObjectivesSlide: React.FC<SlideProps> = ({ data }) => {
       {/* Top Statement */}
       <motion.div variants={itemVariants} className="text-center max-w-4xl mx-auto pt-2 md:pt-0">
         <h2 className="text-3xl md:text-5xl font-light text-slate-900 leading-tight mb-4">
-            {data.content.mainGoal.split("10 Jóvenes Profesionales")[0]}
-            <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-600 to-purple-600">10 Jóvenes Profesionales</span>
-            {data.content.mainGoal.split("10 Jóvenes Profesionales")[1]}
+            {data.content.mainGoal.split("9 Jóvenes Profesionales")[0]}
+            <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-600 to-purple-600">9 Jóvenes Profesionales</span>
+            {data.content.mainGoal.split("9 Jóvenes Profesionales")[1]}
         </h2>
         <div className="flex flex-wrap justify-center gap-3">
             {data.content.pillars.map((pillar: string, idx: number) => (

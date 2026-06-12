@@ -16,7 +16,7 @@ export const SLIDES: SlideData[] = [
     title: 'PROGRAMA DE JP 2026–2027',
     subtitle: 'Formando el futuro del ecosistema de negocios comerciales',
     content: {
-      highlight: '10 Jóvenes Profesionales',
+      highlight: '9 Jóvenes Profesionales',
       tags: ['Mesa de Granos', 'Mercado de Capitales', 'Consultoría']
     }
   },
@@ -26,10 +26,10 @@ export const SLIDES: SlideData[] = [
     title: 'Objetivos',
     subtitle: 'Potenciando el ecosistema de negocios',
     content: {
-      mainGoal: "Incorporar 10 Jóvenes Profesionales con alto potencial comercial y financiero.",
+      mainGoal: "Incorporar 9 Jóvenes Profesionales con alto potencial comercial y financiero.",
       pillars: ["Inmersión Temprana", "Práctica Real", "Visión 360°"],
       stats: [
-        { label: 'Mesa de Granos', value: '4 JP', icon: Users, color: 'text-green-600', bg: 'bg-green-50', border: 'border-green-100' },
+        { label: 'Mesa de Granos', value: '3 JP', icon: Users, color: 'text-green-600', bg: 'bg-green-50', border: 'border-green-100' },
         { label: 'fyoCapital', value: '4 JP', icon: DollarSign, color: 'text-blue-600', bg: 'bg-blue-50', border: 'border-blue-100' },
         { label: 'Consultoría', value: '2 JP', icon: Briefcase, color: 'text-purple-600', bg: 'bg-purple-50', border: 'border-purple-100' }
       ]
@@ -118,7 +118,7 @@ export const SLIDES: SlideData[] = [
   {
     id: 'rotations-capital',
     type: 'info',
-    title: 'Rotaciones: fyoCapital',
+    title: 'Capacitaciones: fyoCapital',
     subtitle: 'Inmersión Full-Time (4 JPs)',
     content: {
       description: "En este caso, la inmersión se plantea como jornada completa en cada área, para acompañar adecuadamente el proceso de aprendizaje sobre los instrumentos financieros.",
@@ -141,9 +141,9 @@ export const SLIDES: SlideData[] = [
     title: 'Mentoreo',
     subtitle: 'Acompañamiento estratégico',
     content: {
-        granosMentors: ['Augusto Theiler', 'Mateo Beli', 'Iván Ratner', 'José Rainaudo', 'Gastón Colombres', 'Juan Fagnano'],
+        granosMentors: ['Mateo Beli', 'Martin Forcadell', 'Juan Fagnano', 'Agustín Chingolani'],
         capitalMentors: ['Martín Rissi', 'Stefania Lattuga', 'Ángeles Tirelli', 'Fabricio Casanova'],
-        consultoriaMentors: ['Giuliana Quirici', 'Dante Romano'],
+        consultoriaMentors: ['Giuliana Quirici', 'Nicolás Sesnich'],
         considerations: [
             "Feedback Mensual (45 min)",
             "Seguimiento de carrera",
